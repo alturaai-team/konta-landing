@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pogodba o obdelavi podatkov — Konta</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .prose h2 { font-size: 1.25rem; font-weight: 700; color: #111827; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+  .prose h3 { font-size: 1rem; font-weight: 600; color: #1f2937; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  .prose p  { color: #6b7280; line-height: 1.75; margin-bottom: 1rem; font-size: 0.9375rem; }
+  .prose ul { list-style: disc; padding-left: 1.5rem; color: #6b7280; margin-bottom: 1rem; }
+  .prose ul li { margin-bottom: 0.35rem; line-height: 1.7; font-size: 0.9375rem; }
+  .prose ol { list-style: decimal; padding-left: 1.5rem; color: #6b7280; margin-bottom: 1rem; }
+  .prose ol li { margin-bottom: 0.35rem; line-height: 1.7; font-size: 0.9375rem; }
+  .prose a  { color: #2563eb; text-decoration: underline; }
+  .prose strong { color: #374151; font-weight: 600; }
+  .prose table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin-bottom: 1.5rem; }
+  .prose table th { text-align: left; padding: 0.6rem 0.75rem; background: #f9fafb; border: 1px solid #e5e7eb; font-weight: 600; color: #374151; }
+  .prose table td { padding: 0.6rem 0.75rem; border: 1px solid #e5e7eb; color: #6b7280; vertical-align: top; }
+  .toc-link { display: block; padding: 0.35rem 0; color: #6b7280; font-size: 0.875rem; transition: color 0.15s; text-decoration: none; }
+  .toc-link:hover { color: #2563eb; }
+  .highlight-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.75rem; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .highlight-box p { margin-bottom: 0; color: #1e40af; }
+</style>
+</head>
+<body class="bg-white">
+
+<!-- NAV -->
+<nav class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+  <div id="navbar-pill" class="pointer-events-auto bg-white/95 backdrop-blur-md border border-gray-200 rounded-full px-6 py-3 shadow-lg flex items-center justify-between w-full max-w-3xl">
+    <div class="flex items-center gap-7">
+      <a href="konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+      <div class="hidden md:flex items-center gap-5 text-sm text-gray-500">
+        <a href="konta-landing.html#how-it-works" class="hover:text-gray-900 transition-colors">Kako deluje</a>
+        <a href="konta-landing.html#examples" class="hover:text-gray-900 transition-colors">Primeri</a>
+        <a href="konta-landing.html#pricing" class="hover:text-gray-900 transition-colors">Cene</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors px-3 py-1.5 hidden md:block">Prijavite se</a>
+      <a href="#" class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-colors font-semibold">Začnite brezplačno</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="pt-32 pb-12 bg-gray-50 border-b border-gray-100">
+  <div class="max-w-3xl mx-auto px-6">
+    <a href="konta-landing.html" class="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors mb-6">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      Nazaj na Konta
+    </a>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">Pravno</span>
+      <span class="text-xs font-semibold text-green-600 bg-green-50 border border-green-100 px-3 py-1 rounded-full">GDPR</span>
+    </div>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Pogodba o obdelavi podatkov</h1>
+    <p class="text-gray-500 mb-1">Data Processing Agreement (DPA) — člen 28 Uredbe (EU) 2016/679</p>
+    <p class="text-gray-400 text-sm">Zadnja posodobitev: 1. januar 2025</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="max-w-5xl mx-auto px-6 py-16">
+  <div class="flex gap-16">
+
+    <!-- Table of contents -->
+    <aside class="hidden lg:block w-56 shrink-0">
+      <div class="sticky top-24">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Vsebina</p>
+        <nav>
+          <a href="#namen" class="toc-link">1. Namen in področje</a>
+          <a href="#definicije" class="toc-link">2. Definicije</a>
+          <a href="#obveznosti-obdelovalca" class="toc-link">3. Obveznosti Konte</a>
+          <a href="#obveznosti-upravljavca" class="toc-link">4. Obveznosti naročnika</a>
+          <a href="#podpogodbeni" class="toc-link">5. Podpogodbeni obdelovalci</a>
+          <a href="#prenosi" class="toc-link">6. Prenosi izven EU</a>
+          <a href="#varnost" class="toc-link">7. Varnostni ukrepi</a>
+          <a href="#krsitve" class="toc-link">8. Kršitve varnosti</a>
+          <a href="#pravice" class="toc-link">9. Pravice posameznikov</a>
+          <a href="#brisanje" class="toc-link">10. Brisanje podatkov</a>
+          <a href="#revizija" class="toc-link">11. Revizija in nadzor</a>
+          <a href="#veljavnost" class="toc-link">12. Veljavnost in prenehanje</a>
+          <a href="#kontakt" class="toc-link">13. Kontakt</a>
+        </nav>
+        <div class="mt-6 p-3 bg-blue-50 rounded-xl">
+          <p class="text-xs text-blue-700 font-medium mb-1">Vprašanja o DPA?</p>
+          <p class="text-xs text-blue-600">Pišite nam na <a href="mailto:dpa@konta.si" class="underline">dpa@konta.si</a></p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main prose -->
+    <article class="prose flex-1 min-w-0">
+
+      <div class="highlight-box">
+        <p><strong>Povzetek:</strong> Ta pogodba ureja razmerje med vami (upravljavcem) in Konto (obdelovalcem) pri obdelavi osebnih podatkov vaših strank prek platforme Konta. Z aktivacijo računa soglašate s pogoji te pogodbe.</p>
+      </div>
+
+      <section id="namen">
+        <h2>1. Namen in področje uporabe</h2>
+        <p>Ta Pogodba o obdelavi podatkov (<strong>"DPA"</strong>) je sklenjena med naročnikom platforme Konta (<strong>"Upravljavec"</strong>) in Konta d.o.o., Dunajska cesta 5, 1000 Ljubljana (<strong>"Obdelovalec"</strong>).</p>
+        <p>DPA ureja obdelavo osebnih podatkov, ki jo Obdelovalec izvaja v imenu in po navodilih Upravljavca pri zagotavljanju storitve Konta v skladu s členom 28 Uredbe (EU) 2016/679 (<strong>"GDPR"</strong>).</p>
+        <p>DPA je sestavni del Pogojev uporabe platforme Konta. V primeru neskladja med DPA in Pogoji uporabe prevlada DPA v zadevah, ki se nanašajo na obdelavo osebnih podatkov.</p>
+      </section>
+
+      <section id="definicije">
+        <h2>2. Definicije</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Izraz</th>
+              <th>Pomen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Osebni podatki</strong></td>
+              <td>Vsaka informacija, ki se nanaša na določeno ali določljivo fizično osebo (člen 4(1) GDPR)</td>
+            </tr>
+            <tr>
+              <td><strong>Obdelava</strong></td>
+              <td>Vsako dejanje z osebnimi podatki — zbiranje, hramba, posredovanje, brisanje idr. (člen 4(2) GDPR)</td>
+            </tr>
+            <tr>
+              <td><strong>Upravljavec</strong></td>
+              <td>Naročnik platforme Konta, ki določa namene in sredstva obdelave</td>
+            </tr>
+            <tr>
+              <td><strong>Obdelovalec</strong></td>
+              <td>Konta d.o.o., ki obdeluje podatke po navodilih Upravljavca</td>
+            </tr>
+            <tr>
+              <td><strong>Podpogodbeni obdelovalec</strong></td>
+              <td>Tretja oseba, ki jo Obdelovalec pooblasti za obdelavo podatkov v imenu Upravljavca</td>
+            </tr>
+            <tr>
+              <td><strong>Posameznik</strong></td>
+              <td>Fizična oseba, na katero se nanašajo osebni podatki</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="obveznosti-obdelovalca">
+        <h2>3. Obveznosti Konte (Obdelovalca)</h2>
+        <p>Konta se zavezuje, da bo:</p>
+        <ul>
+          <li>osebne podatke obdelovala <strong>izključno po dokumentiranih navodilih</strong> Upravljavca, razen kadar to zahteva pravo EU ali Republike Slovenije;</li>
+          <li>zagotovila, da so osebe, pooblaščene za obdelavo podatkov, zavezane k zaupnosti;</li>
+          <li>uvedla <strong>ustrezne tehnične in organizacijske varnostne ukrepe</strong> v skladu s členom 32 GDPR;</li>
+          <li>Upravljavcu pomagala pri izpolnjevanju obveznosti do posameznikov (pravica dostopa, popravka, izbrisa, itd.);</li>
+          <li>Upravljavcu pomagala pri izpolnjevanju obveznosti iz členov 32–36 GDPR (varnost, kršitve, ocene tveganja, posvetovanje z nadzornim organom);</li>
+          <li>po prenehanju storitev po izbiri Upravljavca izbrisala ali vrnila vse osebne podatke;</li>
+          <li>Upravljavcu zagotovila vse informacije, potrebne za dokazovanje skladnosti s členom 28 GDPR.</li>
+        </ul>
+      </section>
+
+      <section id="obveznosti-upravljavca">
+        <h2>4. Obveznosti naročnika (Upravljavca)</h2>
+        <p>Upravljavec se zavezuje, da bo:</p>
+        <ul>
+          <li>zagotovil ustrezno <strong>pravno podlago</strong> za obdelavo osebnih podatkov, ki jih posreduje Konta;</li>
+          <li>zagotovil, da so posamezniki, katerih podatke obdeluje, ustrezno <strong>obveščeni</strong> o obdelavi v skladu s členoma 13 in 14 GDPR;</li>
+          <li>Konto takoj obvestil o kakršni koli napaki, spremembi ali zahtevi posameznika, ki bi vplivala na obdelavo;</li>
+          <li>zagotovil točnost in zakonitost posredovanih osebnih podatkov;</li>
+          <li>upošteval Kontine navodila glede varnega prenosa in ravnanja s podatki.</li>
+        </ul>
+      </section>
+
+      <section id="podpogodbeni">
+        <h2>5. Podpogodbeni obdelovalci</h2>
+        <p>Upravljavec s sklenitvijo te pogodbe podeljuje Konta splošno pooblastilo za vključitev podpogodbenih obdelovalcev. Konta zagotavlja, da so vsi podpogodbeni obdelovalci zavezani k enakovrednim obveznostim varstva podatkov.</p>
+        <p>Trenutni podpogodbeni obdelovalci:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Obdelovalec</th>
+              <th>Namen</th>
+              <th>Lokacija</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Supabase Inc.</td>
+              <td>Hramba podatkov in avtentikacija</td>
+              <td>EU (Frankfurt, AWS)</td>
+            </tr>
+            <tr>
+              <td>Stripe Inc.</td>
+              <td>Obdelava plačil</td>
+              <td>EU</td>
+            </tr>
+            <tr>
+              <td>Anthropic PBC</td>
+              <td>Obdelava dokumentov z AI (ekstrakcija)</td>
+              <td>ZDA (SCCs)</td>
+            </tr>
+            <tr>
+              <td>PostHog Inc.</td>
+              <td>Analitika uporabe</td>
+              <td>EU (eu.posthog.com)</td>
+            </tr>
+            <tr>
+              <td>Functional Software (Sentry)</td>
+              <td>Beleženje napak</td>
+              <td>EU</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Konta bo Upravljavca obvestila o morebitnih nameravanih dodajanjih ali zamenjavah podpogodbenih obdelovalcev vsaj <strong>14 dni vnaprej</strong>. Upravljavec ima pravico do utemeljene zavrnitve.</p>
+      </section>
+
+      <section id="prenosi">
+        <h2>6. Prenosi podatkov izven EU/EGP</h2>
+        <p>Konta podatkov praviloma ne prenaša izven Evropske unije oz. Evropskega gospodarskega prostora. Kadar je to potrebno (npr. obdelava z AI modeli Anthropic), se prenos izvaja na podlagi <strong>standardnih pogodbenih klavzul</strong> (SCCs) v skladu s Sklepom Komisije EU 2021/914.</p>
+        <p>Podrobnosti o posameznih prenosih so na voljo na zahtevo na naslovu <a href="mailto:dpa@konta.si">dpa@konta.si</a>.</p>
+      </section>
+
+      <section id="varnost">
+        <h2>7. Varnostni ukrepi</h2>
+        <p>Konta je v skladu s členom 32 GDPR uvedla naslednje tehnične in organizacijske ukrepe:</p>
+        <h3>7.1 Tehnični ukrepi</h3>
+        <ul>
+          <li>Šifriranje podatkov v mirovanju (AES-256) in med prenosom (TLS 1.3)</li>
+          <li>Večfaktorska avtentikacija za vse administrativne dostope</li>
+          <li>Dostop do podatkov omejen na podlagi načela najmanjšega privilegija</li>
+          <li>Redne varnostne kopije z geografsko redundanco</li>
+          <li>Samodejno zaznavanje anomalij in nepooblaščenih dostopov</li>
+        </ul>
+        <h3>7.2 Organizacijski ukrepi</h3>
+        <ul>
+          <li>Pisna politika varstva podatkov za vse zaposlene</li>
+          <li>Redna usposabljanja zaposlenih s področja varstva podatkov</li>
+          <li>Postopek upravljanja incidentov in kršitev varnosti</li>
+          <li>Preverba ozadja za zaposlene z dostopom do podatkov strank</li>
+        </ul>
+        <p>Podrobnejši opis varnostnih ukrepov je na voljo na naši <a href="security.html">varnostni strani</a>.</p>
+      </section>
+
+      <section id="krsitve">
+        <h2>8. Kršitve varnosti podatkov</h2>
+        <p>V primeru ugotovljene ali domnevne kršitve varnosti osebnih podatkov bo Konta:</p>
+        <ul>
+          <li>Upravljavca obvestila <strong>brez nepotrebnega odlašanja</strong>, in sicer v roku <strong>72 ur</strong> od ugotovitve kršitve;</li>
+          <li>v obvestilu navedla naravo kršitve, kategorije in okvirno število prizadetih posameznikov in podatkov, predvidene posledice ter sprejete ali predlagane ukrepe;</li>
+          <li>zagotovila dokumentacijo kršitve v skladu s členom 33(5) GDPR;</li>
+          <li>Upravljavcu pomagala pri obveščanju Informacijskega pooblaščenca in prizadetih posameznikov, kadar je to obvezno.</li>
+        </ul>
+      </section>
+
+      <section id="pravice">
+        <h2>9. Uresničevanje pravic posameznikov</h2>
+        <p>Konta bo Upravljavcu pomagala pri uresničevanju pravic posameznikov:</p>
+        <ul>
+          <li><strong>Pravica dostopa</strong> (člen 15 GDPR) — posredovanje kopije podatkov</li>
+          <li><strong>Pravica do popravka</strong> (člen 16 GDPR) — popravljanje netočnih podatkov</li>
+          <li><strong>Pravica do izbrisa</strong> (člen 17 GDPR) — brisanje podatkov na zahtevo</li>
+          <li><strong>Pravica do omejitve obdelave</strong> (člen 18 GDPR)</li>
+          <li><strong>Pravica do prenosljivosti</strong> (člen 20 GDPR) — izvoz v strojno berljivem formatu</li>
+          <li><strong>Pravica do ugovora</strong> (člen 21 GDPR)</li>
+        </ul>
+        <p>Zahteve posameznikov posredujte na <a href="mailto:dpa@konta.si">dpa@konta.si</a>. Konta bo odgovorila v roku <strong>30 dni</strong>.</p>
+      </section>
+
+      <section id="brisanje">
+        <h2>10. Brisanje in vračilo podatkov</h2>
+        <p>Po prenehanju storitve ali na pisno zahtevo Upravljavca bo Konta:</p>
+        <ul>
+          <li>v roku <strong>30 dni</strong> izbrisala ali anonimizirala vse osebne podatke Upravljavca;</li>
+          <li>na zahtevo pred izbrisom posredovala izvoz podatkov v formatu CSV/JSON;</li>
+          <li>zagotovila pisno potrdilo o izbrisu.</li>
+        </ul>
+        <p>Izjema: podatki, ki jih je Konta dolžna hraniti na podlagi zakonskih obveznosti (npr. davčna zakonodaja), bodo hranjeni najkrajše zakonsko predpisano obdobje, po poteku katerega bodo izbrisani.</p>
+      </section>
+
+      <section id="revizija">
+        <h2>11. Revizija in nadzor</h2>
+        <p>Upravljavec ima pravico preveriti skladnost Konte s to pogodbo. Konta bo:</p>
+        <ul>
+          <li>na zahtevo posredovala revizijsko dokumentacijo in certifikate;</li>
+          <li>omogočila revizijo s strani Upravljavca ali pooblaščenega revizorja z razumnim predhodnim obvestilom (vsaj 30 dni);</li>
+          <li>revizorju zagotovila dostop do ustreznih evidenc, prostorov in osebja.</li>
+        </ul>
+        <p>Stroške revizije nosi Upravljavec, razen v primeru ugotovljenih kršitev.</p>
+      </section>
+
+      <section id="veljavnost">
+        <h2>12. Veljavnost in prenehanje</h2>
+        <p>Ta pogodba začne veljati z dnem aktivacije računa na platformi Konta in ostane v veljavi ves čas trajanja naročniškega razmerja.</p>
+        <p>Pogodba preneha:</p>
+        <ul>
+          <li>z iztekom ali odpovedjo Pogojev uporabe platforme Konta;</li>
+          <li>na pisno zahtevo katere koli stranke z odpovednim rokom 30 dni.</li>
+        </ul>
+        <p>Po prenehanju se smiselno uporabljajo določbe o brisanju podatkov (razdelek 10) in zaupnosti.</p>
+        <p>Za to pogodbo se uporablja pravo Republike Slovenije. Za reševanje sporov je pristojno sodišče v Ljubljani.</p>
+      </section>
+
+      <section id="kontakt">
+        <h2>13. Kontakt in DPO</h2>
+        <p>Za vsa vprašanja v zvezi s to pogodbo in obdelavo osebnih podatkov se obrnite na:</p>
+        <ul>
+          <li><strong>Konta d.o.o.</strong></li>
+          <li>Dunajska cesta 5, 1000 Ljubljana</li>
+          <li>E-pošta: <a href="mailto:dpa@konta.si">dpa@konta.si</a></li>
+        </ul>
+        <p>Pritožbo v zvezi z obdelavo osebnih podatkov lahko vložite pri <strong>Informacijskem pooblaščencu RS</strong>:<br>
+        Dunajska 22, 1000 Ljubljana | <a href="https://www.ip-rs.si" target="_blank">www.ip-rs.si</a></p>
+      </section>
+
+    </article>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-gray-50 border-t border-gray-100 mt-16 py-12">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+        <p class="mt-2 text-sm text-gray-400 leading-relaxed">AI računovodska platforma za slovensko pisarno.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Platforma</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="konta-landing.html#how-it-works" class="hover:text-gray-700 transition-colors">Kako deluje</a></li>
+          <li><a href="konta-landing.html#examples" class="hover:text-gray-700 transition-colors">Funkcije</a></li>
+          <li><a href="konta-landing.html#pricing" class="hover:text-gray-700 transition-colors">Cene</a></li>
+          <li><a href="security.html" class="hover:text-gray-700 transition-colors">Varnost</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Podjetje</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="about.html" class="hover:text-gray-700 transition-colors">O nas</a></li>
+          <li><a href="blog.html" class="hover:text-gray-700 transition-colors">Blog</a></li>
+          <li><a href="contact.html" class="hover:text-gray-700 transition-colors">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Pravno</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="terms.html" class="hover:text-gray-700 transition-colors">Pogoji uporabe</a></li>
+          <li><a href="privacy.html" class="hover:text-gray-700 transition-colors">Zasebnost</a></li>
+          <li><a href="cookies.html" class="hover:text-gray-700 transition-colors">Piškotki</a></li>
+          <li><a href="dpa.html" class="font-medium text-blue-600">Pogodba o obdelavi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-100 pt-6 flex items-center justify-between">
+      <p class="text-xs text-gray-400">© 2025 Konta. Vse pravice pridržane.</p>
+      <p class="text-xs text-gray-400">Narejen v Sloveniji 🇸🇮</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navPill = document.getElementById('navbar-pill');
+  window.addEventListener('scroll', () => {
+    navPill.style.boxShadow = window.scrollY > 20
+      ? '0 4px 24px rgba(0,0,0,0.12)'
+      : '0 1px 8px rgba(0,0,0,0.06)';
+  });
+</script>
+</body>
+</html>

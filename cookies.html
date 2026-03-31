@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politika piškotkov — Konta</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .prose h2 { font-size: 1.25rem; font-weight: 700; color: #111827; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+  .prose h3 { font-size: 1rem; font-weight: 600; color: #1f2937; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  .prose p  { color: #6b7280; line-height: 1.75; margin-bottom: 1rem; font-size: 0.9375rem; }
+  .prose ul { list-style: disc; padding-left: 1.5rem; color: #6b7280; margin-bottom: 1rem; }
+  .prose ul li { margin-bottom: 0.35rem; line-height: 1.7; font-size: 0.9375rem; }
+  .prose a  { color: #2563eb; text-decoration: underline; }
+  .prose strong { color: #374151; font-weight: 600; }
+  .toc-link { display: block; padding: 0.35rem 0; color: #6b7280; font-size: 0.875rem; transition: color 0.15s; text-decoration: none; }
+  .toc-link:hover { color: #2563eb; }
+  /* Cookie table */
+  .cookie-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin-bottom: 1.5rem; }
+  .cookie-table th { background: #f9fafb; text-align: left; padding: 10px 14px; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; }
+  .cookie-table td { padding: 10px 14px; color: #6b7280; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  .cookie-table tr:last-child td { border-bottom: none; }
+  .cookie-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .cookie-tag.nujni   { background: #DCFCE7; color: #166534; }
+  .cookie-tag.analitika { background: #DBEAFE; color: #1D4ED8; }
+  .cookie-tag.trženje  { background: #FEF3C7; color: #92400E; }
+</style>
+</head>
+<body class="bg-white">
+
+<!-- NAV -->
+<nav class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+  <div id="navbar-pill" class="pointer-events-auto bg-white/95 backdrop-blur-md border border-gray-200 rounded-full px-6 py-3 shadow-lg flex items-center justify-between w-full max-w-3xl">
+    <div class="flex items-center gap-7">
+      <a href="konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+      <div class="hidden md:flex items-center gap-5 text-sm text-gray-500">
+        <a href="konta-landing.html#how-it-works" class="hover:text-gray-900 transition-colors">Kako deluje</a>
+        <a href="konta-landing.html#examples" class="hover:text-gray-900 transition-colors">Primeri</a>
+        <a href="konta-landing.html#pricing" class="hover:text-gray-900 transition-colors">Cene</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors px-3 py-1.5 hidden md:block">Prijavite se</a>
+      <a href="#" class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-colors font-semibold">Začnite brezplačno</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="pt-32 pb-12 bg-gray-50 border-b border-gray-100">
+  <div class="max-w-3xl mx-auto px-6">
+    <a href="konta-landing.html" class="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors mb-6">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      Nazaj na Konta
+    </a>
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">Pravno</span>
+    </div>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Politika piškotkov</h1>
+    <p class="text-gray-500">Zadnja posodobitev: 1. januar 2025</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="max-w-5xl mx-auto px-6 py-16">
+  <div class="flex gap-16">
+
+    <!-- Table of contents -->
+    <aside class="hidden lg:block w-56 shrink-0">
+      <div class="sticky top-24">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Vsebina</p>
+        <nav>
+          <a href="#kaj-so" class="toc-link">1. Kaj so piškotki</a>
+          <a href="#vrste" class="toc-link">2. Vrste piškotkov</a>
+          <a href="#seznam" class="toc-link">3. Seznam piškotkov</a>
+          <a href="#upravljanje" class="toc-link">4. Upravljanje</a>
+          <a href="#tretje-osebe" class="toc-link">5. Tretje osebe</a>
+          <a href="#spremembe" class="toc-link">6. Spremembe</a>
+          <a href="#kontakt" class="toc-link">7. Kontakt</a>
+        </nav>
+
+        <!-- Cookie legend -->
+        <div class="mt-8 space-y-2">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Legenda</p>
+          <div class="flex items-center gap-2"><span class="cookie-tag nujni">Nujni</span><span class="text-xs text-gray-400">Vedno aktivni</span></div>
+          <div class="flex items-center gap-2"><span class="cookie-tag analitika">Analitika</span><span class="text-xs text-gray-400">Z vašo privolitvijo</span></div>
+          <div class="flex items-center gap-2"><span class="cookie-tag trženje">Trženje</span><span class="text-xs text-gray-400">Z vašo privolitvijo</span></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main prose -->
+    <article class="prose flex-1 min-w-0">
+
+      <section id="kaj-so">
+        <h2>1. Kaj so piškotki</h2>
+        <p>Piškotki (<em>cookies</em>) so majhne besedilne datoteke, ki jih spletno mesto shrani v vaš brskalnik ob obisku. Ob naslednji obiskani strani jih brskalnik pošlje nazaj strežniku, kar omogoča, da si stran "zapomni" vaše preference in stanje seje.</p>
+        <p>Poleg piškotkov uporabljamo tudi podobne tehnologije, kot so lokalna hramba brskalnika (<em>localStorage</em>) in seje (<em>sessionStorage</em>), ki delujejo po istem načelu.</p>
+      </section>
+
+      <section id="vrste">
+        <h2>2. Vrste piškotkov, ki jih uporabljamo</h2>
+        <h3>Nujni piškotki</h3>
+        <p>Brez teh piškotkov platforma ne deluje pravilno. Upravljajo sejo prijave, varnostne žetone in osnovne nastavitve vmesnika. Ker so bistveni za delovanje storitve, za njihovo uporabo privolitev ni potrebna.</p>
+        <h3>Analitični piškotki</h3>
+        <p>Zbiramo anonimne podatke o uporabi platforme (katere strani so obiskane, kako dolgo, od kod prihajajo obiskovalci). Te podatke uporabljamo za izboljšanje izkušnje in razvoj novih funkcij. Zbiranje zahteva vašo privolitev.</p>
+        <h3>Piškotki za trženje</h3>
+        <p>Kadar obiščete marketinška spletna mesta ali kliknete na oglas, se lahko v vašem brskalniku nastavijo piškotki za merjenje učinkovitosti oglaševanja. Zbiranje zahteva vašo privolitev.</p>
+      </section>
+
+      <section id="seznam">
+        <h2>3. Podroben seznam piškotkov</h2>
+
+        <h3>Nujni piškotki</h3>
+        <table class="cookie-table">
+          <thead>
+            <tr>
+              <th>Ime</th>
+              <th>Namen</th>
+              <th>Trajanje</th>
+              <th>Tip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>konta_session</code></td>
+              <td>Identifikacija prijavljene seje</td>
+              <td>Seja / 7 dni</td>
+              <td><span class="cookie-tag nujni">Nujni</span></td>
+            </tr>
+            <tr>
+              <td><code>konta_csrf</code></td>
+              <td>Zaščita pred CSRF napadi</td>
+              <td>Seja</td>
+              <td><span class="cookie-tag nujni">Nujni</span></td>
+            </tr>
+            <tr>
+              <td><code>konta_prefs</code></td>
+              <td>Nastavitve vmesnika (tema, jezik)</td>
+              <td>1 leto</td>
+              <td><span class="cookie-tag nujni">Nujni</span></td>
+            </tr>
+            <tr>
+              <td><code>konta_cookie_consent</code></td>
+              <td>Shranjevanje vaše odločitve o piškotkih</td>
+              <td>1 leto</td>
+              <td><span class="cookie-tag nujni">Nujni</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Analitični piškotki</h3>
+        <table class="cookie-table">
+          <thead>
+            <tr>
+              <th>Ime</th>
+              <th>Namen</th>
+              <th>Trajanje</th>
+              <th>Tip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ph_*</code></td>
+              <td>PostHog — analitika uporabe (EU instanca, anonimizirana)</td>
+              <td>1 leto</td>
+              <td><span class="cookie-tag analitika">Analitika</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Piškotki za trženje</h3>
+        <table class="cookie-table">
+          <thead>
+            <tr>
+              <th>Ime</th>
+              <th>Namen</th>
+              <th>Trajanje</th>
+              <th>Tip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>_fbp</code></td>
+              <td>Facebook Pixel — merjenje oglaševalskih konverzij</td>
+              <td>3 mesece</td>
+              <td><span class="cookie-tag trženje">Trženje</span></td>
+            </tr>
+            <tr>
+              <td><code>_gcl_au</code></td>
+              <td>Google Ads — sledenje konverzijam</td>
+              <td>3 mesece</td>
+              <td><span class="cookie-tag trženje">Trženje</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="upravljanje">
+        <h2>4. Upravljanje in preklic privolitve</h2>
+        <p>Ob prvem obisku vas bomo povprašali za privolitev za analitične in trženjske piškotke. Svojo odločitev lahko kadar koli spremenite:</p>
+        <ul>
+          <li><strong>V nastavitvah platforme</strong> — razdelek Zasebnost → Piškotki</li>
+          <li><strong>V nastavitvah brskalnika</strong> — večina brskalnikov omogoča brisanje in blokiranje piškotkov</li>
+        </ul>
+        <p>Opozorilo: blokiranje nujnih piškotkov bo onemogočilo normalno delovanje platforme (ne boste se mogli prijaviti).</p>
+        <h3>Nastavitve po brskalniku</h3>
+        <ul>
+          <li><a href="https://support.google.com/chrome/answer/95647" target="_blank">Google Chrome</a></li>
+          <li><a href="https://support.mozilla.org/sl/kb/piskotki-informacije-ki-jih-shranjujejo-spletna-me" target="_blank">Mozilla Firefox</a></li>
+          <li><a href="https://support.apple.com/sl-si/guide/safari/sfri11471/mac" target="_blank">Apple Safari</a></li>
+          <li><a href="https://support.microsoft.com/sl-si/microsoft-edge/brisanje-piskotkov-v-brskalniku-microsoft-edge" target="_blank">Microsoft Edge</a></li>
+        </ul>
+      </section>
+
+      <section id="tretje-osebe">
+        <h2>5. Piškotki tretjih oseb</h2>
+        <p>Nekateri piškotki prihajajo od tretjih ponudnikov (PostHog, Google, Facebook). Ti ponudniki imajo svoje politike zasebnosti, ki urejajo zbiranje in obdelavo podatkov. Konta nima nadzora nad temi piškotki po tem, ko so nastavljeni.</p>
+        <p>Priporočamo, da preberete politike zasebnosti teh ponudnikov:</p>
+        <ul>
+          <li><a href="https://posthog.com/privacy" target="_blank">PostHog Privacy Policy</a></li>
+          <li><a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a></li>
+          <li><a href="https://www.facebook.com/privacy/policy/" target="_blank">Meta Privacy Policy</a></li>
+        </ul>
+      </section>
+
+      <section id="spremembe">
+        <h2>6. Spremembe politike piškotkov</h2>
+        <p>To politiko piškotkov lahko posodobimo. Ob bistvenih spremembah bomo prikazali novo obvestilo o privolitvi. Datum zadnje posodobitve je naveden na vrhu strani.</p>
+      </section>
+
+      <section id="kontakt">
+        <h2>7. Kontakt</h2>
+        <p>Za vprašanja o piškotkih nas kontaktirajte na <a href="mailto:zasebnost@konta.si">zasebnost@konta.si</a>.</p>
+      </section>
+
+    </article>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-gray-50 border-t border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 py-14">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+      <div class="col-span-2 md:col-span-1">
+        <a href="konta-landing.html" class="text-xl font-extrabold text-gray-900 tracking-tight block mb-2">Konta.</a>
+        <p class="text-sm text-gray-400 leading-relaxed">AI računovodska platforma za slovensko pisarno.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Platforma</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="konta-landing.html#how-it-works" class="hover:text-gray-700 transition-colors">Kako deluje</a></li>
+          <li><a href="konta-landing.html#examples" class="hover:text-gray-700 transition-colors">Funkcije</a></li>
+          <li><a href="konta-landing.html#pricing" class="hover:text-gray-700 transition-colors">Cene</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Podjetje</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="about.html" class="hover:text-gray-700 transition-colors">O nas</a></li>
+          <li><a href="blog.html" class="hover:text-gray-700 transition-colors">Blog</a></li>
+          <li><a href="contact.html" class="hover:text-gray-700 transition-colors">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Pravno</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="terms.html" class="hover:text-gray-700 transition-colors">Pogoji uporabe</a></li>
+          <li><a href="privacy.html" class="hover:text-gray-700 transition-colors">Zasebnost</a></li>
+          <li><a href="cookies.html" class="font-medium text-blue-600">Piškotki</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-100 pt-6 flex items-center justify-between">
+      <p class="text-xs text-gray-400">© 2025 Konta. Vse pravice pridržane.</p>
+      <p class="text-xs text-gray-400">Narejen v Sloveniji 🇸🇮</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navPill = document.getElementById('navbar-pill');
+  window.addEventListener('scroll', () => {
+    navPill.style.boxShadow = window.scrollY > 20
+      ? '0 4px 24px rgba(0,0,0,0.12)'
+      : '0 1px 8px rgba(0,0,0,0.06)';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konta. — AI motor za računovodstvo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}body{margin:0;font-family:'Inter',sans-serif;background:#fff;color:#111;-webkit-font-smoothing:antialiased}html{scroll-behavior:smooth}.font-satoshi{font-family:'Satoshi',sans-serif}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+  .demo-screen{display:none}.demo-screen.active{display:block}.demo-app-bg{background:#F7F6F3;font-family:'Satoshi',sans-serif}.demo-sidebar{background:#FAFAFA;border-right:1px solid #EFEFEC}
+  .demo-stat-card{background:#fff;border:1px solid #E9E9E7;border-radius:10px;padding:10px}.demo-badge-green{background:#dcfce7;color:#166534;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500}.demo-badge-yellow{background:#fef3c7;color:#92400e;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500}
+  .demo-nav-item{color:#9B9A97;font-size:12px;font-weight:500;font-family:'Satoshi',sans-serif;cursor:pointer;transition:all .15s}.demo-nav-item:hover{background:#EFEFEC;color:#37352F}.demo-nav-item.active{background:#E9E9E7;color:#37352F;font-weight:600}
+  .demo-nav-group-label{font-size:10px;font-weight:600;color:#9B9A97;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px 1px;font-family:'Satoshi',sans-serif}
+</style>
+</head>
+<body class="overflow-x-hidden">
+
+<!-- NAV -->
+<nav class="bg-[#0B1437] sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between" style="height:60px;">
+    <div class="flex items-center gap-8">
+      <a href="#" class="text-white text-lg font-extrabold tracking-tight">Konta.</a>
+      <div class="hidden md:flex items-center gap-5 text-sm text-indigo-200 font-medium">
+        <a href="#portfolio" class="hover:text-white transition-colors px-3 py-1.5 rounded-md hover:bg-white/10">Rešitve</a>
+        <a href="#features" class="hover:text-white transition-colors px-3 py-1.5 rounded-md hover:bg-white/10">Platforma</a>
+        <a href="#" class="hover:text-white transition-colors px-3 py-1.5 rounded-md hover:bg-white/10">O nas</a>
+        <a href="#" class="hover:text-white transition-colors px-3 py-1.5 rounded-md hover:bg-white/10">Blog</a>
+      </div>
+    </div>
+    <a href="#" class="text-sm bg-indigo-500 hover:bg-indigo-400 text-white px-5 py-2.5 rounded-lg font-semibold transition-colors">Načrtujte demo</a>
+  </div>
+</nav>
+
+<!-- HERO — Dark navy with gradient overlay -->
+<section class="relative overflow-hidden" style="background:linear-gradient(135deg,#0B1437 0%,#1a2555 50%,#0B1437 100%);">
+  <div class="absolute inset-0 opacity-20"><svg class="w-full h-full" viewBox="0 0 1200 500"><circle cx="900" cy="250" r="300" fill="none" stroke="#6366f1" stroke-width="0.5"/><circle cx="950" cy="200" r="200" fill="none" stroke="#818cf8" stroke-width="0.3"/><circle cx="850" cy="300" r="150" fill="none" stroke="#a5b4fc" stroke-width="0.3"/></svg></div>
+  <div class="max-w-5xl mx-auto px-6 py-24 relative z-10">
+    <div class="max-w-2xl">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] tracking-tight">
+        <span class="bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">AI motor</span> za računovodstvo
+      </h1>
+      <p class="text-indigo-200 mt-5 text-lg leading-relaxed max-w-lg">Zmogljiva platforma za obdelavo dokumentov, avtomatsko usklajevanje in pripravo FURS poročil. Zasnovana za slovenske računovodske pisarne.</p>
+      <div class="flex gap-3 mt-8 flex-wrap">
+        <a href="#" class="bg-indigo-500 hover:bg-indigo-400 text-white px-7 py-3.5 rounded-lg font-semibold text-sm transition-colors">Začnite brezplačno</a>
+        <a href="#" class="border border-indigo-400/40 hover:border-indigo-400 text-indigo-200 hover:text-white px-7 py-3.5 rounded-lg font-semibold text-sm transition-colors">Poglejte demo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCOVER PRODUCT -->
+<section class="py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-6 text-center reveal">
+    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Odkrijte podrobnosti platforme</h2>
+    <p class="text-gray-500 max-w-2xl mx-auto">Konta AI omogoča pisarnam enostavno uporabo AI modelov za <strong>ekstrakcijo dokumentov</strong>, <strong>bančno usklajevanje</strong> in <strong>centralizirano upravljanje</strong> vseh strank.</p>
+  </div>
+</section>
+
+<!-- AI PORTFOLIO — 2x2 Grid -->
+<section id="portfolio" class="py-16 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-6">
+    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 text-center mb-14 reveal">AI portfelj</h2>
+    <div class="grid md:grid-cols-2 gap-6 reveal">
+      <div class="bg-white rounded-2xl p-7 border border-gray-200 hover:shadow-lg transition-shadow">
+        <h3 class="font-bold text-gray-900 text-base mb-2">AI ekstrakcija dokumentov</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">Konta AI prebere vsak PDF, JPG ali PNG. Izvleče dobavitelja, znesek, DDV in kategorijo z 98% natančnostjo. Tudi skenirani in ročno pisani računi.</p>
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center"><svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="text-xs text-gray-400">PDF &middot; JPG &middot; PNG &middot; Skenirani</div></div>
+      </div>
+      <div class="bg-white rounded-2xl p-7 border border-gray-200 hover:shadow-lg transition-shadow">
+        <h3 class="font-bold text-gray-900 text-base mb-2">Bančno usklajevanje</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">AI samodejno poveže bančne vrstice z računi. Povprečno 87% ujemanje brez ročnega dela. Podpira CSV, MT940 in XML formate.</p>
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div><div class="text-xs text-gray-400">NLB &middot; SKB &middot; Sparkasse &middot; Nova KBM</div></div>
+      </div>
+      <div class="bg-white rounded-2xl p-7 border border-gray-200 hover:shadow-lg transition-shadow">
+        <h3 class="font-bold text-gray-900 text-base mb-2">FURS poročila</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">DDV-O, KIR, KPR in REK-O poročila generirana z enim klikom. Vsa polja samodejno izpolnjena iz transakcij. XML za eDavki ali ZIP za FURS.</p>
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center"><svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="text-xs text-gray-400">DDV-O &middot; KIR &middot; KPR &middot; REK-O</div></div>
+      </div>
+      <div class="bg-white rounded-2xl p-7 border border-gray-200 hover:shadow-lg transition-shadow">
+        <h3 class="font-bold text-gray-900 text-base mb-2">Obračun plač</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">Od bruto do SEPA v minutah. Bolniška, dopust, nadure, malica, prevoz — z aktualnimi slovenskimi prispevki 2025. REK-O obrazci za FURS.</p>
+        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center"><svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="text-xs text-gray-400">SEPA XML &middot; REK-O &middot; Prispevki 2025</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN BENEFITS — Bento grid -->
+<section class="py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-6">
+    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 text-center mb-14 reveal">Ključne prednosti</h2>
+    <div class="grid md:grid-cols-3 gap-5 reveal">
+      <div class="md:col-span-2 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-7 border border-indigo-100">
+        <h3 class="font-bold text-gray-900 text-base mb-2">Prilagodljive rešitve za vsako potrebo</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Od solo računovodij do agencij s 100+ strankami. Konta se prilagaja z low-code konfiguracijo in polno avtomatizacijo.</p>
+      </div>
+      <div class="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-2xl p-7 border border-cyan-100">
+        <h3 class="font-bold text-gray-900 text-base mb-2">Integracija obstoječih AI modelov</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Povežite Konto z vašimi obstoječimi sistemi. CSV, MT940, XML uvoz. NLB, SKB in več.</p>
+      </div>
+      <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-7 border border-violet-100">
+        <h3 class="font-bold text-gray-900 text-base mb-2">Transparentnost in razložljivost</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Vsaka AI odločitev ima zaupanje (%). Pregledna dokumentacija vsakega koraka obdelave.</p>
+      </div>
+      <div class="md:col-span-2 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-7 border border-amber-100">
+        <h3 class="font-bold text-gray-900 text-base mb-2">Avtomatska dokumentacija in skladnost</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">GDPR skladno. EU strežniki. 256-bit šifriranje. Vsaka obdelava dokumentirana za revizijo. FURS XML formati podprti iz škatle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW — 4 steps -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-14 reveal">Delovni tok</h2>
+    <div class="grid md:grid-cols-4 gap-6 reveal">
+      <div class="relative">
+        <div class="w-10 h-10 rounded-full bg-indigo-500 text-white font-bold text-sm flex items-center justify-center mx-auto mb-4">1</div>
+        <h3 class="font-bold text-gray-900 text-sm mb-1">Uvozite in obdelajte</h3>
+        <p class="text-xs text-gray-500">Naložite PDF, JPG ali bančni izpisek. AI začne obdelavo takoj.</p>
+      </div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-full bg-indigo-500 text-white font-bold text-sm flex items-center justify-center mx-auto mb-4">2</div>
+        <h3 class="font-bold text-gray-900 text-sm mb-1">Ustvarite in primerjajte</h3>
+        <p class="text-xs text-gray-500">AI izvleče podatke, kategorizira in primerja z banko.</p>
+      </div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-full bg-indigo-500 text-white font-bold text-sm flex items-center justify-center mx-auto mb-4">3</div>
+        <h3 class="font-bold text-gray-900 text-sm mb-1">Integrirajte modele</h3>
+        <p class="text-xs text-gray-500">Preglejte AI predloge, potrdite ujemanja in poročila.</p>
+      </div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-full bg-indigo-500 text-white font-bold text-sm flex items-center justify-center mx-auto mb-4">4</div>
+        <h3 class="font-bold text-gray-900 text-sm mb-1">Izvozite in oddajte</h3>
+        <p class="text-xs text-gray-500">XML za eDavke, FURS ZIP paket, SEPA za plačila. En klik.</p>
+      </div>
+    </div>
+    <!-- Connector line -->
+    <div class="hidden md:block mt-[-82px] mb-12 mx-auto max-w-lg"><div class="border-t-2 border-dashed border-indigo-200"></div></div>
+  </div>
+</section>
+
+<!-- PRODUCT FEATURES — Alternating blocks -->
+<section id="features" class="py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-6">
+    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 text-center mb-16 reveal">Funkcionalnosti platforme</h2>
+
+    <!-- Feature 1 -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-20 reveal">
+      <div>
+        <h3 class="font-bold text-gray-900 text-xl mb-3">Prilagodljive rešitve</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Platforma podpira low-code in polno prilagodljive nastavitve. Solo računovodje nastavijo v 5 minutah, agencije dobijo custom integracije in dedicirane skrbnike.</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+        <div class="font-satoshi p-4 rounded-xl" style="background:#F7F6F3;">
+          <div class="text-xs font-semibold mb-3" style="color:#37352F">Nastavitve &middot; AI obdelava</div>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between bg-white rounded-lg p-2.5 border" style="border-color:#E9E9E7"><span class="text-xs font-medium" style="color:#37352F">Samodejno odobravanje</span><span class="text-xs px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-medium">Vklopljeno</span></div>
+            <div class="flex items-center justify-between bg-white rounded-lg p-2.5 border" style="border-color:#E9E9E7"><span class="text-xs font-medium" style="color:#37352F">Prag zaupanja</span><span class="text-xs font-bold" style="color:#37352F">95%</span></div>
+            <div class="flex items-center justify-between bg-white rounded-lg p-2.5 border" style="border-color:#E9E9E7"><span class="text-xs font-medium" style="color:#37352F">Obdelava ponoči</span><span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">Aktivno</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-20 reveal">
+      <div class="md:order-2">
+        <h3 class="font-bold text-gray-900 text-xl mb-3">Enotni podatkovni viri</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Združite bančne izpiske, račune, plačilne liste in davčna poročila v eno platformo. AI integrira vse v enoten pogled za vsako stranko.</p>
+      </div>
+      <div class="md:order-1 bg-gray-50 rounded-2xl p-6 border border-gray-200">
+        <div class="font-satoshi p-4 rounded-xl" style="background:#F7F6F3;">
+          <div class="text-xs font-semibold mb-3" style="color:#37352F">Podatkovni viri</div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="bg-white rounded-lg p-2.5 border text-center" style="border-color:#E9E9E7"><div class="text-sm font-bold" style="color:#37352F">284</div><div style="font-size:10px;color:#9B9A97">Dokumenti</div></div>
+            <div class="bg-white rounded-lg p-2.5 border text-center" style="border-color:#E9E9E7"><div class="text-sm font-bold" style="color:#37352F">1.420</div><div style="font-size:10px;color:#9B9A97">Transakcije</div></div>
+            <div class="bg-white rounded-lg p-2.5 border text-center" style="border-color:#E9E9E7"><div class="text-sm font-bold" style="color:#37352F">47</div><div style="font-size:10px;color:#9B9A97">Stranke</div></div>
+            <div class="bg-white rounded-lg p-2.5 border text-center" style="border-color:#E9E9E7"><div class="text-sm font-bold" style="color:#37352F">6</div><div style="font-size:10px;color:#9B9A97">Bančni računi</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-20 reveal">
+      <div>
+        <h3 class="font-bold text-gray-900 text-xl mb-3">Transparentna AI</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Vsaka AI odločitev prikazuje stopnjo zaupanja. Kreditni analist dobi jasne razlage za vsako ekstrakcijo ali ujemanje — gradi zaupanje z revizorji in strankami.</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+        <div class="font-satoshi p-4 rounded-xl" style="background:#F7F6F3;">
+          <div class="flex items-center gap-2 mb-3"><span class="demo-badge-green">98% zaupanje</span><span class="text-xs font-medium" style="color:#37352F">Račun Petrol #2024-0847</span></div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div><div style="font-size:10px;color:#9B9A97">Dobavitelj</div><div class="font-medium" style="color:#37352F">Petrol d.o.o.</div></div>
+            <div><div style="font-size:10px;color:#9B9A97">Znesek</div><div class="font-medium" style="color:#37352F">€1.240,00</div></div>
+            <div><div style="font-size:10px;color:#9B9A97">DDV</div><div class="font-medium" style="color:#37352F">€223,61</div></div>
+            <div><div style="font-size:10px;color:#9B9A97">Kategorija</div><div class="font-medium" style="color:#37352F">Gorivo</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 4 -->
+    <div class="grid md:grid-cols-2 gap-12 items-center reveal">
+      <div class="md:order-2">
+        <h3 class="font-bold text-gray-900 text-xl mb-3">Brezšivna uvedba</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">AI modele lahko brez napora uvedete v obstoječe delovne tokove. Uvoz iz Minimax, Pantheon ali kateregakoli CSV sistema. Brez izpada, brez migracije.</p>
+      </div>
+      <div class="md:order-1 bg-gray-50 rounded-2xl p-6 border border-gray-200">
+        <div class="font-satoshi p-4 rounded-xl" style="background:#F7F6F3;">
+          <div class="text-xs font-semibold mb-3" style="color:#37352F">Uvoz podatkov</div>
+          <div class="space-y-2">
+            <div class="bg-white rounded-lg p-2.5 border flex items-center gap-3" style="border-color:#E9E9E7"><div class="w-8 h-8 rounded bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-600">CSV</div><div><div class="text-xs font-medium" style="color:#37352F">Bančni izpisek NLB</div><div style="font-size:10px;color:#9B9A97">Uvoženo 24 vrstic</div></div><span class="demo-badge-green ml-auto">OK</span></div>
+            <div class="bg-white rounded-lg p-2.5 border flex items-center gap-3" style="border-color:#E9E9E7"><div class="w-8 h-8 rounded bg-purple-100 flex items-center justify-center text-xs font-bold text-purple-600">XML</div><div><div class="text-xs font-medium" style="color:#37352F">MT940 SKB</div><div style="font-size:10px;color:#9B9A97">Uvoženo 18 vrstic</div></div><span class="demo-badge-green ml-auto">OK</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-20 bg-[#0B1437]">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-4 reveal">Uspeh naših strank</h2>
+    <div class="text-xs text-indigo-400 uppercase tracking-widest font-semibold mb-12 reveal">Mnenja</div>
+    <div class="grid md:grid-cols-3 gap-6 reveal">
+      <div class="text-left">
+        <div class="text-3xl text-indigo-400 mb-4">"</div>
+        <p class="text-sm text-indigo-100 leading-relaxed mb-5">Konta AI je visoko kakovostna rešitev, ki je racionalizirala naš operativni tok — od ekstrakcije dokumentov do bančnega usklajevanja. Zmanjšali smo ročno delo za 75%.</p>
+        <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-indigo-500/30 flex items-center justify-center text-indigo-300 text-xs font-bold">MK</div><div><div class="text-xs font-semibold text-white">Maja Kovačič</div><div class="text-xs text-indigo-400">Samostojna računovodkinja</div></div></div>
+      </div>
+      <div class="text-left">
+        <div class="text-3xl text-indigo-400 mb-4">"</div>
+        <p class="text-sm text-indigo-100 leading-relaxed mb-5">Z veseljem poročam, da smo od implementacije Konte obdelali 800+ računov mesečno brez dodatnega kadra. Ekipa se zdaj fokusira na svetovanje strankam.</p>
+        <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-green-500/30 flex items-center justify-center text-green-300 text-xs font-bold">BN</div><div><div class="text-xs font-semibold text-white">Borut Novak</div><div class="text-xs text-indigo-400">Partner, Finesa d.o.o.</div></div></div>
+      </div>
+      <div class="text-left">
+        <div class="text-3xl text-indigo-400 mb-4">"</div>
+        <p class="text-sm text-indigo-100 leading-relaxed mb-5">Naše bančno usklajevanje, ki je trajalo pol dneva, zdaj opravimo v 20 minutah. AI predlaga ujemanja, mi samo potrdimo. Produktivnost se je drastično povečala.</p>
+        <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-purple-500/30 flex items-center justify-center text-purple-300 text-xs font-bold">AP</div><div><div class="text-xs font-semibold text-white">Ana Petrovič</div><div class="text-xs text-indigo-400">Vodja, Revizija Plus</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED PRODUCTS / MODULES -->
+<section class="py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-14 reveal">Povezani produkti</h2>
+    <div class="grid md:grid-cols-3 gap-6 reveal">
+      <div class="bg-gradient-to-b from-indigo-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
+        <div class="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h3 class="font-bold text-gray-900 text-sm mb-1">AI Ekstrakcija</h3>
+        <p class="text-xs text-gray-500">Samodejno prebere vsak račun in izvleče vse podatke.</p>
+      </div>
+      <div class="bg-gradient-to-b from-green-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
+        <div class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+        <h3 class="font-bold text-gray-900 text-sm mb-1">Usklajevanje</h3>
+        <p class="text-xs text-gray-500">87% samodejno ujemanje bančnih vrstic z računi.</p>
+      </div>
+      <div class="bg-gradient-to-b from-amber-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
+        <div class="w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <h3 class="font-bold text-gray-900 text-sm mb-1">FURS Poročila</h3>
+        <p class="text-xs text-gray-500">DDV-O, KIR, KPR poročila z enim klikom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20" style="background:linear-gradient(135deg,#0B1437 0%,#1e2d6a 100%);">
+  <div class="max-w-4xl mx-auto px-6 text-center reveal">
+    <h2 class="text-3xl md:text-4xl font-extrabold text-white leading-tight">Pripravite se na prihodnost<br>računovodstva</h2>
+    <p class="text-indigo-200 mt-4">30 dni brezplačno. Brez kreditne kartice.</p>
+    <div class="flex gap-4 justify-center mt-10 flex-wrap">
+      <a href="#" class="bg-indigo-500 hover:bg-indigo-400 text-white px-8 py-4 rounded-lg font-semibold text-sm transition-colors">Začnite brezplačno</a>
+      <a href="#" class="border border-indigo-400/40 hover:border-indigo-400 text-indigo-200 hover:text-white px-8 py-4 rounded-lg font-semibold text-sm transition-colors">Načrtujte demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#0B1437] py-14 border-t border-indigo-900/50">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+      <div><div class="text-white text-lg font-extrabold mb-3">Konta.</div><p class="text-sm text-indigo-400">AI motor za računovodstvo.</p></div>
+      <div><div class="text-xs font-semibold text-indigo-500 uppercase tracking-wider mb-3">Platforma</div><a href="#" class="block text-sm text-indigo-300 hover:text-white mb-1.5">Funkcije</a><a href="#" class="block text-sm text-indigo-300 hover:text-white mb-1.5">Cenik</a><a href="#" class="block text-sm text-indigo-300 hover:text-white">Varnost</a></div>
+      <div><div class="text-xs font-semibold text-indigo-500 uppercase tracking-wider mb-3">Podjetje</div><a href="#" class="block text-sm text-indigo-300 hover:text-white mb-1.5">O nas</a><a href="#" class="block text-sm text-indigo-300 hover:text-white mb-1.5">Blog</a><a href="#" class="block text-sm text-indigo-300 hover:text-white">Kontakt</a></div>
+      <div><div class="text-xs font-semibold text-indigo-500 uppercase tracking-wider mb-3">Pravno</div><a href="#" class="block text-sm text-indigo-300 hover:text-white mb-1.5">Pogoji</a><a href="#" class="block text-sm text-indigo-300 hover:text-white mb-1.5">Zasebnost</a><a href="#" class="block text-sm text-indigo-300 hover:text-white">GDPR</a></div>
+    </div>
+    <div class="border-t border-indigo-900/50 pt-6 text-xs text-indigo-600">&copy; 2025 Konta. Vse pravice pridržane.</div>
+  </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(e=>obs.observe(e));
+setTimeout(()=>{document.querySelectorAll('.reveal').forEach(e=>{if(e.getBoundingClientRect().top<window.innerHeight)e.classList.add('visible')})},100);
+document.querySelectorAll('a[href^="#"]').forEach(l=>{l.addEventListener('click',e=>{const t=document.querySelector(l.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}})});
+</script>
+</body>
+</html>

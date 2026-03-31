@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konta. — Nova era računovodstva</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Inter',sans-serif;background:#080510;color:#c9c5d9;-webkit-font-smoothing:antialiased}
+  .font-serif{font-family:'Playfair Display',serif}
+  .font-satoshi{font-family:'Satoshi',sans-serif}
+
+  /* Purple glow behind hero screenshot */
+  .hero-glow{
+    position:absolute;top:-120px;left:50%;transform:translateX(-50%);
+    width:700px;height:450px;
+    background:radial-gradient(ellipse at center,rgba(124,58,237,0.3)0%,rgba(168,85,247,0.1)40%,transparent 70%);
+    pointer-events:none;z-index:0;
+  }
+
+  /* Cards */
+  .wcard{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;transition:border-color 0.3s}
+  .wcard:hover{border-color:rgba(124,58,237,0.18)}
+
+  /* Purple gradient fill */
+  .purple-grad{background:linear-gradient(135deg,rgba(124,58,237,0.18)0%,rgba(168,85,247,0.06)60%,rgba(124,58,237,0.02)100%)}
+
+  /* FAQ */
+  .faq-item{border-bottom:1px solid rgba(255,255,255,0.06)}
+  .faq-q{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:16px;font-weight:600;color:#e2dff0;transition:color 0.15s}
+  .faq-q:hover{color:#fff}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+  .faq-a.open{max-height:200px}
+  .faq-icon{transition:transform 0.3s;font-size:22px;color:rgba(124,58,237,0.6);font-weight:300}
+  .faq-icon.open{transform:rotate(45deg)}
+
+  /* Reveal */
+  .rv{opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease}
+  .rv.v{opacity:1;transform:translateY(0)}
+
+  /* Data table */
+  .dtbl th{font-size:10px;font-weight:600;color:rgba(124,58,237,0.7);text-transform:uppercase;letter-spacing:0.06em;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(124,58,237,0.1)}
+  .dtbl td{font-size:12px;color:#a89fc4;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.03)}
+  .dtbl tr:hover td{background:rgba(124,58,237,0.03)}
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,5,16,0.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.04)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 24px;height:54px;display:flex;align-items:center;justify-content:space-between">
+    <a href="#" style="display:flex;align-items:center;gap:7px;text-decoration:none">
+      <div style="width:28px;height:28px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:8px;display:flex;align-items:center;justify-content:center">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 12L6 5L9 9L11 7L14 12H3Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/></svg>
+      </div>
+      <span style="color:#fff;font-weight:700;font-size:16px;letter-spacing:-0.3px">konta.</span>
+    </a>
+    <div style="display:flex;gap:28px">
+      <a href="#features" style="color:#706990;font-size:13px;font-weight:500;text-decoration:none;transition:color 0.2s" onmouseenter="this.style.color='#e2dff0'" onmouseleave="this.style.color='#706990'">Funkcije</a>
+      <a href="#pricing" style="color:#706990;font-size:13px;font-weight:500;text-decoration:none;transition:color 0.2s" onmouseenter="this.style.color='#e2dff0'" onmouseleave="this.style.color='#706990'">Cene</a>
+      <a href="#faq" style="color:#706990;font-size:13px;font-weight:500;text-decoration:none;transition:color 0.2s" onmouseenter="this.style.color='#e2dff0'" onmouseleave="this.style.color='#706990'">Kontakt</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <a href="#" style="color:#8a84a0;font-size:13px;font-weight:500;text-decoration:none;padding:7px 14px" onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='#8a84a0'">Prijava</a>
+      <a href="#" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:12px;font-weight:600;padding:8px 18px;border-radius:8px;text-decoration:none">Registracija</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section style="padding:130px 24px 0;text-align:center;position:relative;overflow:hidden">
+  <div class="hero-glow" style="top:-250px"></div>
+  <div style="position:relative;max-width:640px;margin:0 auto">
+    <h1 class="font-serif" style="font-size:clamp(42px,6.5vw,72px);font-weight:700;line-height:1.08;letter-spacing:-1px;color:#fff;margin-bottom:20px">Nova era<br>računovodstva.</h1>
+    <p style="color:#706990;font-size:clamp(14px,1.6vw,16px);line-height:1.7;max-width:440px;margin:0 auto 32px">AI naj opravi delo namesto vas. Procesiranje računov, bančno usklajevanje, DDV-O in obračun plač — vse avtomatizirano.</p>
+    <a href="#pricing" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:13px;font-weight:600;padding:11px 26px;border-radius:100px;text-decoration:none;transition:opacity 0.2s" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">Brezplačni preizkus — 30 dni</a>
+    <!-- Down arrow indicator -->
+    <div style="margin:24px auto 0;width:24px;height:24px;border:1.5px solid rgba(124,58,237,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center">
+      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+    </div>
+  </div>
+
+  <!-- ══════════ FULL-WIDTH APP SCREENSHOT ══════════ -->
+  <div style="max-width:1060px;margin:48px auto 0;position:relative">
+    <div class="hero-glow" style="top:-60px"></div>
+    <div class="wcard" style="position:relative;border-radius:14px 14px 0 0;box-shadow:0 -16px 80px rgba(124,58,237,0.1)">
+      <!-- Browser bar -->
+      <div style="background:#110d1e;padding:9px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div style="width:9px;height:9px;background:#ff5f57;border-radius:50%"></div>
+        <div style="width:9px;height:9px;background:#febc2e;border-radius:50%"></div>
+        <div style="width:9px;height:9px;background:#28c840;border-radius:50%"></div>
+        <div style="flex:1;margin:0 40px;background:rgba(255,255,255,0.05);border-radius:4px;padding:3px 12px;font-size:11px;color:rgba(255,255,255,0.2);text-align:center">app.konta.si/dokumenti</div>
+      </div>
+      <!-- App UI -->
+      <div style="display:flex;min-height:400px;background:#F7F6F3;font-family:'Satoshi',sans-serif">
+        <!-- Sidebar -->
+        <div style="width:170px;flex-shrink:0;background:#FAFAFA;border-right:1px solid #EFEFEC;padding:14px 0">
+          <div style="padding:0 10px;margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:6px;padding:6px 8px">
+              <div style="width:20px;height:20px;background:#7c3aed;border-radius:5px"></div>
+              <div><div style="font-size:10px;font-weight:600;color:#37352f">Računovodstvo d.o.o.</div></div>
+            </div>
+          </div>
+          <div style="padding:0 6px;font-size:10px;color:#9B9A97;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;padding-left:14px;margin-bottom:4px">Pregled</div>
+          <div style="padding:0 8px;display:flex;flex-direction:column;gap:0">
+            <div style="padding:5px 10px;font-size:10px;color:#787774;border-radius:5px;display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#787774" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Nadzorna plošča</div>
+            <div style="padding:5px 10px;font-size:10px;color:#787774;border-radius:5px;display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#787774" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>Stranke</div>
+            <div style="padding:5px 10px;font-size:10px;color:#7c3aed;font-weight:600;background:rgba(124,58,237,0.08);border-radius:5px;display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.5"><path d="M4 1h6l4 4v9a1 1 0 01-1 1H4a1 1 0 01-1-1V2a1 1 0 011-1z"/><path d="M10 1v4h4"/></svg>Dokumenti</div>
+            <div style="padding:5px 10px;font-size:10px;color:#787774;border-radius:5px;display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#787774" stroke-width="1.5"><path d="M1 4h14M1 8h14M1 12h14"/></svg>Transakcije</div>
+          </div>
+          <div style="padding:0 6px;font-size:10px;color:#9B9A97;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;padding-left:14px;margin:8px 0 4px">Finance</div>
+          <div style="padding:0 8px;display:flex;flex-direction:column;gap:0">
+            <div style="padding:5px 10px;font-size:10px;color:#787774;border-radius:5px;display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#787774" stroke-width="1.5"><path d="M1 8h4l2-5 2 10 2-5h4"/></svg>Usklajevanje</div>
+            <div style="padding:5px 10px;font-size:10px;color:#787774;border-radius:5px;display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#787774" stroke-width="1.5"><path d="M2 14V6l3-4h6l3 4v8a1 1 0 01-1 1H3a1 1 0 01-1-1z"/><path d="M6 8h4m-4 3h4"/></svg>Poročila</div>
+            <div style="padding:5px 10px;font-size:10px;color:#787774;border-radius:5px;display:flex;align-items:center;gap:6px"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#787774" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>Plače</div>
+          </div>
+        </div>
+        <!-- Main -->
+        <div style="flex:1;padding:16px 20px;overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div style="font-size:16px;font-weight:700;color:#37352f">Dokumenti</div>
+            <div style="display:flex;gap:6px"><div style="background:#eff6ff;color:#2563eb;font-size:9px;font-weight:600;padding:4px 10px;border-radius:5px;border:1px solid #bfdbfe">Procesiraj vse</div><div style="background:#7c3aed;color:#fff;font-size:9px;font-weight:600;padding:4px 10px;border-radius:5px">+ Naloži</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:10px">
+            <div style="background:#f3f4f6;border-radius:6px;padding:5px 8px;text-align:center"><div style="font-size:7px;color:#6b7280;font-weight:600;text-transform:uppercase">Naloženi</div><div style="font-size:14px;font-weight:700;color:#37352f">148</div></div>
+            <div style="background:#dbeafe;border-radius:6px;padding:5px 8px;text-align:center"><div style="font-size:7px;color:#2563eb;font-weight:600;text-transform:uppercase">Procesirani</div><div style="font-size:14px;font-weight:700;color:#2563eb">141</div></div>
+            <div style="background:#fef3c7;border-radius:6px;padding:5px 8px;text-align:center"><div style="font-size:7px;color:#d97706;font-weight:600;text-transform:uppercase">Zastavice</div><div style="font-size:14px;font-weight:700;color:#d97706">4</div></div>
+            <div style="background:#dcfce7;border-radius:6px;padding:5px 8px;text-align:center"><div style="font-size:7px;color:#16a34a;font-weight:600;text-transform:uppercase">Odobreni</div><div style="font-size:14px;font-weight:700;color:#16a34a">137</div></div>
+          </div>
+          <div style="display:flex;gap:5px;margin-bottom:8px;align-items:center">
+            <input type="text" placeholder="Išči dokumente..." style="flex:1;padding:5px 10px;border:1px solid #e2e8f0;border-radius:5px;font-size:10px;outline:none;color:#37352f;background:#fff" readonly>
+            <span style="font-size:9px;color:#787774;padding:3px 8px;background:#FAFAF9;border:1px solid #e9e9e7;border-radius:4px">▼ Filter</span>
+            <span style="font-size:9px;color:#787774;padding:3px 8px;background:#FAFAF9;border:1px solid #e9e9e7;border-radius:4px">▼ Smer</span>
+          </div>
+          <div style="border:1px solid #e9e9e7;border-radius:8px;overflow:hidden">
+            <table style="width:100%;border-collapse:collapse;font-size:10px">
+              <thead><tr style="background:#FAFAF9">
+                <th style="text-align:left;padding:6px 10px;font-size:8px;font-weight:600;color:#9B9A97;text-transform:uppercase;letter-spacing:0.04em">Dokument</th>
+                <th style="text-align:center;padding:6px 6px;font-size:8px;font-weight:600;color:#9B9A97;text-transform:uppercase">Smer</th>
+                <th style="text-align:left;padding:6px 6px;font-size:8px;font-weight:600;color:#9B9A97;text-transform:uppercase">Stranka</th>
+                <th style="text-align:right;padding:6px 8px;font-size:8px;font-weight:600;color:#9B9A97;text-transform:uppercase">Znesek</th>
+                <th style="text-align:center;padding:6px 6px;font-size:8px;font-weight:600;color:#9B9A97;text-transform:uppercase">Datum</th>
+                <th style="text-align:center;padding:6px 6px;font-size:8px;font-weight:600;color:#9B9A97;text-transform:uppercase">AI</th>
+                <th style="text-align:center;padding:6px 6px;font-size:8px;font-weight:600;color:#9B9A97;text-transform:uppercase">Status</th>
+                <th style="text-align:center;padding:6px 6px;font-size:8px;font-weight:600;color:#9B9A97;text-transform:uppercase">Napake</th>
+              </tr></thead>
+              <tbody>
+                <tr><td style="padding:7px 10px;font-weight:600;color:#37352f">Račun Telekom 2026-03</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#2563EB;background:#EFF6FF;padding:1px 5px;border-radius:3px">KPR</span></td><td style="color:#6b7280">Telekom SLO</td><td style="text-align:right;font-weight:600;color:#37352f">€87.40</td><td style="text-align:center;color:#9B9A97;font-size:9px">15.03</td><td style="text-align:center;color:#16a34a;font-weight:600">98%</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#16a34a;background:#dcfce7;padding:1px 6px;border-radius:100px">Odobreno</span></td><td style="text-align:center;color:#9B9A97;font-size:9px">0</td></tr>
+                <tr style="border-top:1px solid #f1f0ee"><td style="padding:7px 10px;font-weight:600;color:#37352f">Petrol d.d. #2891</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#2563EB;background:#EFF6FF;padding:1px 5px;border-radius:3px">KPR</span></td><td style="color:#6b7280">Petrol d.d.</td><td style="text-align:right;font-weight:600;color:#37352f">€234.60</td><td style="text-align:center;color:#9B9A97;font-size:9px">14.03</td><td style="text-align:center;color:#d97706;font-weight:600">73%</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#d97706;background:#fef9c3;padding:1px 6px;border-radius:100px">V pregledu</span></td><td style="text-align:center;color:#d97706;font-size:9px">1</td></tr>
+                <tr style="border-top:1px solid #f1f0ee"><td style="padding:7px 10px;font-weight:600;color:#37352f">Izdani račun #0042</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#7C3AED;background:#F5F3FF;padding:1px 5px;border-radius:3px">KIR</span></td><td style="color:#6b7280">Mercator d.d.</td><td style="text-align:right;font-weight:600;color:#37352f">€1.204,00</td><td style="text-align:center;color:#9B9A97;font-size:9px">13.03</td><td style="text-align:center;color:#16a34a;font-weight:600">99%</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#16a34a;background:#dcfce7;padding:1px 6px;border-radius:100px">Odobreno</span></td><td style="text-align:center;color:#9B9A97;font-size:9px">0</td></tr>
+                <tr style="border-top:1px solid #f1f0ee"><td style="padding:7px 10px;font-weight:600;color:#37352f">Mercator račun #1042</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#2563EB;background:#EFF6FF;padding:1px 5px;border-radius:3px">KPR</span></td><td style="color:#6b7280">Mercator d.d.</td><td style="text-align:right;font-weight:600;color:#37352f">€67.20</td><td style="text-align:center;color:#9B9A97;font-size:9px">12.03</td><td style="text-align:center;color:#16a34a;font-weight:600">96%</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#16a34a;background:#dcfce7;padding:1px 6px;border-radius:100px">Odobreno</span></td><td style="text-align:center;color:#9B9A97;font-size:9px">0</td></tr>
+                <tr style="border-top:1px solid #f1f0ee"><td style="padding:7px 10px;font-weight:600;color:#37352f">SKB provizija mar.</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#2563EB;background:#EFF6FF;padding:1px 5px;border-radius:3px">KPR</span></td><td style="color:#6b7280">SKB Banka</td><td style="text-align:right;font-weight:600;color:#37352f">€12.00</td><td style="text-align:center;color:#9B9A97;font-size:9px">11.03</td><td style="text-align:center;color:#16a34a;font-weight:600">99%</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#16a34a;background:#dcfce7;padding:1px 6px;border-radius:100px">Odobreno</span></td><td style="text-align:center;color:#9B9A97;font-size:9px">0</td></tr>
+                <tr style="border-top:1px solid #f1f0ee"><td style="padding:7px 10px;font-weight:600;color:#37352f">Spar naročilo #399</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#2563EB;background:#EFF6FF;padding:1px 5px;border-radius:3px">KPR</span></td><td style="color:#6b7280">Spar Slovenija</td><td style="text-align:right;font-weight:600;color:#37352f">€445.80</td><td style="text-align:center;color:#9B9A97;font-size:9px">10.03</td><td style="text-align:center;color:#dc2626;font-weight:600">42%</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#dc2626;background:#fee2e2;padding:1px 6px;border-radius:100px">Zastavica</span></td><td style="text-align:center;color:#dc2626;font-size:9px">2</td></tr>
+                <tr style="border-top:1px solid #f1f0ee"><td style="padding:7px 10px;font-weight:600;color:#37352f">A1 Slovenija apr.</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#2563EB;background:#EFF6FF;padding:1px 5px;border-radius:3px">KPR</span></td><td style="color:#6b7280">A1 Slovenija</td><td style="text-align:right;font-weight:600;color:#37352f">€34.90</td><td style="text-align:center;color:#9B9A97;font-size:9px">09.03</td><td style="text-align:center;color:#16a34a;font-weight:600">97%</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#16a34a;background:#dcfce7;padding:1px 6px;border-radius:100px">Odobreno</span></td><td style="text-align:center;color:#9B9A97;font-size:9px">0</td></tr>
+                <tr style="border-top:1px solid #f1f0ee"><td style="padding:7px 10px;font-weight:600;color:#37352f">Pošta Slovenije #88</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#2563EB;background:#EFF6FF;padding:1px 5px;border-radius:3px">KPR</span></td><td style="color:#6b7280">Pošta Slovenije</td><td style="text-align:right;font-weight:600;color:#37352f">€8.50</td><td style="text-align:center;color:#9B9A97;font-size:9px">08.03</td><td style="text-align:center;color:#16a34a;font-weight:600">99%</td><td style="text-align:center"><span style="font-size:7px;font-weight:600;color:#16a34a;background:#dcfce7;padding:1px 6px;border-radius:100px">Odobreno</span></td><td style="text-align:center;color:#9B9A97;font-size:9px">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height:50px;background:linear-gradient(to bottom,transparent,#080510);margin-top:-50px;position:relative"></div>
+  </div>
+</section>
+
+<!-- ══════════ LOGOS ══════════ -->
+<section style="padding:44px 24px;border-bottom:1px solid rgba(255,255,255,0.04)">
+  <div style="max-width:900px;margin:0 auto;display:flex;justify-content:center;align-items:center;gap:52px;flex-wrap:wrap">
+    <span style="font-size:17px;font-weight:700;color:#2a2440;letter-spacing:-0.3px">Računovodski zavod</span>
+    <span style="font-size:17px;font-weight:700;color:#2a2440">BTC Biro</span>
+    <span style="font-size:17px;font-weight:700;color:#2a2440">Finesa d.o.o.</span>
+    <span style="font-size:17px;font-weight:700;color:#2a2440">Knjigovodstvo Novak</span>
+    <span style="font-size:17px;font-weight:700;color:#2a2440">Abacus Partners</span>
+  </div>
+</section>
+
+<!-- ══════════ FEATURES — 2 cards side by side ══════════ -->
+<section id="features" style="padding:96px 24px 0">
+  <div style="max-width:1000px;margin:0 auto">
+    <h2 class="font-serif rv" style="text-align:center;font-size:clamp(28px,4.5vw,44px);font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:48px">Spoznajte računovodstvo<br>nove generacije.</h2>
+
+    <div style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:14px;margin-bottom:14px">
+      <!-- LEFT: AI Extraction (purple gradient like Wope's backlink card) -->
+      <div class="wcard purple-grad rv" style="padding:28px;display:flex;flex-direction:column">
+        <div style="font-size:20px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px">AI ekstrakcija<br>dokumentov</div>
+        <p style="font-size:13px;color:#8b85a0;line-height:1.55;margin-bottom:auto">Odkrijte, kako AI izvleče vse podatke iz računov — dobavitelj, znesek, DDV, datum — samodejno in natančno.</p>
+        <!-- Mini UI mockup -->
+        <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;margin-top:20px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <div style="width:26px;height:26px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:6px;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 16 16" fill="#fff"><path d="M8 1l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z"/></svg></div>
+            <div><div style="font-size:11px;font-weight:600;color:#e2dff0">AI procesira...</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+            <div style="padding:5px 8px;background:rgba(255,255,255,0.04);border-radius:5px"><div style="font-size:7px;color:#6b6480">Dobavitelj</div><div style="font-size:10px;font-weight:600;color:#e2dff0">Telekom SLO</div></div>
+            <div style="padding:5px 8px;background:rgba(255,255,255,0.04);border-radius:5px"><div style="font-size:7px;color:#6b6480">Znesek</div><div style="font-size:10px;font-weight:600;color:#e2dff0">€87.40</div></div>
+            <div style="padding:5px 8px;background:rgba(255,255,255,0.04);border-radius:5px"><div style="font-size:7px;color:#6b6480">DDV 22%</div><div style="font-size:10px;font-weight:600;color:#a855f7">€15.76</div></div>
+            <div style="padding:5px 8px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.2);border-radius:5px"><div style="font-size:7px;color:#a855f7">Zaupanje</div><div style="font-size:10px;font-weight:700;color:#a855f7">98%</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Reconciliation card with tabs + data (like Wope's keyword card) -->
+      <div class="wcard rv" style="padding:28px">
+        <!-- Tabs like wope's domain inputs -->
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <div style="flex:1;padding:7px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;font-size:11px;color:#8b85a0;display:flex;align-items:center;gap:6px"><div style="width:14px;height:14px;background:#7c3aed;border-radius:3px"></div>SKB Banka · izpisek</div>
+          <div style="flex:1;padding:7px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;font-size:11px;color:#8b85a0;display:flex;align-items:center;gap:6px"><div style="width:14px;height:14px;background:#10B981;border-radius:3px"></div>Računi · april</div>
+          <div style="padding:7px 14px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.2);border-radius:8px;font-size:11px;font-weight:600;color:#a855f7;cursor:pointer">Uskladi</div>
+        </div>
+        <!-- Pill tabs -->
+        <div style="display:flex;gap:6px;margin-bottom:14px">
+          <span style="padding:4px 12px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.25);border-radius:100px;font-size:10px;font-weight:600;color:#a855f7">samodejno ujemanje</span>
+          <span style="padding:4px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:100px;font-size:10px;color:#6b6480">ročni pregled</span>
+          <span style="padding:4px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:100px;font-size:10px;color:#6b6480">DDV-O preverjanje</span>
+        </div>
+        <!-- Stats row like Wope's keyword data -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;margin-bottom:14px">
+          <div style="padding:10px 14px;text-align:center;border-right:1px solid rgba(255,255,255,0.04)"><div style="font-size:8px;color:#6b6480;font-weight:600;text-transform:uppercase">Skupaj</div><div style="font-size:18px;font-weight:700;color:#e2dff0">44</div></div>
+          <div style="padding:10px 14px;text-align:center;border-right:1px solid rgba(255,255,255,0.04)"><div style="font-size:8px;color:#6b6480;font-weight:600;text-transform:uppercase">Samodejno</div><div style="font-size:18px;font-weight:700;color:#a855f7">38</div></div>
+          <div style="padding:10px 14px;text-align:center;border-right:1px solid rgba(255,255,255,0.04)"><div style="font-size:8px;color:#6b6480;font-weight:600;text-transform:uppercase">Predlog</div><div style="font-size:18px;font-weight:700;color:#e2dff0">4</div></div>
+          <div style="padding:10px 14px;text-align:center"><div style="font-size:8px;color:#6b6480;font-weight:600;text-transform:uppercase">Neujemanje</div><div style="font-size:18px;font-weight:700;color:#e2dff0">2</div></div>
+        </div>
+        <!-- Mini table -->
+        <div style="background:rgba(0,0,0,0.15);border:1px solid rgba(255,255,255,0.04);border-radius:8px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:2fr 0.8fr 0.8fr;padding:6px 12px;font-size:8px;font-weight:600;color:rgba(124,58,237,0.6);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid rgba(255,255,255,0.04)"><span>Bančna vrstica</span><span style="text-align:right">Znesek</span><span style="text-align:center">Status</span></div>
+          <div style="display:grid;grid-template-columns:2fr 0.8fr 0.8fr;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,0.03);align-items:center"><span style="font-size:11px;font-weight:600;color:#e2dff0">Telekom Slovenije</span><span style="font-size:11px;text-align:right;color:#c4b5fd">€87.40</span><span style="text-align:center"><span style="font-size:8px;font-weight:600;color:#a855f7;background:rgba(124,58,237,0.12);padding:2px 7px;border-radius:100px">Ujema</span></span></div>
+          <div style="display:grid;grid-template-columns:2fr 0.8fr 0.8fr;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,0.03);align-items:center"><span style="font-size:11px;font-weight:600;color:#e2dff0">Petrol gorivo</span><span style="font-size:11px;text-align:right;color:#c4b5fd">€234.60</span><span style="text-align:center"><span style="font-size:8px;font-weight:600;color:#d97706;background:rgba(217,119,6,0.1);padding:2px 7px;border-radius:100px">Predlog</span></span></div>
+          <div style="display:grid;grid-template-columns:2fr 0.8fr 0.8fr;padding:7px 12px;align-items:center"><span style="font-size:11px;font-weight:600;color:#e2dff0">Neznano plačilo</span><span style="font-size:11px;text-align:right;color:#c4b5fd">€500.00</span><span style="text-align:center"><span style="font-size:8px;font-weight:600;color:#ef4444;background:rgba(239,68,68,0.1);padding:2px 7px;border-radius:100px">Brez</span></span></div>
+        </div>
+
+        <h3 class="font-serif" style="font-size:18px;font-weight:700;color:#fff;margin-top:18px;margin-bottom:6px">Bančno usklajevanje z AI</h3>
+        <p style="font-size:12px;color:#6b6480;line-height:1.5">AI hitro poveže bančne vrstice z vašimi računi. Povprečno 87% samodejno ujemanje brez ročnega dela.</p>
+      </div>
+    </div>
+
+    <!-- ══════════ LARGE DATA TABLE (like Wope's ranked keywords) ══════════ -->
+    <div class="wcard rv" style="margin-bottom:14px">
+      <div style="padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:#e2dff0">148 dokumentov</span>
+          <span style="font-size:11px;color:#4a4460">· Mercator d.d.</span>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <input type="text" placeholder="Išči..." style="padding:5px 10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:10px;color:#c9c5d9;width:120px;outline:none" readonly>
+          <span style="font-size:10px;color:#6b6480;padding:4px 10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:5px;cursor:pointer">▼ Izvozi</span>
+        </div>
+      </div>
+      <table class="dtbl" style="width:100%;border-collapse:collapse">
+        <thead><tr>
+          <th>Dokument</th><th>Smer</th><th>Stranka</th><th style="text-align:right">Znesek</th><th style="text-align:center">Kategorija</th><th style="text-align:center">Zaup.</th><th style="text-align:center">Status</th><th style="text-align:left">URL / Vir</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;color:#e2dff0">Račun Telekom 2026-03</td><td><span style="font-size:8px;color:#a855f7;background:rgba(124,58,237,0.1);padding:1px 5px;border-radius:3px">KPR</span></td><td>Telekom SLO</td><td style="text-align:right;font-weight:600;color:#e2dff0">€87.40</td><td style="text-align:center"><span style="font-size:9px;color:#6b6480;background:rgba(255,255,255,0.03);padding:1px 6px;border-radius:3px">Stroški IT</span></td><td style="text-align:center;color:#a855f7;font-weight:600">98%</td><td style="text-align:center"><span style="font-size:8px;font-weight:600;color:#a855f7;background:rgba(124,58,237,0.1);padding:2px 7px;border-radius:100px">Odobreno</span></td><td style="font-size:10px;color:#4a4460">app.konta.si/docs/telekom-mar</td></tr>
+          <tr><td style="font-weight:600;color:#e2dff0">Petrol d.d. #2891</td><td><span style="font-size:8px;color:#a855f7;background:rgba(124,58,237,0.1);padding:1px 5px;border-radius:3px">KPR</span></td><td>Petrol d.d.</td><td style="text-align:right;font-weight:600;color:#e2dff0">€234.60</td><td style="text-align:center"><span style="font-size:9px;color:#6b6480;background:rgba(255,255,255,0.03);padding:1px 6px;border-radius:3px">Gorivo</span></td><td style="text-align:center;color:#d97706;font-weight:600">73%</td><td style="text-align:center"><span style="font-size:8px;font-weight:600;color:#d97706;background:rgba(217,119,6,0.08);padding:2px 7px;border-radius:100px">V pregledu</span></td><td style="font-size:10px;color:#4a4460">app.konta.si/docs/petrol-2891</td></tr>
+          <tr><td style="font-weight:600;color:#e2dff0">Izdani račun #0042</td><td><span style="font-size:8px;color:#c084fc;background:rgba(192,132,252,0.08);padding:1px 5px;border-radius:3px">KIR</span></td><td>Mercator d.d.</td><td style="text-align:right;font-weight:600;color:#e2dff0">€1.204,00</td><td style="text-align:center"><span style="font-size:9px;color:#6b6480;background:rgba(255,255,255,0.03);padding:1px 6px;border-radius:3px">Prodaja</span></td><td style="text-align:center;color:#a855f7;font-weight:600">99%</td><td style="text-align:center"><span style="font-size:8px;font-weight:600;color:#a855f7;background:rgba(124,58,237,0.1);padding:2px 7px;border-radius:100px">Odobreno</span></td><td style="font-size:10px;color:#4a4460">app.konta.si/docs/izdani-0042</td></tr>
+          <tr><td style="font-weight:600;color:#e2dff0">Plača — April 2026</td><td><span style="font-size:8px;color:#6b6480;background:rgba(255,255,255,0.04);padding:1px 5px;border-radius:3px">INT</span></td><td>Mercator d.d.</td><td style="text-align:right;font-weight:600;color:#e2dff0">€8.420,00</td><td style="text-align:center"><span style="font-size:9px;color:#6b6480;background:rgba(255,255,255,0.03);padding:1px 6px;border-radius:3px">Plače</span></td><td style="text-align:center;color:#6b6480">—</td><td style="text-align:center"><span style="font-size:8px;font-weight:600;color:#a855f7;background:rgba(124,58,237,0.1);padding:2px 7px;border-radius:100px">Odobreno</span></td><td style="font-size:10px;color:#4a4460">app.konta.si/payroll/apr-2026</td></tr>
+          <tr><td style="font-weight:600;color:#e2dff0">Spar naročilo #399</td><td><span style="font-size:8px;color:#a855f7;background:rgba(124,58,237,0.1);padding:1px 5px;border-radius:3px">KPR</span></td><td>Spar Slovenija</td><td style="text-align:right;font-weight:600;color:#e2dff0">€445.80</td><td style="text-align:center"><span style="font-size:9px;color:#6b6480;background:rgba(255,255,255,0.03);padding:1px 6px;border-radius:3px">Pisarniški</span></td><td style="text-align:center;color:#ef4444;font-weight:600">42%</td><td style="text-align:center"><span style="font-size:8px;font-weight:600;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 7px;border-radius:100px">Zastavica</span></td><td style="font-size:10px;color:#4a4460">app.konta.si/docs/spar-399</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:10px 18px;border-top:1px solid rgba(255,255,255,0.03);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:10px;color:#4a4460">Stran 1 od 8</span>
+        <div style="display:flex;gap:4px">
+          <span style="padding:3px 10px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.2);border-radius:5px;font-size:10px;font-weight:600;color:#a855f7">1</span>
+          <span style="padding:3px 10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:5px;font-size:10px;color:#6b6480">2</span>
+          <span style="padding:3px 10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:5px;font-size:10px;color:#6b6480">3</span>
+          <span style="padding:3px 10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:5px;font-size:10px;color:#6b6480">→</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Centered text below table (like Wope's "Analyze Ranked Keywords") -->
+    <div class="rv" style="text-align:center;max-width:460px;margin:32px auto 0;padding-bottom:20px">
+      <h3 class="font-serif" style="font-size:24px;font-weight:700;color:#fff;margin-bottom:10px">Analizirajte vsako transakcijo</h3>
+      <p style="font-size:13px;color:#6b6480;line-height:1.6">Pregledujte obdelane račune, odobrite ali zavrnite, filtrirajte po zaupanju AI in optimizirajte svoj davčni proces.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section id="faq" style="padding:80px 24px;border-top:1px solid rgba(255,255,255,0.04)">
+  <div style="max-width:640px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:6px"><span style="font-size:12px;font-weight:600;color:#7c3aed;text-transform:uppercase;letter-spacing:0.08em">FAQ</span></div>
+    <h2 class="font-serif rv" style="text-align:center;font-size:clamp(26px,4vw,40px);font-weight:700;color:#fff;margin-bottom:8px">Pogosta vprašanja</h2>
+    <p class="rv" style="text-align:center;font-size:14px;color:#6b6480;margin-bottom:40px">Niste našli odgovora? <a href="#" style="color:#a855f7;text-decoration:underline">Kontaktirajte nas.</a></p>
+
+    <div style="border-top:1px solid rgba(255,255,255,0.06)">
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Kaj je Konta.?<span class="faq-icon">+</span></div><div class="faq-a"><p style="font-size:14px;color:#8b85a0;line-height:1.6;padding-bottom:16px">Konta. je AI računovodski asistent, ki avtomatizira procesiranje računov, bančno usklajevanje, DDV-O poročila in obračun plač za slovenske računovodje.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Za koga je Konta.?<span class="faq-icon">+</span></div><div class="faq-a"><p style="font-size:14px;color:#8b85a0;line-height:1.6;padding-bottom:16px">Za samostojne računovodje, računovodske biroe in podjetja v Sloveniji, ki obdelujejo prejete in izdane račune, pripravljajo DDV-O ter obračunavajo plače.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Kako natančna je AI ekstrakcija?<span class="faq-icon">+</span></div><div class="faq-a"><p style="font-size:14px;color:#8b85a0;line-height:1.6;padding-bottom:16px">AI doseže povprečno 96% natančnost. Pri nizkem zaupanju dokument označi za ročni pregled — nikoli ne odobri samodejno brez preverjanja.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Ali Konta. podpira FURS oddajo?<span class="faq-icon">+</span></div><div class="faq-a"><p style="font-size:14px;color:#8b85a0;line-height:1.6;padding-bottom:16px">Da. Samodejno pripravi DDV-O, KIR in KPR poročila ter izvozi XML za eDavki in ZIP za FURS oddajo z enim klikom.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Kakšne formate bančnih izpiskov podpirate?<span class="faq-icon">+</span></div><div class="faq-a"><p style="font-size:14px;color:#8b85a0;line-height:1.6;padding-bottom:16px">CSV, MT940 in XML camt.053 — formate vseh slovenskih bank (NLB, SKB, UniCredit, Intesa, NKBM).</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section style="padding:20px 24px 80px">
+  <div style="max-width:600px;margin:0 auto">
+    <div class="wcard purple-grad rv" style="text-align:center;padding:48px 32px;border-radius:20px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:350px;height:250px;background:radial-gradient(ellipse,rgba(124,58,237,0.35)0%,transparent 70%);pointer-events:none"></div>
+      <div style="position:relative">
+        <div style="width:52px;height:52px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+          <svg width="24" height="24" viewBox="0 0 16 16" fill="none"><path d="M3 12L6 5L9 9L11 7L14 12H3Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 class="font-serif" style="font-size:clamp(24px,3.5vw,34px);font-weight:700;color:#fff;margin-bottom:12px">Avtomatizirajte vse.<br>Začnite zdaj.</h2>
+        <p style="font-size:14px;color:#8b85a0;margin-bottom:24px">Konta. procesira tisoče dokumentov in prihrani ure dela.</p>
+        <div style="display:flex;gap:8px;justify-content:center;max-width:340px;margin:0 auto">
+          <input type="email" placeholder="Vaš email naslov" style="flex:1;padding:11px 14px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);border-radius:10px;font-size:13px;color:#e2dff0;outline:none" readonly>
+          <a href="#" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:13px;font-weight:600;padding:11px 20px;border-radius:10px;text-decoration:none;white-space:nowrap">Preizkusite</a>
+        </div>
+        <p style="font-size:11px;color:#4a4460;margin-top:12px">Brez kreditne kartice · 30-dnevni preizkus</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer style="padding:48px 24px;border-top:1px solid rgba(255,255,255,0.04)">
+  <div style="max-width:1000px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.5fr;gap:32px;margin-bottom:40px">
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+          <div style="width:22px;height:22px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:6px;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 12L6 5L9 9L11 7L14 12H3Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/></svg></div>
+          <span style="font-weight:700;font-size:14px;color:#e2dff0">konta.</span>
+        </div>
+        <p style="font-size:12px;color:#4a4460;line-height:1.5;max-width:200px">AI računovodski asistent za slovenske računovodje.</p>
+        <p style="font-size:11px;color:#4a4460;margin-top:8px">Brezplačni preizkus — 30 dni</p>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#6b6480;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px">Platforma</div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <a href="#features" style="font-size:12px;color:#4a4460;text-decoration:none">Funkcije</a>
+          <a href="#pricing" style="font-size:12px;color:#4a4460;text-decoration:none">Cene</a>
+          <a href="#" style="font-size:12px;color:#4a4460;text-decoration:none">Changelog</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#6b6480;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px">Pravno</div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <a href="#" style="font-size:12px;color:#4a4460;text-decoration:none">Pogoji</a>
+          <a href="#" style="font-size:12px;color:#4a4460;text-decoration:none">Zasebnost</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#6b6480;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px">Konta za</div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <a href="#" style="font-size:12px;color:#4a4460;text-decoration:none">Računovodje</a>
+          <a href="#" style="font-size:12px;color:#4a4460;text-decoration:none">Biroe</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#6b6480;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px">Kontakt</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:12px;color:#4a4460">Altura d.o.o.</span>
+          <span style="font-size:12px;color:#4a4460">Ljubljana, Slovenija</span>
+          <a href="mailto:hello@konta.si" style="font-size:12px;color:#7c3aed;text-decoration:none">hello@konta.si</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.04);padding-top:20px;display:flex;justify-content:space-between;align-items:center">
+      <p style="font-size:11px;color:#2a2440">© 2026 Altura d.o.o. Vse pravice pridržane.</p>
+      <div style="display:flex;gap:12px">
+        <a href="#" style="width:28px;height:28px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:11px;color:#4a4460">in</a>
+        <a href="#" style="width:28px;height:28px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:11px;color:#4a4460">𝕏</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleFaq(item){const a=item.querySelector('.faq-a'),icon=item.querySelector('.faq-icon'),isOpen=a.classList.contains('open');document.querySelectorAll('.faq-a').forEach(el=>el.classList.remove('open'));document.querySelectorAll('.faq-icon').forEach(el=>el.classList.remove('open'));if(!isOpen){a.classList.add('open');icon.classList.add('open')}}
+  const obs=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')})},{threshold:0.05,rootMargin:'0px 0px 60px 0px'});document.querySelectorAll('.rv').forEach(el=>obs.observe(el));setTimeout(()=>{document.querySelectorAll('.rv').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('v')})},100);
+</script>
+</body>
+</html>

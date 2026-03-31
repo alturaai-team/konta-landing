@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Začnite brezplačno — Konta</title>
+<meta name="description" content="Ustvarite brezplačen račun in preizkusite Konto 14 dni. Brez kreditne kartice.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- Nav -->
+  <nav class="bg-white border-b border-gray-100 px-6 py-4">
+    <a href="konta-landing.html" class="text-xl font-extrabold text-gray-900 tracking-tight">Konta.</a>
+  </nav>
+
+  <!-- Main -->
+  <main class="flex-1 flex items-center justify-center px-4 py-16">
+    <div class="w-full max-w-md">
+
+      <!-- Badge -->
+      <div class="flex justify-center mb-6">
+        <span class="inline-flex items-center gap-1.5 bg-green-50 border border-green-200 text-green-700 text-sm font-semibold px-4 py-1.5 rounded-full">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          14 dni brezplačno · Brez kreditne kartice
+        </span>
+      </div>
+
+      <h1 class="text-3xl font-extrabold text-gray-900 text-center mb-2">Ustvarite račun</h1>
+      <p class="text-gray-500 text-center mb-8">Preizkusite Konto brez obveznosti.</p>
+
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+        <form onsubmit="handleSignup(event)" class="space-y-5">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Ime in priimek</label>
+            <input type="text" placeholder="Ana Novak" required
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Ime pisarne / podjetja</label>
+            <input type="text" placeholder="Novak Računovodstvo d.o.o." required
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">E-poštni naslov</label>
+            <input type="email" placeholder="ana@pisarna.si" required
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Geslo</label>
+            <input type="password" placeholder="Najmanj 8 znakov" minlength="8" required
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+          </div>
+          <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-colors text-sm shadow-sm">
+            Začnite brezplačno
+          </button>
+        </form>
+        <p class="text-xs text-gray-400 text-center mt-5 leading-relaxed">
+          Z registracijo se strinjate s <a href="terms.html" class="underline hover:text-gray-600">pogoji uporabe</a>
+          in <a href="privacy.html" class="underline hover:text-gray-600">politiko zasebnosti</a>.
+        </p>
+      </div>
+
+      <p class="text-center text-sm text-gray-400 mt-6">
+        Že imate račun? <a href="#" class="text-blue-600 font-semibold hover:underline">Prijavite se</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="text-center py-6 text-xs text-gray-400">
+    © 2025 Konta. Narejen v Sloveniji 🇸🇮
+  </footer>
+
+  <script>
+    function handleSignup(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type=submit]');
+      btn.textContent = 'Ustvarjam račun…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = '✓ Račun ustvarjen!';
+        btn.classList.replace('bg-blue-600', 'bg-green-600');
+        btn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

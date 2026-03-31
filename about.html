@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O nas — Konta</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .value-card { border: 1px solid #e5e7eb; border-radius: 1rem; padding: 1.5rem; }
+  .team-card { border: 1px solid #e5e7eb; border-radius: 1rem; overflow: hidden; transition: box-shadow 0.2s; }
+  .team-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
+  .stat-num { font-size: 2.5rem; font-weight: 800; color: #111827; line-height: 1; }
+</style>
+</head>
+<body class="bg-white">
+
+<!-- NAV -->
+<nav class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+  <div id="navbar-pill" class="pointer-events-auto bg-white/95 backdrop-blur-md border border-gray-200 rounded-full px-6 py-3 shadow-lg flex items-center justify-between w-full max-w-3xl">
+    <div class="flex items-center gap-7">
+      <a href="konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+      <div class="hidden md:flex items-center gap-5 text-sm text-gray-500">
+        <a href="konta-landing.html#how-it-works" class="hover:text-gray-900 transition-colors">Kako deluje</a>
+        <a href="konta-landing.html#examples" class="hover:text-gray-900 transition-colors">Primeri</a>
+        <a href="konta-landing.html#pricing" class="hover:text-gray-900 transition-colors">Cene</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors px-3 py-1.5 hidden md:block">Prijavite se</a>
+      <a href="#" class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-colors font-semibold">Začnite brezplačno</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="pt-32 pb-16 bg-white">
+  <div class="max-w-3xl mx-auto px-6 text-center">
+    <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+      Naša zgodba
+    </div>
+    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+      Naredili smo orodje,<br>ki smo ga sami pogrešali.
+    </h1>
+    <p class="text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto">
+      Izhajamo iz računovodske prakse. Vemo, kako izgleda zaključek meseca. Vemo, koliko časa vzame DDV-O. Zato smo naredili Konto.
+    </p>
+  </div>
+</div>
+
+<!-- STORY SECTION -->
+<div class="bg-gray-50 border-y border-gray-100 py-20">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div>
+        <img src="https://placehold.co/520x380/f1f5f9/94a3b8?text=Konta+ekipa" alt="Konta ekipa" class="rounded-2xl w-full">
+      </div>
+      <div>
+        <h2 class="text-2xl font-extrabold text-gray-900 mb-4">Začelo se je z enim vprašanjem</h2>
+        <p class="text-gray-500 leading-relaxed mb-4">
+          Zakaj računovodja, ki dela s stotinami strank, vsak mesec ročno vtipka vsak račun posebej?
+        </p>
+        <p class="text-gray-500 leading-relaxed mb-4">
+          Ne zato, ker ne bi bilo boljše rešitve. Temveč zato, ker so obstoječa orodja — Pantheon, Minimax — nastala v drugem obdobju. Dobra so. Ampak niso bila zasnovana za hitrost in avtomatizacijo.
+        </p>
+        <p class="text-gray-500 leading-relaxed">
+          Konta je nastala leta 2024 z eno mislijo: računovodje si zaslužijo orodje, ki jim vrne čas. Ne samo program za vodenje knjig — platforma, ki zna brati, razumeti in organizirati.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="py-16 bg-white border-b border-gray-100">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <div class="stat-num">2024</div>
+        <p class="text-sm text-gray-400 mt-1">Leto ustanovitve</p>
+      </div>
+      <div>
+        <div class="stat-num">100+</div>
+        <p class="text-sm text-gray-400 mt-1">Računovodk v beta</p>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <p class="text-sm text-gray-400 mt-1">Natančnost AI ekstrakcije</p>
+      </div>
+      <div>
+        <div class="stat-num">SI 🇸🇮</div>
+        <p class="text-sm text-gray-400 mt-1">Narejeno za slovensko prakso</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="py-20 bg-white">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Kar nas vodi</h2>
+      <p class="text-gray-500">Tri načela, ki so za nami vsake odločitve.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="value-card">
+        <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-2">Čas je dragocen</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Vsaka ura, ki jo računovodja porabi za tipkanje, je ura manj za stranke, razvoj in življenje. Optimiziramo za čas, ne za funkcionalnost.</p>
+      </div>
+      <div class="value-card">
+        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-2">Zaupanje se zasluži</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Računovodje nam zaupajo podatke svojih strank. To je velika odgovornost. Varnost, transparentnost in GDPR skladnost so za nas osnova, ne dodatek.</p>
+      </div>
+      <div class="value-card">
+        <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-2">Naredili za Slovenijo</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Ne predelujemo tujega SaaS-a. Konta je zasnovana za slovensko zakonodajo, FURS, DDV-O in prakso od prvega dne. Razumemo kontekst.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="py-20 bg-gray-50 border-t border-gray-100">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Ekipa za Konto</h2>
+      <p class="text-gray-500">Majhna ekipa z velikimi ambicijami.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <div class="team-card bg-white">
+        <img src="https://placehold.co/400x280/e0f2fe/3b82f6?text=A.N." alt="Ana Novak" class="w-full">
+        <div class="p-5">
+          <h3 class="font-bold text-gray-900">Ana Novak</h3>
+          <p class="text-sm text-blue-600 mb-2">Soustanoviteljica & CEO</p>
+          <p class="text-xs text-gray-400 leading-relaxed">12 let izkušenj v računovodski praksi. Nekdanja partnerica v računovodski pisarni z 80 strankami.</p>
+        </div>
+      </div>
+
+      <div class="team-card bg-white">
+        <img src="https://placehold.co/400x280/f0fdf4/22c55e?text=M.K." alt="Miha Kovač" class="w-full">
+        <div class="p-5">
+          <h3 class="font-bold text-gray-900">Miha Kovač</h3>
+          <p class="text-sm text-blue-600 mb-2">Soustanovitelj & CTO</p>
+          <p class="text-xs text-gray-400 leading-relaxed">Inženir z izkušnjami pri gradnji fintech produktov. Pred Konto vodil tehnično ekipo pri slovenskem startupu.</p>
+        </div>
+      </div>
+
+      <div class="team-card bg-white">
+        <img src="https://placehold.co/400x280/faf5ff/a855f7?text=T.H." alt="Tina Horvat" class="w-full">
+        <div class="p-5">
+          <h3 class="font-bold text-gray-900">Tina Horvat</h3>
+          <p class="text-sm text-blue-600 mb-2">Vodja produkta</p>
+          <p class="text-xs text-gray-400 leading-relaxed">Prihaja iz revizije in davčnega svetovanja. Razume, kaj računovodje zares potrebujejo vsak dan.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-10 text-center">
+      <p class="text-gray-500 text-sm mb-4">Iščemo še dobre ljudi.</p>
+      <a href="careers.html" class="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors">
+        Oglejte si odprta mesta
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="py-20 bg-white border-t border-gray-100">
+  <div class="max-w-2xl mx-auto px-6 text-center">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Preizkusite Konto.</h2>
+    <p class="text-gray-500 mb-8">14 dni brezplačno. Brez kreditne kartice. Brez zavez.</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-7 py-3 rounded-full transition-colors text-sm">Začnite brezplačno →</a>
+      <a href="contact.html" class="border border-gray-200 hover:border-gray-300 text-gray-700 font-semibold px-7 py-3 rounded-full transition-colors text-sm">Pišite nam</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-gray-50 border-t border-gray-100 py-12">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+        <p class="mt-2 text-sm text-gray-400 leading-relaxed">AI računovodska platforma za slovensko pisarno.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Platforma</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="konta-landing.html#how-it-works" class="hover:text-gray-700 transition-colors">Kako deluje</a></li>
+          <li><a href="konta-landing.html#examples" class="hover:text-gray-700 transition-colors">Funkcije</a></li>
+          <li><a href="konta-landing.html#pricing" class="hover:text-gray-700 transition-colors">Cene</a></li>
+          <li><a href="security.html" class="hover:text-gray-700 transition-colors">Varnost</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Podjetje</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="about.html" class="font-medium text-blue-600">O nas</a></li>
+          <li><a href="blog.html" class="hover:text-gray-700 transition-colors">Blog</a></li>
+          <li><a href="careers.html" class="hover:text-gray-700 transition-colors">Kariere</a></li>
+          <li><a href="contact.html" class="hover:text-gray-700 transition-colors">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Pravno</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="terms.html" class="hover:text-gray-700 transition-colors">Pogoji uporabe</a></li>
+          <li><a href="privacy.html" class="hover:text-gray-700 transition-colors">Zasebnost</a></li>
+          <li><a href="cookies.html" class="hover:text-gray-700 transition-colors">Piškotki</a></li>
+          <li><a href="dpa.html" class="hover:text-gray-700 transition-colors">Pogodba o obdelavi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-100 pt-6 flex items-center justify-between">
+      <p class="text-xs text-gray-400">© 2025 Konta. Vse pravice pridržane.</p>
+      <p class="text-xs text-gray-400">Narejen v Sloveniji 🇸🇮</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navPill = document.getElementById('navbar-pill');
+  window.addEventListener('scroll', () => {
+    navPill.style.boxShadow = window.scrollY > 20
+      ? '0 4px 24px rgba(0,0,0,0.12)'
+      : '0 1px 8px rgba(0,0,0,0.06)';
+  });
+</script>
+</body>
+</html>

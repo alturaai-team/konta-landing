@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Konta. — Računovodstvo na avtopilotu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: #1a1a2e; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+
+    /* ── HERO ── */
+    .hero-bg {
+      background: #0f0f1a;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(0,115,255,0.22) 0%, rgba(0,115,255,0.06) 45%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-lines {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    .nav-link { color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500; text-decoration: none; }
+    .nav-link:hover { color: #fff; }
+
+    /* ── FEATURE CARDS ── */
+    .card-teal    { background: #0f766e; }
+    .card-blue    { background: #1d4ed8; }
+    .card-purple  { background: #6d28d9; }
+    .card-tan     { background: #92400e; }
+    .card-green   { background: #166534; }
+    .card-slate   { background: #334155; }
+
+    /* ── LOGOS MARQUEE ── */
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: marquee 28s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    /* ── DEMO WIDGET ── */
+    .demo-tab { cursor: pointer; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 6px; transition: all 0.2s; color: #6b7280; border: 1px solid transparent; }
+    .demo-tab.active { background: #fff; color: #0f0f1a; border-color: #e5e7eb; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .demo-panel { display: none; }
+    .demo-panel.active { display: block; }
+
+    /* ── APP MOCK PULSE ── */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-anim { animation: float 5s ease-in-out infinite; }
+
+    /* ── SECTION CARD hover ── */
+    .feature-tile { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .feature-tile:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+
+    /* ── SAVINGS COUNTER ── */
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .count-in { animation: countUp 0.6s ease forwards; }
+
+    /* ── PRICING ── */
+    .price-card { border: 1px solid #e5e7eb; border-radius: 16px; padding: 32px; background: #fff; transition: all 0.2s; }
+    .price-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .price-card.popular { border-color: #0073ff; box-shadow: 0 0 0 3px rgba(0,115,255,0.12); }
+
+    /* ── SCROLL INTO VIEW ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     ANNOUNCEMENT BAR
+════════════════════════════════════════════════════════════ -->
+<div style="background:#0073ff; color:#fff; text-align:center; font-size:13px; font-weight:500; padding:9px 16px;">
+  Konta. je zdaj v beti — brezplačno za prvih 50 računovodij &nbsp;·&nbsp;
+  <a href="#pricing" style="color:#fff; text-decoration:underline;">Začni brezplačno →</a>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════════════ -->
+<nav style="background:#0f0f1a; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:50;">
+  <div style="max-width:1160px; margin:0 auto; padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between;">
+    <!-- Logo -->
+    <div style="display:flex; align-items:center; gap:32px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="width:28px; height:28px; background:#0073ff; border-radius:6px; display:flex; align-items:center; justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 12L6 5L9 9L11 7L14 12H3Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/></svg>
+        </div>
+        <span style="color:#fff; font-weight:700; font-size:17px; letter-spacing:-0.3px;">Konta.</span>
+      </div>
+      <div style="display:flex; gap:24px;">
+        <a href="#features" class="nav-link">Funkcije</a>
+        <a href="#how-it-works" class="nav-link">Kako deluje</a>
+        <a href="#pricing" class="nav-link">Cene</a>
+        <a href="#" class="nav-link">Blog</a>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <a href="#" style="color:rgba(255,255,255,0.7); font-size:14px; font-weight:500; text-decoration:none;">Prijava</a>
+      <a href="#pricing" style="background:#0073ff; color:#fff; font-size:14px; font-weight:600; padding:8px 18px; border-radius:8px; text-decoration:none;">Začni brezplačno</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section class="hero-bg" style="padding: 56px 24px 0;">
+  <div class="hero-glow"></div>
+  <div class="hero-lines"></div>
+  <div style="position:relative; max-width:800px; margin:0 auto; text-align:center;">
+    <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(0,115,255,0.15); border:1px solid rgba(0,115,255,0.3); border-radius:100px; padding:5px 14px; margin-bottom:18px;">
+      <div style="width:7px; height:7px; background:#0073ff; border-radius:50%;"></div>
+      <span style="color:#7cb9ff; font-size:13px; font-weight:500;">Zdaj dostopno slovenskim računovodjam</span>
+    </div>
+    <h1 style="color:#fff; font-size:clamp(38px,5.5vw,64px); font-weight:800; line-height:1.05; letter-spacing:-1.5px; margin-bottom:18px;">
+      Računovodstvo<br>na <span style="color:#0073ff;">avtopilotu.</span>
+    </h1>
+    <p style="color:rgba(255,255,255,0.6); font-size:clamp(15px,1.8vw,18px); font-weight:400; line-height:1.5; max-width:560px; margin:0 auto 28px;">
+      Konta. procesira račune z AI, uskladi banko, pripravi DDV-O in obračuna plače — medtem ko vi skrbite za stranke.
+    </p>
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <a href="#pricing" style="background:#0073ff; color:#fff; font-size:16px; font-weight:600; padding:14px 28px; border-radius:10px; text-decoration:none;">Začni brezplačno</a>
+      <a href="#demo" style="background:rgba(255,255,255,0.08); color:#fff; font-size:16px; font-weight:600; padding:14px 28px; border-radius:10px; text-decoration:none; border:1px solid rgba(255,255,255,0.15);">Oglej si demo →</a>
+    </div>
+    <p style="color:rgba(255,255,255,0.3); font-size:13px; margin-top:10px;">Brez kreditne kartice · 30-dnevni preizkus</p>
+  </div>
+
+  <!-- Hero App Screenshot -->
+  <div class="float-anim" style="max-width:1100px; margin:36px auto 0; position:relative;">
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px 16px 0 0; overflow:hidden; box-shadow:0 -20px 80px rgba(0,115,255,0.15);">
+      <!-- App chrome bar -->
+      <div style="background:#1a1a2e; padding:10px 16px; display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.07);">
+        <div style="width:10px;height:10px;background:#ff5f57;border-radius:50%;"></div>
+        <div style="width:10px;height:10px;background:#febc2e;border-radius:50%;"></div>
+        <div style="width:10px;height:10px;background:#28c840;border-radius:50%;"></div>
+        <div style="flex:1; margin:0 40px; background:rgba(255,255,255,0.07); border-radius:4px; padding:4px 12px; font-size:12px; color:rgba(255,255,255,0.35); text-align:center;">app.konta.si/dashboard</div>
+      </div>
+      <!-- App UI Mock -->
+      <div style="display:flex; min-height:440px;">
+        <!-- Sidebar — real konta-app replica -->
+        <div style="width:200px; flex-shrink:0; background:#FAFAFA; border-right:1px solid #EFEFEC; padding:12px 0;">
+          <!-- Company selector -->
+          <div style="padding:0 10px; margin-bottom:12px;">
+            <div style="display:flex; align-items:center; gap:8px; padding:7px 8px; background:#fff; border-radius:8px; border:1px solid #e9e9e7; cursor:pointer;">
+              <div style="width:24px;height:24px;background:#0073ff;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 12L6 5L9 9L11 7L14 12H3Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:11px;font-weight:600;color:#37352f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Računovodstvo d.o.o.</div>
+                <div style="font-size:9px;color:#9b9a97;">Vodja · 24 strank</div>
+              </div>
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#9b9a97" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <!-- Nav group: Pregled -->
+          <div style="padding:0 8px; margin-bottom:4px;">
+            <div style="font-size:9px;font-weight:600;color:#9B9A97;text-transform:uppercase;letter-spacing:0.05em;padding:4px 10px 2px;">Pregled</div>
+          </div>
+          <div id="hero-nav" style="padding:0 8px; display:flex; flex-direction:column; gap:1px;">
+            <div class="hnav" data-screen="dashboard" onclick="switchHeroScreen('dashboard')" style="padding:6px 10px; border-radius:6px; background:#e8f0ff; font-size:11px; font-weight:600; color:#0073ff; cursor:pointer; display:flex; align-items:center; gap:7px;">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+              Nadzorna plošča
+            </div>
+            <div class="hnav" data-screen="stranke" onclick="switchHeroScreen('stranke')" style="padding:6px 10px; font-size:11px; color:#787774; cursor:pointer; border-radius:6px; transition:all 0.15s; display:flex; align-items:center; gap:7px;">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+              Stranke
+            </div>
+            <div class="hnav" data-screen="dokumenti" onclick="switchHeroScreen('dokumenti')" style="padding:6px 10px; font-size:11px; color:#787774; cursor:pointer; border-radius:6px; transition:all 0.15s; display:flex; align-items:center; gap:7px;">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 1h6l4 4v9a1 1 0 01-1 1H4a1 1 0 01-1-1V2a1 1 0 011-1z"/><path d="M10 1v4h4"/></svg>
+              Dokumenti
+            </div>
+          </div>
+          <!-- Nav group: Finance -->
+          <div style="padding:0 8px; margin-top:8px; margin-bottom:4px;">
+            <div style="font-size:9px;font-weight:600;color:#9B9A97;text-transform:uppercase;letter-spacing:0.05em;padding:4px 10px 2px;">Finance</div>
+          </div>
+          <div style="padding:0 8px; display:flex; flex-direction:column; gap:1px;">
+            <div class="hnav" data-screen="transakcije" onclick="switchHeroScreen('transakcije')" style="padding:6px 10px; font-size:11px; color:#787774; cursor:pointer; border-radius:6px; transition:all 0.15s; display:flex; align-items:center; gap:7px;">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h14M1 8h14M1 12h14"/></svg>
+              Transakcije
+            </div>
+            <div class="hnav" data-screen="usklajevanje" onclick="switchHeroScreen('usklajevanje')" style="padding:6px 10px; font-size:11px; color:#787774; cursor:pointer; border-radius:6px; transition:all 0.15s; display:flex; align-items:center; gap:7px;">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 8h4l2-5 2 10 2-5h4"/></svg>
+              Usklajevanje
+            </div>
+            <div class="hnav" data-screen="porocila" onclick="switchHeroScreen('porocila')" style="padding:6px 10px; font-size:11px; color:#787774; cursor:pointer; border-radius:6px; transition:all 0.15s; display:flex; align-items:center; gap:7px;">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 14V6l3-4h6l3 4v8a1 1 0 01-1 1H3a1 1 0 01-1-1z"/><path d="M6 8h4m-4 3h4"/></svg>
+              Poročila
+            </div>
+            <div class="hnav" data-screen="place" onclick="switchHeroScreen('place')" style="padding:6px 10px; font-size:11px; color:#787774; cursor:pointer; border-radius:6px; transition:all 0.15s; display:flex; align-items:center; gap:7px;">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+              Plače
+            </div>
+          </div>
+          <!-- Bottom user -->
+          <div style="margin-top:auto; padding:8px 10px 0; border-top:1px solid #EFEFEC; margin-top:12px;">
+            <div style="display:flex;align-items:center;gap:7px;padding:6px 8px;">
+              <div style="width:22px;height:22px;background:#e8f0ff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#0073ff;">M</div>
+              <div><div style="font-size:10px;font-weight:600;color:#37352f;">Maja Novak</div><div style="font-size:8px;color:#9b9a97;">Vodja</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Main content -->
+        <div id="hero-main" style="flex:1; background:#fff; padding:20px 24px; overflow:hidden;"></div>
+      </div>
+    </div>
+    <!-- Bottom fade -->
+    <div style="height:80px; background:linear-gradient(to bottom, transparent, #0f0f1a); margin-top:-80px; position:relative;"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     LOGOS
+════════════════════════════════════════════════════════════ -->
+<section style="background:#f9f8f6; border-top:1px solid #e9e9e7; border-bottom:1px solid #e9e9e7; padding:24px 0; overflow:hidden;">
+  <div style="max-width:1160px; margin:0 auto; padding:0 24px;">
+    <p style="text-align:center; font-size:12px; color:#b0afab; font-weight:500; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:20px;">Zaupajo nam računovodski biroji po celotni Sloveniji</p>
+    <div style="overflow:hidden; position:relative;">
+      <div class="marquee-track" style="display:flex; gap:48px; width:max-content; align-items:center;">
+        <!-- Each "logo" is a company name in branded style, repeated twice for seamless loop -->
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap; letter-spacing:-0.3px;">Računovodski zavod</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap;">BTC Biro</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap;">Finesa d.o.o.</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap; letter-spacing:-0.5px;">Knjigovodstvo Novak</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap;">Revija Servis</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap; letter-spacing:-0.3px;">Računovodski zavod</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap;">BTC Biro</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap;">Finesa d.o.o.</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap; letter-spacing:-0.5px;">Knjigovodstvo Novak</span>
+        <span style="font-size:16px; font-weight:700; color:#9b9a97; white-space:nowrap;">Revija Servis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     LIVE DEMO WIDGET
+════════════════════════════════════════════════════════════ -->
+<section id="demo" style="padding:96px 24px; background:#fff;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:16px;">
+      <div style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; border-radius:100px; padding:4px 12px; margin-bottom:16px;">
+        <div style="width:6px;height:6px;background:#0073ff;border-radius:50%;"></div>
+        <span style="color:#0073ff; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;">Interaktivni demo</span>
+      </div>
+    </div>
+    <h2 class="reveal" style="text-align:center; font-size:clamp(30px,4vw,48px); font-weight:800; letter-spacing:-1px; color:#0f0f1a; margin-bottom:12px;">Kliknite in preizkusite sami.</h2>
+    <p class="reveal" style="text-align:center; color:#6b7280; font-size:18px; max-width:520px; margin:0 auto 48px;">Vsak korak je tak, kot bo v resničnem orodju. Brez prijave, takoj.</p>
+
+    <!-- Demo tabs -->
+    <div style="display:flex; justify-content:center; gap:6px; margin-bottom:32px; background:#f7f6f3; border-radius:10px; padding:6px; max-width:520px; margin-left:auto; margin-right:auto; margin-bottom:32px;">
+      <button class="demo-tab active" onclick="switchDemo('upload')">Nalaganje računa</button>
+      <button class="demo-tab" onclick="switchDemo('ai')">AI obdelava</button>
+      <button class="demo-tab" onclick="switchDemo('recon')">Usklajevanje</button>
+      <button class="demo-tab" onclick="switchDemo('report')">DDV poročilo</button>
+    </div>
+
+    <!-- DEMO PANEL: Upload -->
+    <div id="demo-upload" class="demo-panel active" style="background:#fff; border:1px solid #e9e9e7; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+      <div style="display:grid; grid-template-columns:1fr 1fr; min-height:420px;">
+        <!-- Left: instructions -->
+        <div style="padding:40px; border-right:1px solid #e9e9e7; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:12px; color:#0073ff; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px;">Korak 1 / 4</div>
+            <h3 style="font-size:24px; font-weight:700; color:#0f0f1a; line-height:1.2; margin-bottom:16px;">Naloži račun.</h3>
+            <p style="color:#6b7280; line-height:1.6;">Povleci PDF ali sliko računa v okno. Konta. podpira PDF, JPEG in PNG do 10 MB. Tudi skenirani in ročno pisani računi.</p>
+            <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#6b7280;"><span style="width:20px;height:20px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;">✓</span>PDF, JPEG, PNG</div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#6b7280;"><span style="width:20px;height:20px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;">✓</span>Več računov v enem PDF-u</div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#6b7280;"><span style="width:20px;height:20px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;">✓</span>Varno šifrirano (TLS 1.3)</div>
+            </div>
+          </div>
+          <button onclick="switchDemo('ai')" style="background:#0073ff; color:#fff; border:none; padding:12px 24px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; align-self:flex-start;">Naprej: AI obdelava →</button>
+        </div>
+        <!-- Right: UI mock -->
+        <div style="padding:32px; background:#f9f8f6; display:flex; flex-direction:column; gap:12px;">
+          <div style="font-size:13px; font-weight:600; color:#37352f; margin-bottom:4px;">Nov dokument</div>
+          <!-- Drop zone -->
+          <div id="drop-zone" style="border:2px dashed #d1d5db; border-radius:12px; padding:40px 24px; text-align:center; cursor:pointer; transition:all 0.2s; background:#fff;" onclick="simulateUpload()" onmouseenter="this.style.borderColor='#0073ff'; this.style.background='#eff6ff';" onmouseleave="this.style.borderColor='#d1d5db'; this.style.background='#fff';">
+            <div style="font-size:32px; margin-bottom:10px;">📂</div>
+            <div style="font-size:14px; font-weight:600; color:#37352f; margin-bottom:4px;">Povleci datoteko ali klikni</div>
+            <div style="font-size:12px; color:#9b9a97;">PDF, JPEG, PNG · max 10 MB</div>
+          </div>
+          <!-- Simulated upload progress (hidden by default) -->
+          <div id="upload-progress" style="display:none; background:#fff; border:1px solid #e9e9e7; border-radius:10px; padding:16px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+              <div style="font-size:20px;">📄</div>
+              <div style="flex:1;">
+                <div style="font-size:13px; font-weight:600; color:#37352f;">racun_telekom_mar2026.pdf</div>
+                <div style="font-size:11px; color:#9b9a97;">245 KB</div>
+              </div>
+              <div id="upload-check" style="display:none; color:#16a34a; font-size:18px;">✓</div>
+            </div>
+            <div style="height:4px; background:#e9e9e7; border-radius:2px; overflow:hidden;">
+              <div id="upload-bar" style="height:4px; background:#0073ff; border-radius:2px; width:0%; transition:width 0.8s ease;"></div>
+            </div>
+          </div>
+          <!-- Stranke dropdown mock -->
+          <div>
+            <div style="font-size:11px; font-weight:500; color:#9b9a97; margin-bottom:4px;">Stranka</div>
+            <select style="width:100%; padding:8px 12px; border:1px solid #e9e9e7; border-radius:8px; font-size:13px; color:#37352f; background:#fff; cursor:pointer;">
+              <option>Telekom Slovenije d.d.</option>
+              <option>Mercator d.d.</option>
+              <option>Petrol d.d.</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:500; color:#9b9a97; margin-bottom:4px;">Vrsta dokumenta</div>
+            <select style="width:100%; padding:8px 12px; border:1px solid #e9e9e7; border-radius:8px; font-size:13px; color:#37352f; background:#fff; cursor:pointer;">
+              <option>Prejeti račun</option>
+              <option>Izdani račun</option>
+              <option>Dobropis</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEMO PANEL: AI processing -->
+    <div id="demo-ai" class="demo-panel" style="background:#fff; border:1px solid #e9e9e7; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+      <div style="display:grid; grid-template-columns:1fr 1fr; min-height:420px;">
+        <div style="padding:40px; border-right:1px solid #e9e9e7; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:12px; color:#0073ff; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px;">Korak 2 / 4</div>
+            <h3 style="font-size:24px; font-weight:700; color:#0f0f1a; line-height:1.2; margin-bottom:16px;">AI izvleče podatke.</h3>
+            <p style="color:#6b7280; line-height:1.6;">Mistral OCR pretvori dokument v besedilo. Gemini 2.5 Flash nato izvleče vse računovodske podatke — DDV, znesek, dobavitelja, datum — in jih razvrsti v kategorijo.</p>
+            <div style="margin-top:20px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#6b7280;">Čas obdelave:</span><span style="color:#37352f; font-weight:600;">~8 sekund</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#6b7280;">Povprečna natančnost:</span><span style="color:#16a34a; font-weight:600;">96.4%</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:13px;"><span style="color:#6b7280;">Podprti jeziki:</span><span style="color:#37352f; font-weight:600;">SL, EN, DE, HR, IT</span></div>
+            </div>
+          </div>
+          <button onclick="switchDemo('recon')" style="background:#0073ff; color:#fff; border:none; padding:12px 24px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; align-self:flex-start;">Naprej: Usklajevanje →</button>
+        </div>
+        <div style="padding:32px; background:#f9f8f6;">
+          <div style="background:#fff; border:1px solid #e9e9e7; border-radius:10px; overflow:hidden;">
+            <div style="background:#f7f6f3; padding:10px 16px; font-size:11px; font-weight:600; color:#9b9a97; display:flex; align-items:center; gap:8px;">
+              <div style="width:8px;height:8px;background:#16a34a;border-radius:50%;"></div>
+              AI je izvlekel podatke
+            </div>
+            <div style="padding:16px; display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; justify-content:space-between; padding-bottom:8px; border-bottom:1px solid #f1f0ee;">
+                <span style="font-size:12px; color:#9b9a97;">Dobavitelj</span>
+                <span style="font-size:12px; font-weight:600; color:#37352f;">Telekom Slovenije d.d.</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding-bottom:8px; border-bottom:1px solid #f1f0ee;">
+                <span style="font-size:12px; color:#9b9a97;">Številka računa</span>
+                <span style="font-size:12px; font-weight:600; color:#37352f;">SI-2026-03-18472</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding-bottom:8px; border-bottom:1px solid #f1f0ee;">
+                <span style="font-size:12px; color:#9b9a97;">Datum</span>
+                <span style="font-size:12px; font-weight:600; color:#37352f;">2026-03-15</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding-bottom:8px; border-bottom:1px solid #f1f0ee;">
+                <span style="font-size:12px; color:#9b9a97;">Znesek brez DDV</span>
+                <span style="font-size:12px; font-weight:600; color:#37352f;">€71.64</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding-bottom:8px; border-bottom:1px solid #f1f0ee;">
+                <span style="font-size:12px; color:#9b9a97;">DDV (22%)</span>
+                <span style="font-size:12px; font-weight:600; color:#37352f;">€15.76</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding-bottom:8px; border-bottom:1px solid #f1f0ee;">
+                <span style="font-size:12px; color:#9b9a97;">Skupaj z DDV</span>
+                <span style="font-size:14px; font-weight:700; color:#0073ff;">€87.40</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="font-size:12px; color:#9b9a97;">Kategorija AI</span>
+                <span style="font-size:11px; font-weight:600; color:#6d28d9; background:#ede9fe; padding:2px 8px; border-radius:100px;">Telekomunikacije</span>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:10px; display:flex; gap:8px;">
+            <button style="flex:1; background:#16a34a; color:#fff; border:none; padding:10px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;">Potrdi in shrani</button>
+            <button style="flex:1; background:#fff; color:#37352f; border:1px solid #e9e9e7; padding:10px; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer;">Popravi ročno</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEMO PANEL: Reconciliation -->
+    <div id="demo-recon" class="demo-panel" style="background:#fff; border:1px solid #e9e9e7; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+      <div style="display:grid; grid-template-columns:1fr 1fr; min-height:420px;">
+        <div style="padding:40px; border-right:1px solid #e9e9e7; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:12px; color:#0073ff; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px;">Korak 3 / 4</div>
+            <h3 style="font-size:24px; font-weight:700; color:#0f0f1a; line-height:1.2; margin-bottom:16px;">Uskladi banko.</h3>
+            <p style="color:#6b7280; line-height:1.6;">Naloži bančni izpisek. Konta. samodejno poveže vrstice z obstoječimi računi po znesku, datumu in referenci. Ročno samo tisto, kar AI ne najde.</p>
+            <div style="margin-top:20px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; gap:8px; align-items:center; font-size:13px; color:#6b7280;"><span style="color:#16a34a; font-weight:700; font-size:16px;">●</span> Samodejno ujemanje</div>
+              <div style="display:flex; gap:8px; align-items:center; font-size:13px; color:#6b7280;"><span style="color:#d97706; font-weight:700; font-size:16px;">●</span> Predlog (preverite)</div>
+              <div style="display:flex; gap:8px; align-items:center; font-size:13px; color:#6b7280;"><span style="color:#dc2626; font-weight:700; font-size:16px;">●</span> Ni ujemanja</div>
+            </div>
+          </div>
+          <button onclick="switchDemo('report')" style="background:#0073ff; color:#fff; border:none; padding:12px 24px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; align-self:flex-start;">Naprej: DDV poročilo →</button>
+        </div>
+        <div style="padding:24px; background:#f9f8f6;">
+          <div style="background:#fff; border:1px solid #e9e9e7; border-radius:10px; overflow:hidden;">
+            <div style="background:#f7f6f3; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:600; color:#9b9a97;">Bančne vrstice · SKB März 2026</span>
+              <span style="font-size:11px; color:#6b7280;">12 vrstic</span>
+            </div>
+            <div style="padding:0 12px;">
+              <div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f1f0ee;">
+                <div style="width:8px;height:8px;background:#16a34a;border-radius:50%;flex-shrink:0;"></div>
+                <div style="flex:1; font-size:12px; color:#37352f;">Telekom Slovenije</div>
+                <div style="font-size:12px; font-weight:600; color:#dc2626;">-€87.40</div>
+                <div style="font-size:11px; color:#16a34a; background:#dcfce7; padding:2px 6px; border-radius:4px; white-space:nowrap;">Ujema</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f1f0ee;">
+                <div style="width:8px;height:8px;background:#16a34a;border-radius:50%;flex-shrink:0;"></div>
+                <div style="flex:1; font-size:12px; color:#37352f;">Petrol d.d.</div>
+                <div style="font-size:12px; font-weight:600; color:#dc2626;">-€234.60</div>
+                <div style="font-size:11px; color:#16a34a; background:#dcfce7; padding:2px 6px; border-radius:4px; white-space:nowrap;">Ujema</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f1f0ee;">
+                <div style="width:8px;height:8px;background:#d97706;border-radius:50%;flex-shrink:0;"></div>
+                <div style="flex:1; font-size:12px; color:#37352f;">AMZN MKTP</div>
+                <div style="font-size:12px; font-weight:600; color:#dc2626;">-€45.99</div>
+                <div style="font-size:11px; color:#d97706; background:#fef9c3; padding:2px 6px; border-radius:4px; white-space:nowrap;">Predlog</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:10px 0;">
+                <div style="width:8px;height:8px;background:#dc2626;border-radius:50%;flex-shrink:0;"></div>
+                <div style="flex:1; font-size:12px; color:#37352f;">Plačilo ref 2891</div>
+                <div style="font-size:12px; font-weight:600; color:#16a34a;">+€1,200.00</div>
+                <div style="font-size:11px; color:#dc2626; background:#fee2e2; padding:2px 6px; border-radius:4px; white-space:nowrap;">Ni ujemanja</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:10px; display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center;">
+            <div style="background:#fff; border:1px solid #e9e9e7; border-radius:8px; padding:10px;"><div style="font-size:18px;font-weight:700;color:#16a34a;">9</div><div style="font-size:10px;color:#9b9a97;">Usklajeno</div></div>
+            <div style="background:#fff; border:1px solid #e9e9e7; border-radius:8px; padding:10px;"><div style="font-size:18px;font-weight:700;color:#d97706;">2</div><div style="font-size:10px;color:#9b9a97;">Predlogi</div></div>
+            <div style="background:#fff; border:1px solid #e9e9e7; border-radius:8px; padding:10px;"><div style="font-size:18px;font-weight:700;color:#dc2626;">1</div><div style="font-size:10px;color:#9b9a97;">Odprto</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEMO PANEL: Report -->
+    <div id="demo-report" class="demo-panel" style="background:#fff; border:1px solid #e9e9e7; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+      <div style="display:grid; grid-template-columns:1fr 1fr; min-height:420px;">
+        <div style="padding:40px; border-right:1px solid #e9e9e7; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:12px; color:#0073ff; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px;">Korak 4 / 4</div>
+            <h3 style="font-size:24px; font-weight:700; color:#0f0f1a; line-height:1.2; margin-bottom:16px;">Pripravi DDV-O.</h3>
+            <p style="color:#6b7280; line-height:1.6;">Konta. samodejno izpolni obrazec DDV-O iz procesiranih transakcij. En klik za izvoz XML, ki je pripravljen za oddajo na eDavki.</p>
+            <div style="margin-top:20px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; gap:8px; align-items:center; font-size:13px; color:#6b7280;"><span style="color:#0073ff;">→</span> Vse polje F1–F70 avtomatsko</div>
+              <div style="display:flex; gap:8px; align-items:center; font-size:13px; color:#6b7280;"><span style="color:#0073ff;">→</span> Export XML za eDavki</div>
+              <div style="display:flex; gap:8px; align-items:center; font-size:13px; color:#6b7280;"><span style="color:#0073ff;">→</span> KPR in KIR knjigi</div>
+            </div>
+          </div>
+          <a href="#pricing" style="background:#0073ff; color:#fff; text-decoration:none; display:inline-block; padding:12px 24px; border-radius:8px; font-size:14px; font-weight:600; align-self:flex-start;">Začni brezplačno →</a>
+        </div>
+        <div style="padding:24px; background:#f9f8f6;">
+          <div style="background:#fff; border:1px solid #e9e9e7; border-radius:10px; overflow:hidden; margin-bottom:12px;">
+            <div style="background:#0073ff; padding:10px 16px; font-size:11px; font-weight:700; color:#fff;">DDV-O · Március 2026</div>
+            <div style="padding:16px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px; padding-bottom:6px; border-bottom:1px solid #f1f0ee;"><span style="color:#6b7280;">F11 — Domača dobava</span><span style="font-weight:700; color:#37352f;">€84,200</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; padding-bottom:6px; border-bottom:1px solid #f1f0ee;"><span style="color:#6b7280;">F21 — Vstopni DDV</span><span style="font-weight:700; color:#37352f;">€2,140</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; padding-bottom:6px; border-bottom:1px solid #f1f0ee;"><span style="color:#6b7280;">F31 — Izstopni DDV</span><span style="font-weight:700; color:#37352f;">€18,524</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; padding-top:4px;"><span style="font-weight:600; color:#37352f;">DDV za plačilo</span><span style="font-size:15px; font-weight:700; color:#0073ff;">€16,384</span></div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px; background:#0073ff; color:#fff; border:none; padding:10px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Izvozi XML
+            </button>
+            <button style="flex:1; background:#fff; color:#37352f; border:1px solid #e9e9e7; padding:10px; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer;">Natisni PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FEATURES — "Spoznajte vašega AI asistenta"
+════════════════════════════════════════════════════════════ -->
+<section id="features" style="padding:96px 24px; background:#f9f8f6;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <h2 class="reveal" style="font-size:clamp(28px,4vw,48px); font-weight:800; letter-spacing:-1px; color:#0f0f1a; margin-bottom:12px;">Spoznajte vašega AI asistenta.</h2>
+    <p class="reveal" style="font-size:18px; color:#6b7280; margin-bottom:52px; max-width:480px;">Ni le software. Je računovodski asistent, ki dela 24/7 in se ne utrudi.</p>
+
+    <!-- Top row: 3 cards -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:16px;">
+
+      <!-- AI Processing -->
+      <div class="feature-tile reveal" style="background:#fff; border-radius:16px; padding:28px; border:1px solid #e9e9e7;">
+        <div style="width:40px;height:40px;background:#eff6ff;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:20px;">🤖</div>
+        <h3 style="font-size:18px; font-weight:700; color:#0f0f1a; margin-bottom:8px;">AI obdelava računov</h3>
+        <p style="font-size:14px; color:#6b7280; line-height:1.6;">OCR + Gemini 2.5 Flash izvleče vse podatke v sekunde. PDF, JPEG, PNG. Tudi skenirani.</p>
+        <div style="margin-top:16px; background:#f9f8f6; border-radius:10px; padding:12px; font-size:12px; color:#37352f;">
+          <div style="font-weight:600; margin-bottom:6px; color:#9b9a97;">Izvlečeni podatki</div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#6b7280;">Dobavitelj</span><span style="font-weight:600;">Telekom SLO</span></div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:#6b7280;">Znesek</span><span style="font-weight:600;">€87.40</span></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:#6b7280;">DDV 22%</span><span style="font-weight:600;">€15.76</span></div>
+        </div>
+      </div>
+
+      <!-- Reconciliation -->
+      <div class="feature-tile reveal" style="background:#0f0f1a; border-radius:16px; padding:28px; border:1px solid rgba(255,255,255,0.07);">
+        <div style="width:40px;height:40px;background:rgba(0,115,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:20px;">🏦</div>
+        <h3 style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">Bančno usklajevanje</h3>
+        <p style="font-size:14px; color:rgba(255,255,255,0.5); line-height:1.6;">AI poveže bančne vrstice z računi. Povprečno 87% samodejno ujemanje.</p>
+        <!-- Mini bar chart -->
+        <div style="margin-top:16px; display:flex; align-items:flex-end; gap:6px; height:60px;">
+          <div style="flex:1; background:rgba(0,115,255,0.5); border-radius:3px; height:45px;"></div>
+          <div style="flex:1; background:rgba(0,115,255,0.5); border-radius:3px; height:55px;"></div>
+          <div style="flex:1; background:rgba(0,115,255,0.5); border-radius:3px; height:35px;"></div>
+          <div style="flex:1; background:#0073ff; border-radius:3px; height:60px;"></div>
+          <div style="flex:1; background:rgba(0,115,255,0.5); border-radius:3px; height:50px;"></div>
+          <div style="flex:1; background:rgba(0,115,255,0.5); border-radius:3px; height:40px;"></div>
+        </div>
+        <div style="margin-top:8px; display:flex; justify-content:space-between; font-size:11px; color:rgba(255,255,255,0.3);">
+          <span>Okt</span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span>
+        </div>
+      </div>
+
+      <!-- DDV-O -->
+      <div class="feature-tile reveal" style="background:#0052cc; border-radius:16px; padding:28px;">
+        <div style="width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:20px;">📊</div>
+        <h3 style="font-size:18px; font-weight:700; color:#fff; margin-bottom:8px;">DDV-O avtomatsko</h3>
+        <p style="font-size:14px; color:rgba(255,255,255,0.7); line-height:1.6;">Vsa polja F1–F70 izpolnjena iz transakcij. Izvoz XML za eDavki z enim klikom.</p>
+        <div style="margin-top:16px; display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.8); background:rgba(255,255,255,0.1); border-radius:6px; padding:6px 10px;"><span>F11 Domač promet</span><span style="font-weight:700;">€84,200</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.8); background:rgba(255,255,255,0.1); border-radius:6px; padding:6px 10px;"><span>F21 Vstopni DDV</span><span style="font-weight:700;">€2,140</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:#fff; background:rgba(255,255,255,0.2); border-radius:6px; padding:6px 10px; font-weight:700;"><span>Za plačilo</span><span>€16,384</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row: 2 wide cards -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+      <!-- Payroll -->
+      <div class="feature-tile reveal" style="background:#f0fdf4; border-radius:16px; padding:28px; border:1px solid #bbf7d0;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:600; color:#16a34a; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Obračun plač</div>
+            <h3 style="font-size:22px; font-weight:700; color:#0f0f1a; line-height:1.2;">Od bruto do SEPA v minutah.</h3>
+          </div>
+          <div style="width:40px;height:40px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">💸</div>
+        </div>
+        <p style="font-size:14px; color:#6b7280; line-height:1.6; margin-bottom:16px;">Bolniška, dopust, nadure, malica, prevoz — Konta. izračuna neto, pripravi REK-O in SEPA XML za plačilni nalog.</p>
+        <!-- Mini payroll table -->
+        <div style="background:#fff; border-radius:10px; overflow:hidden; border:1px solid #e9e9e7;">
+          <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:0; background:#f7f6f3; padding:8px 12px; font-size:10px; font-weight:600; color:#9b9a97; text-transform:uppercase;">
+            <span>Zaposleni</span><span style="text-align:right;">Bruto</span><span style="text-align:right;">Neto</span><span style="text-align:right;">Strošek</span>
+          </div>
+          <div style="padding:0 12px;">
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; padding:8px 0; border-bottom:1px solid #f1f0ee; font-size:12px;">
+              <span style="color:#37352f; font-weight:500;">Jana Novak</span><span style="text-align:right; color:#6b7280;">€2,500</span><span style="text-align:right; color:#16a34a; font-weight:600;">€1,810</span><span style="text-align:right; color:#37352f;">€2,840</span>
+            </div>
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; padding:8px 0; font-size:12px;">
+              <span style="color:#37352f; font-weight:500;">Marko Kranjc</span><span style="text-align:right; color:#6b7280;">€3,200</span><span style="text-align:right; color:#16a34a; font-weight:600;">€2,210</span><span style="text-align:right; color:#37352f;">€3,640</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reports / KIR KPR -->
+      <div class="feature-tile reveal" style="background:#faf5ff; border-radius:16px; padding:28px; border:1px solid #e9d5ff;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:600; color:#7c3aed; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">Poročila</div>
+            <h3 style="font-size:22px; font-weight:700; color:#0f0f1a; line-height:1.2;">KIR, KPR in DDV poročila.</h3>
+          </div>
+          <div style="width:40px;height:40px;background:#ede9fe;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📋</div>
+        </div>
+        <p style="font-size:14px; color:#6b7280; line-height:1.6; margin-bottom:16px;">Knjiga prejetih in izdanih računov je vedno ažurna. Primerjalni grafi P/L po mesecih. Izvoz Excel in PDF.</p>
+        <!-- Mini donut chart representation -->
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:8px;">
+          <div style="background:#fff; border-radius:10px; padding:12px; border:1px solid #e9e9e7;">
+            <div style="font-size:10px; color:#9b9a97; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.05em;">Prihodki</div>
+            <div style="font-size:20px; font-weight:700; color:#16a34a;">€84,200</div>
+            <div style="font-size:10px; color:#16a34a;">↑ 8% vs. feb</div>
+          </div>
+          <div style="background:#fff; border-radius:10px; padding:12px; border:1px solid #e9e9e7;">
+            <div style="font-size:10px; color:#9b9a97; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.05em;">Odhodki</div>
+            <div style="font-size:20px; font-weight:700; color:#dc2626;">€31,450</div>
+            <div style="font-size:10px; color:#6b7280;">stabilno</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     HOW IT WORKS — 3 STEPS
+════════════════════════════════════════════════════════════ -->
+<section id="how-it-works" style="padding:96px 24px; background:#fff;">
+  <div style="max-width:900px; margin:0 auto; text-align:center;">
+    <h2 class="reveal" style="font-size:clamp(28px,4vw,48px); font-weight:800; letter-spacing:-1px; color:#0f0f1a; margin-bottom:12px;">Začnete v 5 minutah.</h2>
+    <p class="reveal" style="font-size:18px; color:#6b7280; margin-bottom:64px;">Brez namestitve, brez uvoza podatkov, brez konfiguracije.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:40px; text-align:left; position:relative;">
+      <!-- connecting line -->
+      <div style="position:absolute; top:28px; left:calc(33.33% - 0px); right:calc(33.33% - 0px); height:1px; background:linear-gradient(to right, #e9e9e7, #0073ff, #e9e9e7); pointer-events:none;"></div>
+
+      <div class="reveal" style="position:relative;">
+        <div style="width:56px; height:56px; background:#0073ff; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:#fff; margin-bottom:20px; box-shadow:0 4px 16px rgba(0,115,255,0.3);">1</div>
+        <h3 style="font-size:18px; font-weight:700; color:#0f0f1a; margin-bottom:8px;">Registracija & stranke</h3>
+        <p style="font-size:14px; color:#6b7280; line-height:1.6;">Odprite račun, dodajte stranke in ekipo. Uvoz iz Excel ali ročno — 2 minuti.</p>
+      </div>
+
+      <div class="reveal" style="position:relative;">
+        <div style="width:56px; height:56px; background:#0f0f1a; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:#fff; margin-bottom:20px;">2</div>
+        <h3 style="font-size:18px; font-weight:700; color:#0f0f1a; margin-bottom:8px;">Naloži dokumente</h3>
+        <p style="font-size:14px; color:#6b7280; line-height:1.6;">Povlecite PDF-e ali slike računov. AI jih obdela samodejno v ozadju.</p>
+      </div>
+
+      <div class="reveal" style="position:relative;">
+        <div style="width:56px; height:56px; background:#0073ff; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:#fff; margin-bottom:20px; box-shadow:0 4px 16px rgba(0,115,255,0.3);">3</div>
+        <h3 style="font-size:18px; font-weight:700; color:#0f0f1a; margin-bottom:8px;">Pregledaj & oddaj</h3>
+        <p style="font-size:14px; color:#6b7280; line-height:1.6;">Preverite tisto, kar AI ni prepričan. Ostalo potrdi v masi. DDV-O pripravi sam.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     SAVINGS CALCULATOR
+════════════════════════════════════════════════════════════ -->
+<section style="padding:80px 24px; background:#0f0f1a;">
+  <div style="max-width:900px; margin:0 auto; text-align:center;">
+    <h2 class="reveal" style="font-size:clamp(28px,4vw,48px); font-weight:800; letter-spacing:-1px; color:#fff; margin-bottom:8px;">Več produktivnosti. Manj orodij.</h2>
+    <p class="reveal" style="font-size:18px; color:rgba(255,255,255,0.5); margin-bottom:48px;">Konta. nadomesti 4 ločena orodja in prihrani povprečno 3 ure na dan.</p>
+
+    <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:40px;">
+      <div style="display:grid; grid-template-columns:1fr 2fr; gap:32px; align-items:start; text-align:left;">
+        <!-- Left: controls -->
+        <div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.5); font-weight:500; margin-bottom:8px;">Število strank</div>
+          <input type="range" id="client-slider" min="5" max="100" value="25" oninput="updateSavings()" style="width:100%; accent-color:#0073ff; margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.3);"><span>5</span><span id="client-count" style="color:#0073ff; font-weight:700;">25</span><span>100</span></div>
+
+          <div style="margin-top:24px; font-size:13px; color:rgba(255,255,255,0.5); font-weight:500; margin-bottom:8px;">Dokumenti / stranka / mesec</div>
+          <input type="range" id="docs-slider" min="10" max="100" value="30" oninput="updateSavings()" style="width:100%; accent-color:#0073ff; margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.3);"><span>10</span><span id="docs-count" style="color:#0073ff; font-weight:700;">30</span><span>100</span></div>
+        </div>
+        <!-- Right: outputs -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; text-align:center;">
+          <div style="background:rgba(255,255,255,0.05); border-radius:12px; padding:20px;">
+            <div style="font-size:11px; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">Dokumenti/mesec</div>
+            <div id="save-docs" style="font-size:32px; font-weight:800; color:#fff;">750</div>
+          </div>
+          <div style="background:rgba(0,115,255,0.12); border:1px solid rgba(0,115,255,0.3); border-radius:12px; padding:20px;">
+            <div style="font-size:11px; color:rgba(0,200,255,0.6); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">Prihranek ur/mesec</div>
+            <div id="save-hours" style="font-size:32px; font-weight:800; color:#7cb9ff;">37 h</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.05); border-radius:12px; padding:20px;">
+            <div style="font-size:11px; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">Vrednost prihrankov</div>
+            <div id="save-eur" style="font-size:32px; font-weight:800; color:#4ade80;">€1,480</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px; color:rgba(255,255,255,0.25); margin-top:16px;">Izračun temelji na povprečni uri dela računovodje €40 in 3 min/dokument za ročno obdelavo.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════════════════════ -->
+<section style="padding:96px 24px; background:#fff;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <h2 class="reveal" style="font-size:clamp(28px,4vw,48px); font-weight:800; letter-spacing:-1px; color:#0f0f1a; margin-bottom:8px;">Zaupajo nam računovodje.</h2>
+    <p class="reveal" style="font-size:18px; color:#6b7280; margin-bottom:52px;">Pravi računovodje. Resnični rezultati.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+      <div class="feature-tile reveal" style="background:#f9f8f6; border-radius:16px; padding:28px; border:1px solid #e9e9e7;">
+        <div style="display:flex; gap:2px; margin-bottom:16px;">
+          <span style="color:#f59e0b; font-size:16px;">★★★★★</span>
+        </div>
+        <p style="font-size:15px; color:#37352f; line-height:1.7; margin-bottom:20px; font-style:italic;">"Pred Konto sem za DDV-O porabila cel dan. Zdaj gre v manj kot uro. Konta. je res spremenila moje delo."</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; background:linear-gradient(135deg, #0073ff, #6d28d9); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:#fff; font-weight:700;">M</div>
+          <div><div style="font-size:14px; font-weight:600; color:#37352f;">Maja Kovačič</div><div style="font-size:12px; color:#9b9a97;">Računovotkinja, Kovačič d.o.o.</div></div>
+        </div>
+      </div>
+
+      <div class="feature-tile reveal" style="background:#0f0f1a; border-radius:16px; padding:28px;">
+        <div style="display:flex; gap:2px; margin-bottom:16px;">
+          <span style="color:#f59e0b; font-size:16px;">★★★★★</span>
+        </div>
+        <p style="font-size:15px; color:rgba(255,255,255,0.8); line-height:1.7; margin-bottom:20px; font-style:italic;">"Naš biro obdeluje 800+ računov mesečno. Konta. je vzela to delo s 3 računovodij in ga avtomatizirala. Fokusiramo se na stranke."</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; background:linear-gradient(135deg, #16a34a, #0073ff); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:#fff; font-weight:700;">B</div>
+          <div><div style="font-size:14px; font-weight:600; color:#fff;">Borut Novak</div><div style="font-size:12px; color:rgba(255,255,255,0.4);">Direktor, Finesa d.o.o.</div></div>
+        </div>
+      </div>
+
+      <div class="feature-tile reveal" style="background:#f9f8f6; border-radius:16px; padding:28px; border:1px solid #e9e9e7;">
+        <div style="display:flex; gap:2px; margin-bottom:16px;">
+          <span style="color:#f59e0b; font-size:16px;">★★★★★</span>
+        </div>
+        <p style="font-size:15px; color:#37352f; line-height:1.7; margin-bottom:20px; font-style:italic;">"Usklajevanje banke je bilo noč mora. Zdaj naloži izpisek SKB in Konta. sama poveže 90% vrstic. Res magic."</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; background:linear-gradient(135deg, #d97706, #dc2626); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:#fff; font-weight:700;">A</div>
+          <div><div style="font-size:14px; font-weight:600; color:#37352f;">Ana Petrovič</div><div style="font-size:12px; color:#9b9a97;">Samostojna računovodkinja, s.p.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote highlight -->
+    <div style="margin-top:48px; text-align:center; padding:40px; background:#f9f8f6; border-radius:16px; border:1px solid #e9e9e7;">
+      <p style="font-size:clamp(18px,2.5vw,28px); font-weight:600; color:#0f0f1a; line-height:1.4; font-style:italic; max-width:700px; margin:0 auto 16px;">"Konta. je Notion za računovodje — vse na enem mestu, preprosto in hitro."</p>
+      <p style="font-size:14px; color:#9b9a97; font-weight:500;">— Finance.si, december 2025</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PRICING
+════════════════════════════════════════════════════════════ -->
+<section id="pricing" style="padding:96px 24px; background:#f9f8f6;">
+  <div style="max-width:1000px; margin:0 auto;">
+    <h2 class="reveal" style="text-align:center; font-size:clamp(28px,4vw,48px); font-weight:800; letter-spacing:-1px; color:#0f0f1a; margin-bottom:8px;">Preproste, poštene cene.</h2>
+    <p class="reveal" style="text-align:center; font-size:18px; color:#6b7280; margin-bottom:16px;">Brez presenečenj. Odpovejte kadarkoli.</p>
+
+    <!-- Toggle annual/monthly -->
+    <div style="text-align:center; margin-bottom:48px; display:flex; align-items:center; justify-content:center; gap:12px;">
+      <span style="font-size:14px; color:#6b7280; font-weight:500;">Mesečno</span>
+      <div id="billing-toggle" onclick="toggleBilling()" style="width:44px; height:24px; background:#0073ff; border-radius:100px; position:relative; cursor:pointer; transition:background 0.2s;">
+        <div id="toggle-dot" style="width:20px; height:20px; background:#fff; border-radius:50%; position:absolute; top:2px; right:2px; transition:right 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+      </div>
+      <span style="font-size:14px; color:#6b7280; font-weight:500;">Letno</span>
+      <span style="font-size:12px; font-weight:600; color:#16a34a; background:#dcfce7; padding:2px 8px; border-radius:100px;">-20%</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+
+      <!-- Solo -->
+      <div class="price-card reveal">
+        <div style="font-size:13px; font-weight:600; color:#6b7280; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">Solo</div>
+        <div style="margin-bottom:8px;">
+          <span id="price-solo" style="font-size:40px; font-weight:800; color:#0f0f1a; letter-spacing:-1px;">€39</span>
+          <span style="font-size:14px; color:#9b9a97;">/mesec</span>
+        </div>
+        <p style="font-size:13px; color:#6b7280; margin-bottom:24px; line-height:1.5;">Za samostojne računovodje in male biroe.</p>
+        <a href="#" style="display:block; text-align:center; background:#0f0f1a; color:#fff; font-size:14px; font-weight:600; padding:12px; border-radius:10px; text-decoration:none; margin-bottom:24px;">Začni brezplačno</a>
+        <div style="font-size:12px; color:#9b9a97; margin-bottom:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Vključuje</div>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Do 20 strank</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>200 AI obdelav/mesec</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>DDV-O export XML</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Bančno usklajevanje</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>KIR & KPR poročila</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#b0afab;"><span style="color:#b0afab; flex-shrink:0;">—</span>Obračun plač</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#b0afab;"><span style="color:#b0afab; flex-shrink:0;">—</span>Multi-uporabniški dostop</li>
+        </ul>
+      </div>
+
+      <!-- Pro -->
+      <div class="price-card popular reveal" style="position:relative; background:#fff;">
+        <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:#0073ff; color:#fff; font-size:11px; font-weight:700; padding:4px 14px; border-radius:100px; white-space:nowrap;">Najpopularnejši</div>
+        <div style="font-size:13px; font-weight:600; color:#0073ff; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">Pro</div>
+        <div style="margin-bottom:8px;">
+          <span id="price-pro" style="font-size:40px; font-weight:800; color:#0f0f1a; letter-spacing:-1px;">€89</span>
+          <span style="font-size:14px; color:#9b9a97;">/mesec</span>
+        </div>
+        <p style="font-size:13px; color:#6b7280; margin-bottom:24px; line-height:1.5;">Za rastoče biroe z ekipo in več strankami.</p>
+        <a href="#" style="display:block; text-align:center; background:#0073ff; color:#fff; font-size:14px; font-weight:600; padding:12px; border-radius:10px; text-decoration:none; margin-bottom:24px; box-shadow:0 4px 16px rgba(0,115,255,0.3);">Začni brezplačno</a>
+        <div style="font-size:12px; color:#9b9a97; margin-bottom:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Vse iz Solo, plus</div>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Do 75 strank</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>1.000 AI obdelav/mesec</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Obračun plač + REK-O</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Multi-uporabniški (do 5)</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>SEPA XML za plačila</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Prioritetna podpora</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Strankin upload portal</li>
+        </ul>
+      </div>
+
+      <!-- Agency -->
+      <div class="price-card reveal">
+        <div style="font-size:13px; font-weight:600; color:#7c3aed; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">Agencija</div>
+        <div style="margin-bottom:8px;">
+          <span style="font-size:40px; font-weight:800; color:#0f0f1a; letter-spacing:-1px;">Po meri</span>
+        </div>
+        <p style="font-size:13px; color:#6b7280; margin-bottom:24px; line-height:1.5;">Za biroe z 100+ strankami in posebnimi potrebami.</p>
+        <a href="mailto:hello@konta.si" style="display:block; text-align:center; background:#f9f8f6; color:#0f0f1a; font-size:14px; font-weight:600; padding:12px; border-radius:10px; text-decoration:none; margin-bottom:24px; border:1px solid #e9e9e7;">Kontaktirajte nas</a>
+        <div style="font-size:12px; color:#9b9a97; margin-bottom:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Vse iz Pro, plus</div>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Neomejene stranke</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Neomejeni AI dokumenti</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Neomejeni uporabniki</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Dedicirani account manager</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Custom integracije</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>SLA 99.9% uptime</li>
+          <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#37352f;"><span style="color:#16a34a; font-weight:700; flex-shrink:0;">✓</span>Onboarding & šolanje</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="text-align:center; font-size:13px; color:#9b9a97; margin-top:32px;">Vsi paketi vključujejo 30-dnevni brezplačni preizkus · Brez kreditne kartice · GDPR skladno · Strežniki v EU</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     CTA — TRY FOR FREE
+════════════════════════════════════════════════════════════ -->
+<section style="padding:96px 24px; background:#0f0f1a; text-align:center; position:relative; overflow:hidden;">
+  <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:400px; background:radial-gradient(ellipse, rgba(0,115,255,0.2) 0%, transparent 70%); pointer-events:none;"></div>
+  <div style="position:relative; max-width:600px; margin:0 auto;">
+    <h2 style="font-size:clamp(32px,5vw,60px); font-weight:800; color:#fff; letter-spacing:-1.5px; margin-bottom:16px; line-height:1.1;">Začnite brezplačno<br>danes.</h2>
+    <p style="font-size:18px; color:rgba(255,255,255,0.5); margin-bottom:36px; line-height:1.6;">30 dni brez omejitev. Brez kreditne kartice. Prekličite kadarkoli.</p>
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <a href="#" style="background:#0073ff; color:#fff; font-size:16px; font-weight:600; padding:16px 32px; border-radius:10px; text-decoration:none; box-shadow:0 4px 24px rgba(0,115,255,0.4);">Ustvari brezplačen račun</a>
+      <a href="#demo" style="background:rgba(255,255,255,0.08); color:#fff; font-size:16px; font-weight:600; padding:16px 32px; border-radius:10px; text-decoration:none; border:1px solid rgba(255,255,255,0.15);">Oglej si demo</a>
+    </div>
+    <div style="margin-top:24px; display:flex; justify-content:center; gap:24px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:rgba(255,255,255,0.4);"><span style="color:#16a34a;">✓</span>Brez kreditne kartice</div>
+      <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:rgba(255,255,255,0.4);"><span style="color:#16a34a;">✓</span>GDPR skladno</div>
+      <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:rgba(255,255,255,0.4);"><span style="color:#16a34a;">✓</span>Strežniki v EU</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer style="background:#0a0a14; border-top:1px solid rgba(255,255,255,0.06); padding:64px 24px 40px;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px;">
+      <!-- Brand -->
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+          <div style="width:28px; height:28px; background:#0073ff; border-radius:6px; display:flex; align-items:center; justify-content:center;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 12L6 5L9 9L11 7L14 12H3Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/></svg>
+          </div>
+          <span style="color:#fff; font-weight:700; font-size:17px; letter-spacing:-0.3px;">Konta.</span>
+        </div>
+        <p style="font-size:14px; color:rgba(255,255,255,0.4); line-height:1.7; max-width:260px;">AI računovodski asistent za slovenske računovodje. Varno, GDPR skladno, strežniki v EU.</p>
+        <div style="display:flex; gap:12px; margin-top:20px;">
+          <a href="#" style="color:rgba(255,255,255,0.3); text-decoration:none; font-size:20px;">𝕏</a>
+          <a href="#" style="color:rgba(255,255,255,0.3); text-decoration:none; font-size:18px;">in</a>
+        </div>
+      </div>
+      <!-- Product -->
+      <div>
+        <div style="font-size:12px; font-weight:600; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:16px;">Produkt</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Funkcije</a>
+          <a href="#pricing" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Cene</a>
+          <a href="#demo" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Demo</a>
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Changelog</a>
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Roadmap</a>
+        </div>
+      </div>
+      <!-- Company -->
+      <div>
+        <div style="font-size:12px; font-weight:600; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:16px;">Podjetje</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">O nas</a>
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Blog</a>
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Kariera</a>
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Kontakt</a>
+        </div>
+      </div>
+      <!-- Legal -->
+      <div>
+        <div style="font-size:12px; font-weight:600; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:16px;">Pravno</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Zasebnost</a>
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Pogoji</a>
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Varnost</a>
+          <a href="#" style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;">Piškotki</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <p style="font-size:13px; color:rgba(255,255,255,0.2);">© 2026 Altura d.o.o. Vse pravice pridržane. · Slovenija, EU</p>
+      <div style="display:flex; gap:16px;">
+        <a href="#" style="font-size:13px; color:rgba(255,255,255,0.2); text-decoration:none;">Slovenščina (SLO)</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════ -->
+<script>
+  // ── Demo tabs
+  function switchDemo(tab) {
+    document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('demo-' + tab).classList.add('active');
+    const tabs = ['upload','ai','recon','report'];
+    document.querySelectorAll('.demo-tab')[tabs.indexOf(tab)].classList.add('active');
+  }
+
+  // ── Hero sidebar screens — real konta-app replica
+  const heroScreens = {
+    dashboard: `
+      <!-- Blue banner like real app -->
+      <div style="background:linear-gradient(135deg,#2563EB,#1d4ed8);border-radius:12px;padding:14px 16px;margin-bottom:14px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(255,255,255,0.08);border-radius:50%;"></div>
+        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;">Dober dan, Maja!</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.7);margin-bottom:10px;">Sreda, 2. april 2026</div>
+        <div style="display:flex;gap:6px;">
+          <div style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer;">↑ Naloži dokumente</div>
+          <div style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer;">+ Dodaj stranko</div>
+        </div>
+      </div>
+      <!-- 4 stat cards with colored icons -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+            <div style="width:22px;height:22px;background:#F5F3FF;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="#7C3AED"><path d="M2 2h5v5H2V2zm7 0h5v5H9V2zM2 9h5v5H2V9zm7 2.5a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z"/></svg>
+            </div>
+            <div style="font-size:8px;color:#9B9A97;font-weight:600;text-transform:uppercase;">Naloge</div>
+          </div>
+          <div style="font-size:18px;font-weight:700;color:#111827;">12</div>
+          <div style="display:flex;gap:2px;margin-top:4px;">${[60,80,40,90,70,55,85].map(h=>'<div style="width:4px;height:'+Math.round(h/5)+'px;background:#7C3AED;border-radius:1px;opacity:0.6;"></div>').join('')}</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+            <div style="width:22px;height:22px;background:#EFF6FF;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="#2563EB"><path d="M8 1a3 3 0 013 3v1h1a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h1V4a3 3 0 013-3zm0 1.5A1.5 1.5 0 006.5 4v1h3V4A1.5 1.5 0 008 2.5z"/></svg>
+            </div>
+            <div style="font-size:8px;color:#9B9A97;font-weight:600;text-transform:uppercase;">Stranke</div>
+          </div>
+          <div style="font-size:18px;font-weight:700;color:#111827;">24</div>
+          <div style="display:flex;gap:2px;margin-top:4px;">${[40,55,60,50,70,65,80].map(h=>'<div style="width:4px;height:'+Math.round(h/5)+'px;background:#2563EB;border-radius:1px;opacity:0.6;"></div>').join('')}</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+            <div style="width:22px;height:22px;background:#ECFDF5;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="#10B981"><path d="M3 1h7l4 4v9a1 1 0 01-1 1H3a1 1 0 01-1-1V2a1 1 0 011-1zm6 1v4h4L9 2z"/></svg>
+            </div>
+            <div style="font-size:8px;color:#9B9A97;font-weight:600;text-transform:uppercase;">Dokumenti</div>
+          </div>
+          <div style="font-size:18px;font-weight:700;color:#111827;">148</div>
+          <div style="display:flex;gap:2px;margin-top:4px;">${[50,70,85,60,90,75,95].map(h=>'<div style="width:4px;height:'+Math.round(h/5)+'px;background:#10B981;border-radius:1px;opacity:0.6;"></div>').join('')}</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+            <div style="width:22px;height:22px;background:#FFFBEB;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="#F59E0B"><path d="M8 1l2.5 5 5.5.8-4 3.9.9 5.3L8 13.5 3.1 16l.9-5.3-4-3.9L5.5 6z"/></svg>
+            </div>
+            <div style="font-size:8px;color:#9B9A97;font-weight:600;text-transform:uppercase;">Odprti</div>
+          </div>
+          <div style="font-size:18px;font-weight:700;color:#d97706;">7</div>
+          <div style="display:flex;gap:2px;margin-top:4px;">${[30,45,55,40,60,35,50].map(h=>'<div style="width:4px;height:'+Math.round(h/5)+'px;background:#F59E0B;border-radius:1px;opacity:0.6;"></div>').join('')}</div>
+        </div>
+      </div>
+      <!-- Deadline bar -->
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid #E9E9E7;border-radius:8px;margin-bottom:12px;">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#d97706" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v4m6-4v4M2 7h12"/></svg>
+        <div style="font-size:10px;color:#6b7280;">Rok za <b style="color:#37352f;">DDV-O</b>: 25. apr · <b style="color:#37352f;">REK</b>: 18. apr · <b style="color:#37352f;">KIR/KPR</b>: 20. apr</div>
+      </div>
+      <!-- Recent docs -->
+      <div style="border:1px solid #e9e9e7;border-radius:10px;overflow:hidden;">
+        <div style="background:#FAFAF9;padding:7px 14px;font-size:10px;font-weight:600;color:#9B9A97;text-transform:uppercase;letter-spacing:0.05em;">Zadnji dokumenti</div>
+        <div style="padding:0 14px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f1f0ee;"><div style="width:24px;height:24px;background:#dcfce7;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;">📄</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;color:#37352f;">Račun Telekom 2026-03</div><div style="font-size:9px;color:#9b9a97;">Telekom · €87.40</div></div><span style="font-size:9px;font-weight:600;color:#16a34a;background:#dcfce7;padding:2px 7px;border-radius:100px;">Odobreno</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f1f0ee;"><div style="width:24px;height:24px;background:#fef9c3;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;">📄</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;color:#37352f;">Petrol d.d. #2891</div><div style="font-size:9px;color:#9b9a97;">Petrol · €234.60</div></div><span style="font-size:9px;font-weight:600;color:#d97706;background:#fef9c3;padding:2px 7px;border-radius:100px;">V pregledu</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;"><div style="width:24px;height:24px;background:#dcfce7;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;">🏦</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;color:#37352f;">Izpisek SKB Banka</div><div style="font-size:9px;color:#9b9a97;">42 vrstic · usklajeno</div></div><span style="font-size:9px;font-weight:600;color:#16a34a;background:#dcfce7;padding:2px 7px;border-radius:100px;">Usklajeno</span></div>
+        </div>
+      </div>`,
+
+    stranke: `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:16px;font-weight:700;color:#111827;">Stranke</div>
+        <div style="background:#0073ff;color:#fff;font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;">+ Dodaj stranko</div>
+      </div>
+      <!-- Search -->
+      <div style="position:relative;margin-bottom:10px;">
+        <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#9CA3AF" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg>
+        <input type="text" placeholder="Išči po imenu, davčni št..." style="width:100%;padding:7px 10px 7px 28px;border:1px solid #E5E7EB;border-radius:8px;font-size:11px;color:#37352f;outline:none;" readonly>
+      </div>
+      <!-- Filter pills -->
+      <div style="display:flex;gap:5px;margin-bottom:12px;">
+        <span style="padding:3px 9px;background:#0073ff;color:#fff;border-radius:5px;font-size:10px;font-weight:500;">Vse (24)</span>
+        <span style="padding:3px 9px;background:#fff;color:#6b7280;border:1px solid #e2e8f0;border-radius:5px;font-size:10px;font-weight:500;">Aktivne</span>
+        <span style="padding:3px 9px;background:#fff;color:#6b7280;border:1px solid #e2e8f0;border-radius:5px;font-size:10px;font-weight:500;">DDV</span>
+        <span style="padding:3px 9px;background:#fff;color:#6b7280;border:1px solid #e2e8f0;border-radius:5px;font-size:10px;font-weight:500;">V čakanju</span>
+      </div>
+      <!-- Client cards -->
+      ${[
+        ['Mercator d.d.','SI12345678','34 dok · 2 nalogi','Aktiven','#16a34a','#dcfce7'],
+        ['Telekom Slovenije','SI98765432','28 dok · 0 nalog','Aktiven','#16a34a','#dcfce7'],
+        ['Petrol d.d.','SI55667788','41 dok · 5 nalog','Pozornost','#d97706','#fef9c3'],
+        ['SKB Banka','SI11223344','19 dok · 1 naloga','Aktiven','#16a34a','#dcfce7'],
+      ].map(([n,tax,info,s,sc,bg])=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f1f0ee;">
+        <div style="width:32px;height:32px;background:#e8f0ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0073ff;flex-shrink:0;">${n[0]}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;font-weight:600;color:#37352f;">${n}</div>
+          <div style="font-size:9px;color:#9b9a97;">${tax} · ${info}</div>
+        </div>
+        <span style="font-size:9px;font-weight:600;color:${sc};background:${bg};padding:2px 7px;border-radius:100px;flex-shrink:0;">${s}</span>
+      </div>`).join('')}`,
+
+    dokumenti: `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:16px;font-weight:700;color:#111827;">Dokumenti</div>
+        <div style="background:#0073ff;color:#fff;font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;">+ Naloži</div>
+      </div>
+      <!-- Pipeline status cards -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;">
+        <div style="background:#f3f4f6;border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:8px;color:#6b7280;font-weight:600;text-transform:uppercase;">Naloženi</div>
+          <div style="font-size:16px;font-weight:700;color:#37352f;">148</div>
+        </div>
+        <div style="background:#dbeafe;border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:8px;color:#2563eb;font-weight:600;text-transform:uppercase;">Procesirani</div>
+          <div style="font-size:16px;font-weight:700;color:#2563eb;">141</div>
+        </div>
+        <div style="background:#fef3c7;border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:8px;color:#d97706;font-weight:600;text-transform:uppercase;">Zastavice</div>
+          <div style="font-size:16px;font-weight:700;color:#d97706;">4</div>
+        </div>
+        <div style="background:#dcfce7;border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:8px;color:#16a34a;font-weight:600;text-transform:uppercase;">Odobreni</div>
+          <div style="font-size:16px;font-weight:700;color:#16a34a;">137</div>
+        </div>
+      </div>
+      <!-- n8n-style workflow -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:14px;padding:10px 0;">
+        <div style="background:#fff;border:1px solid #E9E9E7;border-radius:10px;padding:8px 12px;text-align:center;">
+          <div style="width:24px;height:24px;background:#EFF6FF;border-radius:6px;display:flex;align-items:center;justify-content:center;margin:0 auto 4px;">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="#2563EB"><path d="M7 1v8l-3-3-1 1 5 5 5-5-1-1-3 3V1H7z"/></svg>
+          </div>
+          <div style="font-size:9px;font-weight:600;color:#37352f;">Naloži</div>
+        </div>
+        <div style="width:24px;height:2px;background:#d1d5db;position:relative;"><div style="position:absolute;right:-3px;top:-3px;border:solid #d1d5db;border-width:0 2px 2px 0;padding:3px;transform:rotate(-45deg);"></div></div>
+        <div style="background:#fff;border:1px solid #E9E9E7;border-radius:10px;padding:8px 12px;text-align:center;">
+          <div style="width:24px;height:24px;background:#ECFDF5;border-radius:6px;display:flex;align-items:center;justify-content:center;margin:0 auto 4px;">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="#10B981"><path d="M8 1a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3zM3 13c0-2.8 2.2-5 5-5s5 2.2 5 5v1H3v-1z"/></svg>
+          </div>
+          <div style="font-size:9px;font-weight:600;color:#37352f;">Stranka</div>
+        </div>
+        <div style="width:24px;height:2px;background:#d1d5db;position:relative;"><div style="position:absolute;right:-3px;top:-3px;border:solid #d1d5db;border-width:0 2px 2px 0;padding:3px;transform:rotate(-45deg);"></div></div>
+        <div style="background:#fff;border:1px solid #0073ff;border-radius:10px;padding:8px 12px;text-align:center;box-shadow:0 0 0 2px rgba(0,115,255,0.1);">
+          <div style="width:24px;height:24px;background:#0073ff;border-radius:6px;display:flex;align-items:center;justify-content:center;margin:0 auto 4px;">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="#fff"><path d="M8 1l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z"/></svg>
+          </div>
+          <div style="font-size:9px;font-weight:600;color:#0073ff;">Procesiraj</div>
+        </div>
+      </div>
+      <!-- Document table -->
+      <div style="border:1px solid #e9e9e7;border-radius:10px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:2fr 0.6fr 0.8fr 0.8fr;background:#FAFAF9;padding:6px 12px;font-size:9px;font-weight:600;color:#9B9A97;text-transform:uppercase;letter-spacing:0.05em;gap:6px;"><span>Dokument</span><span style="text-align:center;">Smer</span><span style="text-align:right;">Znesek</span><span style="text-align:center;">Status</span></div>
+        ${[
+          ['Račun Telekom 2026-03','KPR','€87.40','Odobreno','#16a34a','#dcfce7'],
+          ['Petrol d.d. #2891','KPR','€234.60','V pregledu','#d97706','#fef9c3'],
+          ['Izdani račun #0042','KIR','€1.204','Odobreno','#16a34a','#dcfce7'],
+          ['SKB provizija','KPR','€12.00','Odobreno','#16a34a','#dcfce7'],
+        ].map(([name,dir,amt,status,sc,bg],i)=>`
+        <div style="display:grid;grid-template-columns:2fr 0.6fr 0.8fr 0.8fr;padding:7px 12px;gap:6px;align-items:center;${i<3?'border-bottom:1px solid #f1f0ee;':''}">
+          <div style="font-size:11px;font-weight:600;color:#37352f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${name}</div>
+          <div style="text-align:center;"><span style="font-size:9px;font-weight:600;color:${dir==='KIR'?'#7C3AED':'#2563EB'};background:${dir==='KIR'?'#F5F3FF':'#EFF6FF'};padding:1px 6px;border-radius:4px;">${dir}</span></div>
+          <div style="font-size:11px;font-weight:600;color:#37352f;text-align:right;">${amt}</div>
+          <div style="text-align:center;"><span style="font-size:9px;font-weight:600;color:${sc};background:${bg};padding:2px 7px;border-radius:100px;">${status}</span></div>
+        </div>`).join('')}
+      </div>`,
+
+    transakcije: `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#111827;">Pregled transakcij</div>
+          <div style="font-size:10px;color:#9B9A97;">Mercator d.d. · April 2026</div>
+        </div>
+        <div style="display:flex;gap:4px;">
+          <div style="background:#dcfce7;color:#16a34a;font-size:9px;font-weight:600;padding:4px 8px;border-radius:5px;">Odobri</div>
+          <div style="background:#fee2e2;color:#dc2626;font-size:9px;font-weight:600;padding:4px 8px;border-radius:5px;">Zavrni</div>
+        </div>
+      </div>
+      <!-- Stats row -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px;">
+        <div style="background:#f0fdf4;border-radius:8px;padding:8px 10px;"><div style="font-size:8px;color:#16a34a;font-weight:600;text-transform:uppercase;">Fakturirano</div><div style="font-size:16px;font-weight:700;color:#15803d;">€12.4k</div></div>
+        <div style="background:#fef9c3;border-radius:8px;padding:8px 10px;"><div style="font-size:8px;color:#ca8a04;font-weight:600;text-transform:uppercase;">Čaka pregled</div><div style="font-size:16px;font-weight:700;color:#a16207;">7</div></div>
+        <div style="background:#fee2e2;border-radius:8px;padding:8px 10px;"><div style="font-size:8px;color:#dc2626;font-weight:600;text-transform:uppercase;">Zastavica</div><div style="font-size:16px;font-weight:700;color:#dc2626;">2</div></div>
+      </div>
+      <!-- Filter buttons -->
+      <div style="display:flex;gap:5px;margin-bottom:10px;">
+        <span style="padding:3px 9px;background:#0073ff;color:#fff;border-radius:5px;font-size:10px;font-weight:500;">Vse</span>
+        <span style="padding:3px 9px;background:#fff;color:#6b7280;border:1px solid #e2e8f0;border-radius:5px;font-size:10px;font-weight:500;">Čaka</span>
+        <span style="padding:3px 9px;background:#fff;color:#6b7280;border:1px solid #e2e8f0;border-radius:5px;font-size:10px;font-weight:500;">Zastavica</span>
+        <span style="padding:3px 9px;background:#fff;color:#6b7280;border:1px solid #e2e8f0;border-radius:5px;font-size:10px;font-weight:500;">Odobreno</span>
+      </div>
+      <!-- Transaction table -->
+      <div style="border:1px solid #e9e9e7;border-radius:10px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:0.7fr 1.3fr 0.8fr 0.8fr 0.7fr;background:#FAFAF9;padding:6px 12px;font-size:9px;font-weight:600;color:#9B9A97;text-transform:uppercase;letter-spacing:0.04em;gap:4px;"><span>Datum</span><span>Dobavitelj</span><span style="text-align:right;">Znesek</span><span style="text-align:center;">Zaup.</span><span style="text-align:center;">Status</span></div>
+        ${[
+          ['02.04','Telekom Slovenije','€87.40','98%','Odobreno','#16a34a','#dcfce7'],
+          ['01.04','Petrol d.d.','€234.60','73%','V pregledu','#d97706','#fef9c3'],
+          ['01.04','Plača — Apr','€8.420','—','Odobreno','#16a34a','#dcfce7'],
+          ['31.03','Mercator d.d.','€67.20','45%','Zastavica','#dc2626','#fee2e2'],
+          ['30.03','Vhodna plačila','€12.400','—','Odobreno','#16a34a','#dcfce7'],
+        ].map(([d,desc,amt,conf,status,sc,bg],i)=>`
+        <div style="display:grid;grid-template-columns:0.7fr 1.3fr 0.8fr 0.8fr 0.7fr;padding:7px 12px;gap:4px;align-items:center;${i<4?'border-bottom:1px solid #f1f0ee;':''}">
+          <span style="font-size:10px;color:#9b9a97;">${d}</span>
+          <span style="font-size:11px;font-weight:600;color:#37352f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${desc}</span>
+          <span style="font-size:11px;font-weight:600;text-align:right;color:#37352f;">${amt}</span>
+          <span style="font-size:10px;text-align:center;color:${conf==='—'?'#9b9a97':parseInt(conf)>80?'#16a34a':'#d97706'};font-weight:600;">${conf}</span>
+          <span style="font-size:9px;font-weight:600;text-align:center;color:${sc};background:${bg};padding:2px 5px;border-radius:100px;">${status}</span>
+        </div>`).join('')}
+      </div>`,
+
+    usklajevanje: `
+      <div style="margin-bottom:12px;">
+        <div style="font-size:16px;font-weight:700;color:#111827;">Bančno usklajevanje</div>
+        <div style="font-size:10px;color:#9B9A97;">Naložite bančni izpisek — AI ga poveže z računi</div>
+      </div>
+      <!-- Step indicator -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:16px;">
+        <div style="width:22px;height:22px;background:#2563EB;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;">1</div>
+        <div style="width:28px;height:2px;background:#D0CFC9;"></div>
+        <div style="width:22px;height:22px;background:#F1F0EE;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#9B9A97;">2</div>
+        <div style="width:28px;height:2px;background:#D0CFC9;"></div>
+        <div style="width:22px;height:22px;background:#F1F0EE;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#9B9A97;">3</div>
+      </div>
+      <!-- Drop zone -->
+      <div style="border:2px dashed #D0CFC9;border-radius:12px;padding:24px 16px;text-align:center;background:#FAFAF9;margin-bottom:14px;cursor:pointer;" onmouseenter="this.style.borderColor='#0073ff';this.style.background='#eff6ff'" onmouseleave="this.style.borderColor='#D0CFC9';this.style.background='#FAFAF9'">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#2563EB" stroke-width="1.5"><path d="M7 1v8m-3-3l3-3 3 3"/><path d="M1 11v2a2 2 0 002 2h10a2 2 0 002-2v-2"/></svg>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:#37352f;margin-bottom:4px;">Povleci bančni izpisek sem</div>
+        <div style="font-size:10px;color:#9b9a97;">ali klikni za izbiro</div>
+        <div style="display:inline-flex;align-items:center;gap:4px;background:#EFF6FF;border-radius:100px;padding:3px 10px;margin-top:8px;">
+          <span style="font-size:9px;font-weight:600;color:#2563EB;">CSV · MT940 · XML camt.053</span>
+        </div>
+      </div>
+      <!-- Pending sidebar -->
+      <div style="background:#fff;border:1px solid #E9E9E7;border-top:3px solid #2563EB;border-radius:8px;padding:12px;">
+        <div style="font-size:11px;font-weight:600;color:#37352f;margin-bottom:8px;">Neusklajeno za stranko</div>
+        <div style="display:flex;gap:12px;">
+          <div><div style="font-size:9px;color:#6b7280;">Dokumenti</div><div style="font-size:16px;font-weight:700;color:#37352f;">23</div></div>
+          <div><div style="font-size:9px;color:#6b7280;">Neusklajene tx</div><div style="font-size:16px;font-weight:700;color:#d97706;">8</div></div>
+        </div>
+      </div>`,
+
+    porocila: `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#111827;">Davčna Poročila</div>
+          <div style="font-size:10px;color:#9B9A97;">Mercator d.d. · Q1 2026</div>
+        </div>
+        <div style="background:#0073ff;color:#fff;font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;">Generiraj vse</div>
+      </div>
+      <!-- Report cards with colored left border -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-left:3px solid #2563EB;border-radius:8px;padding:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:start;">
+            <div style="font-size:11px;font-weight:700;color:#111827;">DDV-O</div>
+            <span style="font-size:8px;font-weight:600;color:#16a34a;background:#dcfce7;padding:1px 6px;border-radius:100px;">Pripravljen</span>
+          </div>
+          <div style="font-size:9px;color:#9B9A97;margin:2px 0 6px;">Obračun DDV</div>
+          <div style="display:flex;gap:4px;">
+            <div style="background:#F8FAFC;border-radius:4px;padding:4px 6px;flex:1;"><div style="font-size:7px;color:#9B9A97;text-transform:uppercase;">Osnova</div><div style="font-size:11px;font-weight:700;color:#111827;">€38.2k</div></div>
+            <div style="background:#F8FAFC;border-radius:4px;padding:4px 6px;flex:1;"><div style="font-size:7px;color:#9B9A97;text-transform:uppercase;">DDV 22%</div><div style="font-size:11px;font-weight:700;color:#2563EB;">€8.4k</div></div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-left:3px solid #10B981;border-radius:8px;padding:10px;">
+          <div style="font-size:11px;font-weight:700;color:#111827;">KPR</div>
+          <div style="font-size:9px;color:#9B9A97;margin:2px 0 6px;">Knjiga prejetih računov</div>
+          <div style="display:flex;gap:4px;">
+            <div style="background:#F8FAFC;border-radius:4px;padding:4px 6px;flex:1;"><div style="font-size:7px;color:#9B9A97;text-transform:uppercase;">Vnosov</div><div style="font-size:11px;font-weight:700;color:#111827;">87</div></div>
+            <div style="background:#F8FAFC;border-radius:4px;padding:4px 6px;flex:1;"><div style="font-size:7px;color:#9B9A97;text-transform:uppercase;">Skupaj</div><div style="font-size:11px;font-weight:700;color:#2563EB;">€42.1k</div></div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-left:3px solid #7C3AED;border-radius:8px;padding:10px;">
+          <div style="font-size:11px;font-weight:700;color:#111827;">KIR</div>
+          <div style="font-size:9px;color:#9B9A97;margin:2px 0 6px;">Knjiga izdanih računov</div>
+          <div style="display:flex;gap:4px;">
+            <div style="background:#F8FAFC;border-radius:4px;padding:4px 6px;flex:1;"><div style="font-size:7px;color:#9B9A97;text-transform:uppercase;">Vnosov</div><div style="font-size:11px;font-weight:700;color:#111827;">34</div></div>
+            <div style="background:#F8FAFC;border-radius:4px;padding:4px 6px;flex:1;"><div style="font-size:7px;color:#9B9A97;text-transform:uppercase;">Skupaj</div><div style="font-size:11px;font-weight:700;color:#7C3AED;">€18.6k</div></div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-left:3px solid #F59E0B;border-radius:8px;padding:10px;">
+          <div style="font-size:11px;font-weight:700;color:#111827;">FURS Izvoz</div>
+          <div style="font-size:9px;color:#9B9A97;margin:2px 0 6px;">ZIP za oddajo</div>
+          <div style="display:flex;gap:4px;">
+            <div style="background:#F8FAFC;border-radius:4px;padding:4px 6px;flex:1;"><div style="font-size:7px;color:#9B9A97;text-transform:uppercase;">Datoteke</div><div style="font-size:11px;font-weight:700;color:#111827;">3</div></div>
+            <div style="background:#0073ff;border-radius:6px;padding:4px 8px;flex:1;display:flex;align-items:center;justify-content:center;cursor:pointer;"><span style="font-size:9px;font-weight:600;color:#fff;">Prenesi ZIP</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Financial summary -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px;">
+        <div style="font-size:11px;font-weight:600;color:#111827;margin-bottom:8px;">Finančni povzetek obdobja</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+          <div style="background:#ECFDF5;border-radius:6px;padding:6px;text-align:center;"><div style="font-size:7px;color:#10B981;font-weight:600;text-transform:uppercase;">Prihodki</div><div style="font-size:12px;font-weight:700;color:#10B981;">€56.8k</div></div>
+          <div style="background:#FEF2F2;border-radius:6px;padding:6px;text-align:center;"><div style="font-size:7px;color:#EF4444;font-weight:600;text-transform:uppercase;">Odhodki</div><div style="font-size:12px;font-weight:700;color:#EF4444;">€42.1k</div></div>
+          <div style="background:#EFF6FF;border-radius:6px;padding:6px;text-align:center;"><div style="font-size:7px;color:#2563EB;font-weight:600;text-transform:uppercase;">DDV</div><div style="font-size:12px;font-weight:700;color:#2563EB;">€3.2k</div></div>
+          <div style="background:#F8FAFC;border-radius:6px;padding:6px;text-align:center;"><div style="font-size:7px;color:#111827;font-weight:600;text-transform:uppercase;">Dobiček</div><div style="font-size:12px;font-weight:700;color:#111827;">€14.7k</div></div>
+        </div>
+      </div>`,
+
+    place: `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#111827;">Plače</div>
+          <div style="font-size:10px;color:#9B9A97;">Mercator d.d. · April 2026</div>
+        </div>
+        <div style="background:#0073ff;color:#fff;font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;">+ Dodaj zaposlenega</div>
+      </div>
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;"><div style="font-size:8px;color:#6b7280;font-weight:600;text-transform:uppercase;">Zaposleni</div><div style="font-size:18px;font-weight:700;color:#111827;">4</div></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;"><div style="font-size:8px;color:#6b7280;font-weight:600;text-transform:uppercase;">Skupaj bruto</div><div style="font-size:14px;font-weight:700;color:#111827;">€8.700</div></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;"><div style="font-size:8px;color:#6b7280;font-weight:600;text-transform:uppercase;">Neto izplačilo</div><div style="font-size:14px;font-weight:700;color:#111827;">€6.300</div></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;"><div style="font-size:8px;color:#6b7280;font-weight:600;text-transform:uppercase;">Prispevki del.</div><div style="font-size:14px;font-weight:700;color:#111827;">€1.404</div></div>
+      </div>
+      <!-- Employee table -->
+      <div style="border:1px solid #e9e9e7;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+        <div style="padding:8px 14px;font-size:11px;font-weight:600;color:#37352f;background:#FAFAF9;border-bottom:1px solid #e9e9e7;">Zaposleni</div>
+        <div style="display:grid;grid-template-columns:1.5fr 1fr 0.8fr 0.8fr;background:#FAFAF9;padding:5px 14px;font-size:9px;font-weight:600;color:#9B9A97;text-transform:uppercase;letter-spacing:0.04em;gap:6px;border-bottom:1px solid #e9e9e7;"><span>Ime</span><span>Delovno mesto</span><span style="text-align:right;">Bruto</span><span style="text-align:right;">Neto</span></div>
+        ${[
+          ['Jana Novak','Računovodja','€2.500','€1.810'],
+          ['Marko Peršin','Svetovalec','€2.200','€1.590'],
+          ['Ana Kovač','Asistentka','€1.900','€1.380'],
+          ['Luka Zupan','Analitik','€2.100','€1.520'],
+        ].map(([n,role,b,net],i)=>`
+        <div style="display:grid;grid-template-columns:1.5fr 1fr 0.8fr 0.8fr;padding:8px 14px;gap:6px;align-items:center;${i<3?'border-bottom:1px solid #f1f0ee;':''}">
+          <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;background:#e8f0ff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#0073ff;">${n[0]}</div><span style="font-size:11px;font-weight:600;color:#37352f;">${n}</span></div>
+          <span style="font-size:10px;color:#6b7280;">${role}</span>
+          <span style="font-size:11px;color:#6b7280;text-align:right;">${b}</span>
+          <span style="font-size:11px;font-weight:600;color:#37352f;text-align:right;">${net}</span>
+        </div>`).join('')}
+      </div>
+      <!-- Monthly runs -->
+      <div style="border:1px solid #e9e9e7;border-radius:10px;overflow:hidden;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:#FAFAF9;border-bottom:1px solid #e9e9e7;">
+          <span style="font-size:11px;font-weight:600;color:#37352f;">Mesečni obračuni</span>
+          <span style="background:#0073ff;color:#fff;font-size:9px;font-weight:600;padding:3px 8px;border-radius:5px;cursor:pointer;">+ Nov obračun</span>
+        </div>
+        ${[
+          ['April 2026','V pripravi','#d97706','#fef9c3'],
+          ['Marec 2026','Zaključen','#16a34a','#dcfce7'],
+          ['Februar 2026','Zaključen','#16a34a','#dcfce7'],
+        ].map(([period,s,sc,bg],i)=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;${i<2?'border-bottom:1px solid #f1f0ee;':''}">
+          <span style="font-size:11px;font-weight:600;color:#37352f;">${period}</span>
+          <span style="font-size:9px;font-weight:600;color:${sc};background:${bg};padding:2px 7px;border-radius:100px;">${s}</span>
+        </div>`).join('')}
+      </div>`
+  };
+
+  function switchHeroScreen(name) {
+    document.querySelectorAll('.hnav').forEach(el => {
+      const isActive = el.dataset.screen === name;
+      el.style.background = isActive ? '#e8f0ff' : '';
+      el.style.color = isActive ? '#0073ff' : '#6b7280';
+      el.style.fontWeight = isActive ? '600' : '400';
+    });
+    document.getElementById('hero-main').innerHTML = heroScreens[name] || '';
+  }
+
+  // Init hero on load
+  switchHeroScreen('dashboard');
+
+  // ── Upload simulation
+  function simulateUpload() {
+    const zone = document.getElementById('drop-zone');
+    const prog = document.getElementById('upload-progress');
+    const bar  = document.getElementById('upload-bar');
+    const chk  = document.getElementById('upload-check');
+    zone.style.display = 'none';
+    prog.style.display = 'block';
+    setTimeout(() => { bar.style.width = '60%'; }, 100);
+    setTimeout(() => { bar.style.width = '100%'; }, 600);
+    setTimeout(() => { chk.style.display = 'block'; bar.style.background = '#16a34a'; }, 1000);
+    setTimeout(() => { switchDemo('ai'); }, 1800);
+  }
+
+  // ── Savings calculator
+  function updateSavings() {
+    const clients = parseInt(document.getElementById('client-slider').value);
+    const docs    = parseInt(document.getElementById('docs-slider').value);
+    document.getElementById('client-count').textContent = clients;
+    document.getElementById('docs-count').textContent   = docs;
+    const totalDocs  = clients * docs;
+    const hoursSaved = Math.round(totalDocs * 3 / 60); // 3 min/doc saved
+    const eurSaved   = hoursSaved * 40; // €40/h
+    document.getElementById('save-docs').textContent  = totalDocs.toLocaleString();
+    document.getElementById('save-hours').textContent = hoursSaved + ' h';
+    document.getElementById('save-eur').textContent   = '€' + eurSaved.toLocaleString();
+  }
+
+  // ── Billing toggle
+  let annualBilling = true;
+  const prices = { solo: [39, 49], pro: [89, 109] }; // [annual, monthly]
+  function toggleBilling() {
+    annualBilling = !annualBilling;
+    const dot = document.getElementById('toggle-dot');
+    const toggle = document.getElementById('billing-toggle');
+    dot.style.right = annualBilling ? '2px' : 'calc(100% - 22px)';
+    toggle.style.background = annualBilling ? '#0073ff' : '#9b9a97';
+    document.getElementById('price-solo').textContent = '€' + (annualBilling ? prices.solo[0] : prices.solo[1]);
+    document.getElementById('price-pro').textContent  = '€' + (annualBilling ? prices.pro[0]  : prices.pro[1]);
+  }
+  // Init: show annual prices
+  toggleBilling();
+
+  // ── Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Init savings
+  updateSavings();
+</script>
+</body>
+</html>

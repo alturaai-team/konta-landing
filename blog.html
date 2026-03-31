@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Konta</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .post-card { border: 1px solid #e5e7eb; border-radius: 1rem; overflow: hidden; transition: box-shadow 0.2s, border-color 0.2s; cursor: pointer; }
+  .post-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.09); border-color: #bfdbfe; }
+</style>
+</head>
+<body class="bg-white">
+
+<!-- NAV -->
+<nav class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+  <div id="navbar-pill" class="pointer-events-auto bg-white/95 backdrop-blur-md border border-gray-200 rounded-full px-6 py-3 shadow-lg flex items-center justify-between w-full max-w-3xl">
+    <div class="flex items-center gap-7">
+      <a href="konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+      <div class="hidden md:flex items-center gap-5 text-sm text-gray-500">
+        <a href="konta-landing.html#how-it-works" class="hover:text-gray-900 transition-colors">Kako deluje</a>
+        <a href="konta-landing.html#examples" class="hover:text-gray-900 transition-colors">Primeri</a>
+        <a href="konta-landing.html#pricing" class="hover:text-gray-900 transition-colors">Cene</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#" class="text-sm text-gray-500 hover:text-gray-900 transition-colors px-3 py-1.5 hidden md:block">Prijavite se</a>
+      <a href="#" class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-colors font-semibold">Začnite brezplačno</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="pt-32 pb-12 bg-gray-50 border-b border-gray-100">
+  <div class="max-w-4xl mx-auto px-6">
+    <a href="konta-landing.html" class="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors mb-6">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      Nazaj na Konta
+    </a>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Blog</h1>
+    <p class="text-gray-500 text-lg">Nasveti za računovodje, novosti Konte in pogled na prihodnost računovodstva.</p>
+  </div>
+</div>
+
+<!-- POSTS -->
+<div class="max-w-4xl mx-auto px-6 py-16">
+
+  <!-- Featured post -->
+  <div class="post-card mb-10 bg-white">
+    <img src="https://placehold.co/900x380/eff6ff/3b82f6?text=Kako+AI+bere+vaše+račune" alt="Kako AI bere vaše račune" class="w-full h-56 object-cover">
+    <div class="p-7">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-xs font-semibold text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">Produkt</span>
+        <span class="text-xs text-gray-400">15. januar 2025 · 6 min branja</span>
+      </div>
+      <h2 class="text-xl font-extrabold text-gray-900 mb-2">Kako AI prebere vaš račun v 2 sekundah</h2>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">Razložimo, kako Konta prepozna dobavitelja, znesek, DDV in kategorijo — brez tipkanja. Vpogled v tehnologijo za ekstrakcijo dokumentov.</p>
+      <span class="text-blue-600 text-sm font-semibold hover:text-blue-700">Preberite →</span>
+    </div>
+  </div>
+
+  <!-- Grid of posts -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <div class="post-card bg-white">
+      <img src="https://placehold.co/600x260/f0fdf4/22c55e?text=DDV-O+v+2025" alt="DDV-O 2025" class="w-full h-40 object-cover">
+      <div class="p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-xs font-semibold text-green-700 bg-green-50 border border-green-100 px-2.5 py-0.5 rounded-full">Zakonodaja</span>
+          <span class="text-xs text-gray-400">8. jan 2025 · 4 min</span>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-1.5">DDV-O v 2025: kaj se je spremenilo</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">Pregled sprememb pri oddaji DDV-O obrazcev za davčno leto 2025 in kako Konta samodejno upošteva nova pravila.</p>
+      </div>
+    </div>
+
+    <div class="post-card bg-white">
+      <img src="https://placehold.co/600x260/faf5ff/a855f7?text=Bančno+usklajevanje" alt="Bančno usklajevanje" class="w-full h-40 object-cover">
+      <div class="p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-xs font-semibold text-purple-700 bg-purple-50 border border-purple-100 px-2.5 py-0.5 rounded-full">Nasveti</span>
+          <span class="text-xs text-gray-400">2. jan 2025 · 5 min</span>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-1.5">5 napak pri bančnem usklajevanju (in kako se jim izogniti)</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">Najpogostejše napake, ki jih vidimo pri računovodjih, in kako avtomatizacija pomaga preprečiti vsako od njih.</p>
+      </div>
+    </div>
+
+    <div class="post-card bg-white">
+      <img src="https://placehold.co/600x260/fff7ed/f97316?text=Strankin+portal" alt="Strankin portal" class="w-full h-40 object-cover">
+      <div class="p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-xs font-semibold text-orange-700 bg-orange-50 border border-orange-100 px-2.5 py-0.5 rounded-full">Funkcija</span>
+          <span class="text-xs text-gray-400">20. dec 2024 · 3 min</span>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-1.5">Nov: strankarski portal za oddajo dokumentov</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">Vaše stranke zdaj same naložijo račune in izpiske — vi pa samo potrdite in nadaljujete.</p>
+      </div>
+    </div>
+
+    <div class="post-card bg-white">
+      <img src="https://placehold.co/600x260/f0f9ff/0ea5e9?text=GDPR+za+računovodje" alt="GDPR" class="w-full h-40 object-cover">
+      <div class="p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-xs font-semibold text-sky-700 bg-sky-50 border border-sky-100 px-2.5 py-0.5 rounded-full">Varnost</span>
+          <span class="text-xs text-gray-400">12. dec 2024 · 7 min</span>
+        </div>
+        <h3 class="font-bold text-gray-900 mb-1.5">GDPR za računovodje: kaj morate vedeti v 2025</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">Vaše obveznosti kot upravljavca podatkov vaših strank in kako se zaščititi pred kršitvami.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Newsletter signup -->
+  <div class="mt-16 bg-gray-50 border border-gray-200 rounded-2xl p-8 text-center">
+    <h3 class="text-xl font-bold text-gray-900 mb-2">Ostanite na tekočem</h3>
+    <p class="text-gray-500 text-sm mb-6">Mesečnik za računovodje: spremembe zakonodaje, nasveti za produktivnost, novosti Konte.</p>
+    <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+      <input type="email" placeholder="vaš@email.si" class="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors whitespace-nowrap">Naročite se</button>
+    </div>
+    <p class="text-xs text-gray-400 mt-3">Brez neželene pošte. Odjavite se kadarkoli.</p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-gray-50 border-t border-gray-100 py-12">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+        <p class="mt-2 text-sm text-gray-400 leading-relaxed">AI računovodska platforma za slovensko pisarno.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Platforma</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="konta-landing.html#how-it-works" class="hover:text-gray-700 transition-colors">Kako deluje</a></li>
+          <li><a href="konta-landing.html#examples" class="hover:text-gray-700 transition-colors">Funkcije</a></li>
+          <li><a href="konta-landing.html#pricing" class="hover:text-gray-700 transition-colors">Cene</a></li>
+          <li><a href="security.html" class="hover:text-gray-700 transition-colors">Varnost</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Podjetje</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="about.html" class="hover:text-gray-700 transition-colors">O nas</a></li>
+          <li><a href="blog.html" class="font-medium text-blue-600">Blog</a></li>
+          <li><a href="careers.html" class="hover:text-gray-700 transition-colors">Kariere</a></li>
+          <li><a href="contact.html" class="hover:text-gray-700 transition-colors">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Pravno</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="terms.html" class="hover:text-gray-700 transition-colors">Pogoji uporabe</a></li>
+          <li><a href="privacy.html" class="hover:text-gray-700 transition-colors">Zasebnost</a></li>
+          <li><a href="cookies.html" class="hover:text-gray-700 transition-colors">Piškotki</a></li>
+          <li><a href="dpa.html" class="hover:text-gray-700 transition-colors">Pogodba o obdelavi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-100 pt-6 flex items-center justify-between">
+      <p class="text-xs text-gray-400">© 2025 Konta. Vse pravice pridržane.</p>
+      <p class="text-xs text-gray-400">Narejen v Sloveniji 🇸🇮</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navPill = document.getElementById('navbar-pill');
+  window.addEventListener('scroll', () => {
+    navPill.style.boxShadow = window.scrollY > 20
+      ? '0 4px 24px rgba(0,0,0,0.12)'
+      : '0 1px 8px rgba(0,0,0,0.06)';
+  });
+</script>
+</body>
+</html>

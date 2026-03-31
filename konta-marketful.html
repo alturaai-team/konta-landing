@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konta. — AI ekipa za vaše računovodstvo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Inter', sans-serif; background: #fff; color: #111; -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; }
+  .font-satoshi { font-family: 'Satoshi', sans-serif; }
+  .bg-yellow { background: #FFD60A; }
+  .text-yellow { color: #FFD60A; }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Demo */
+  .demo-screen { display: none; }
+  .demo-screen.active { display: block; }
+  .demo-app-bg { background: #F7F6F3; font-family: 'Satoshi', sans-serif; }
+  .demo-sidebar { background: #FAFAFA; border-right: 1px solid #EFEFEC; }
+  .demo-stat-card { background: #fff; border: 1px solid #E9E9E7; border-radius: 10px; padding: 10px; }
+  .demo-badge-green { background: #dcfce7; color: #166534; font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 500; }
+  .demo-badge-yellow { background: #fef3c7; color: #92400e; font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 500; }
+  .demo-nav-item { color: #9B9A97; font-size: 12px; font-weight: 500; font-family: 'Satoshi', sans-serif; cursor: pointer; transition: all 0.15s; }
+  .demo-nav-item:hover { background: #EFEFEC; color: #37352F; }
+  .demo-nav-item.active { background: #E9E9E7; color: #37352F; font-weight: 600; }
+  .demo-nav-group-label { font-size: 10px; font-weight: 600; color: #9B9A97; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px 1px; font-family: 'Satoshi', sans-serif; }
+
+  /* FAQ */
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .faq-item.open .faq-answer { max-height: 200px; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-icon { transition: transform 0.3s; }
+</style>
+</head>
+<body class="overflow-x-hidden">
+
+<!-- ===== NAV ===== -->
+<nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between" style="height:60px;">
+    <div class="flex items-center gap-8">
+      <a href="#" class="text-xl font-black tracking-tight text-gray-900">KONTA.</a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
+        <a href="#team" class="hover:text-gray-900 transition-colors">AI ekipa</a>
+        <a href="#demo" class="hover:text-gray-900 transition-colors">Demo</a>
+        <a href="#pricing" class="hover:text-gray-900 transition-colors">Cene</a>
+        <a href="#faq" class="hover:text-gray-900 transition-colors">FAQ</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#" class="text-sm text-gray-500 hover:text-gray-900 px-3 py-2 hidden md:block">Prijava</a>
+      <a href="#" class="text-sm bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-lg font-bold transition-colors">Začnite brezplačno</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="pt-16 pb-20 bg-white text-center">
+  <div class="max-w-4xl mx-auto px-6">
+    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 tracking-tight leading-[1.05] uppercase">
+      AI ekipa za rast<br>vašega podjetja
+    </h1>
+    <p class="text-lg text-gray-500 mt-5 max-w-lg mx-auto">Dobite AI ekipo, ki obdeluje dokumente, usklajuje banko, pripravlja DDV-O in obračunava plače!</p>
+    <a href="#" class="mt-8 inline-block bg-yellow hover:brightness-95 text-gray-900 px-8 py-4 rounded-lg font-black text-base uppercase tracking-wide transition-all">Začnite brezplačno</a>
+    <div class="flex items-center justify-center gap-6 mt-6 text-sm text-gray-400">
+      <span class="flex items-center gap-1"><span class="text-yellow-500 text-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.9/5</span>
+      <span>|</span>
+      <span class="font-semibold text-green-600">30 dni brezplačno</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEM SECTION ===== -->
+<section class="py-20 bg-white">
+  <div class="max-w-4xl mx-auto px-6 text-center reveal">
+    <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-6">Želite rasti, ampak...</h2>
+    <div class="grid md:grid-cols-3 gap-4 mt-10">
+      <div class="bg-yellow/10 border-2 border-yellow-300 rounded-2xl p-6 text-left">
+        <div class="text-2xl mb-3">&#128233;</div>
+        <div class="font-bold text-gray-900 mb-1">100+ neprebranih računov</div>
+        <p class="text-sm text-gray-500">Vsako jutro vas čaka kup dokumentov za ročni vnos podatkov.</p>
+      </div>
+      <div class="bg-yellow/10 border-2 border-yellow-300 rounded-2xl p-6 text-left">
+        <div class="text-2xl mb-3">&#128200;</div>
+        <div class="font-bold text-gray-900 mb-1">DDV-O rok se bliža</div>
+        <p class="text-sm text-gray-500">Poročila za FURS pripravljate ročno — vsak mesec ista nočna mora.</p>
+      </div>
+      <div class="bg-yellow/10 border-2 border-yellow-300 rounded-2xl p-6 text-left">
+        <div class="text-2xl mb-3">&#128556;</div>
+        <div class="font-bold text-gray-900 mb-1">Vse počnete sami</div>
+        <p class="text-sm text-gray-500">Dokumenti, usklajevanje, plače, poročila — in še stranke čakajo na vas.</p>
+      </div>
+    </div>
+    <h3 class="text-2xl md:text-3xl font-black text-gray-900 mt-14">Nosite preveč klobukov: računovodja, davčni<br>svetovalec, administrator, podpornik...</h3>
+  </div>
+</section>
+
+<!-- ===== YELLOW SECTION: MEET YOUR AI TEAM ===== -->
+<section id="team" class="py-20 bg-yellow">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 uppercase tracking-tight mb-3 reveal">Nehajte žonglirati.<br>Spoznajte svojo AI ekipo.</h2>
+    <p class="text-gray-700 mb-14 reveal">Konta AI obdeluje dokumente, usklajuje banko, pripravlja poročila in plače.</p>
+
+    <div class="grid md:grid-cols-5 gap-5 reveal">
+      <div class="bg-white rounded-2xl p-5 text-left shadow-sm hover:shadow-lg transition-shadow">
+        <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-4"><svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h3 class="font-black text-gray-900 text-sm mb-1">AI Ekstrakcija</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">"Preberem vsak PDF, izvlečem dobavitelja, znesek in DDV. 98% natančnost."</p>
+      </div>
+      <div class="bg-white rounded-2xl p-5 text-left shadow-sm hover:shadow-lg transition-shadow">
+        <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center mb-4"><svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+        <h3 class="font-black text-gray-900 text-sm mb-1">AI Usklajevanje</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">"Povežem bančne vrstice z računi. 87% samodejno — vi samo potrdite."</p>
+      </div>
+      <div class="bg-white rounded-2xl p-5 text-left shadow-sm hover:shadow-lg transition-shadow">
+        <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center mb-4"><svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <h3 class="font-black text-gray-900 text-sm mb-1">AI Poročila</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">"DDV-O, KIR, KPR — generirana v sekundah. XML za eDavki z enim klikom."</p>
+      </div>
+      <div class="bg-white rounded-2xl p-5 text-left shadow-sm hover:shadow-lg transition-shadow">
+        <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center mb-4"><svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
+        <h3 class="font-black text-gray-900 text-sm mb-1">AI Plače</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">"Od bruto do SEPA v minutah. Bolniška, dopust, prispevki — vse izračunam."</p>
+      </div>
+      <div class="bg-white rounded-2xl p-5 text-left shadow-sm hover:shadow-lg transition-shadow">
+        <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center mb-4"><svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3 class="font-black text-gray-900 text-sm mb-1">AI Asistentka</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">"Upravljam stranke, naloge in roke. Dodelim delo ekipi in spremljam napredek."</p>
+      </div>
+    </div>
+
+    <a href="#" class="mt-12 inline-block bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-lg font-black text-sm uppercase tracking-wide transition-colors reveal">Začnite brezplačno</a>
+  </div>
+</section>
+
+<!-- ===== WELCOME TO YOUR NEW LIFE (Day timeline) ===== -->
+<section class="py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 uppercase tracking-tight mb-16 reveal">Dobrodošli v<br>vaše novo življenje</h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal">
+      <div class="bg-gray-50 rounded-2xl p-4 text-left border border-gray-100">
+        <div class="text-xs font-black text-gray-900 mb-2 bg-yellow inline-block px-2 py-0.5 rounded">7:00</div>
+        <div class="text-xs font-bold text-gray-800 mb-1">Prihod v pisarno</div>
+        <p class="text-xs text-gray-500">Konta je že obdelala 18 računov ponoči. Preglejte le zastavice.</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-4 text-left border border-gray-100">
+        <div class="text-xs font-black text-gray-900 mb-2 bg-yellow inline-block px-2 py-0.5 rounded">10:00</div>
+        <div class="text-xs font-bold text-gray-800 mb-1">Banka usklajena</div>
+        <p class="text-xs text-gray-500">AI je povezala 87% bančnih vrstic. Potrdite ujemanja z enim klikom.</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-4 text-left border border-gray-100">
+        <div class="text-xs font-black text-gray-900 mb-2 bg-yellow inline-block px-2 py-0.5 rounded">12:00</div>
+        <div class="text-xs font-bold text-gray-800 mb-1">DDV-O pripravljen</div>
+        <p class="text-xs text-gray-500">Vsa polja izpolnjena. Prenesite XML in oddajte na eDavke.</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-4 text-left border border-gray-100">
+        <div class="text-xs font-black text-gray-900 mb-2 bg-yellow inline-block px-2 py-0.5 rounded">14:00</div>
+        <div class="text-xs font-bold text-gray-800 mb-1">Plače obračunane</div>
+        <p class="text-xs text-gray-500">6 zaposlenih — bruto, neto, prispevki. SEPA XML pripravljen.</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-4 text-left border border-gray-100">
+        <div class="text-xs font-black text-gray-900 mb-2 bg-yellow inline-block px-2 py-0.5 rounded">16:00</div>
+        <div class="text-xs font-bold text-gray-800 mb-1">Stranke zadovoljne</div>
+        <p class="text-xs text-gray-500">Poročila poslana, dokumenti urejeni. Fokus na rast poslovanja.</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-4 text-left border border-gray-100">
+        <div class="text-xs font-black text-gray-900 mb-2 bg-yellow inline-block px-2 py-0.5 rounded">17:00</div>
+        <div class="text-xs font-bold text-gray-800 mb-1">Konec dneva</div>
+        <p class="text-xs text-gray-500">Vse opravljeno. Brez nadur, brez stresa. Konta dela naprej.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== YELLOW SECTION: TESTIMONIALS ===== -->
+<section class="py-20 bg-yellow">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-4 reveal">Računovodja meseca.<br>Vsak mesec.</h2>
+    <div class="flex items-center justify-center gap-3 mb-12 reveal">
+      <span class="text-xs bg-green-600 text-white px-3 py-1 rounded-full font-bold">30 dni brezplačno</span>
+      <span class="flex items-center gap-0.5 text-sm"><span class="text-gray-900">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span class="text-xs font-bold">4.9/5</span></span>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5 reveal">
+      <div class="bg-white rounded-2xl p-6 text-left shadow-sm">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-bold">MK</div>
+          <div><div class="text-xs font-bold text-gray-900">Maja Kovačič</div><div class="text-xs text-gray-400">Računovodkinja</div></div>
+        </div>
+        <div class="font-bold text-gray-900 text-sm mb-2">Prihranila sem 15 ur na teden</div>
+        <p class="text-xs text-gray-500 leading-relaxed">DDV-O sem porabila cel dan, zdaj manj kot uro. AI izpolni vsa polja, jaz samo pregledam. Res mi je olajšala delo enormno.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-left shadow-sm">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs font-bold">BN</div>
+          <div><div class="text-xs font-bold text-gray-900">Borut Novak</div><div class="text-xs text-gray-400">Finesa d.o.o.</div></div>
+        </div>
+        <div class="font-bold text-gray-900 text-sm mb-2">Agenti so res zakon</div>
+        <p class="text-xs text-gray-500 leading-relaxed">800+ računov mesečno avtomatizirano. Delo 3 računovodij zdaj opravi Konta. Fokusiramo se na stranke, ne na vnos podatkov.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-left shadow-sm">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-xs font-bold">AP</div>
+          <div><div class="text-xs font-bold text-gray-900">Ana Petrovič</div><div class="text-xs text-gray-400">Vodja računovodstva</div></div>
+        </div>
+        <div class="font-bold text-gray-900 text-sm mb-2">Konec ročnega dela</div>
+        <p class="text-xs text-gray-500 leading-relaxed">Usklajevanje banke je bilo nočna mora. Zdaj Konta poveže 90% vrstic sama. Ostalo ročno v 5 minutah. Res deluje.</p>
+      </div>
+    </div>
+
+    <a href="#" class="mt-12 inline-block bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-lg font-black text-sm uppercase tracking-wide transition-colors reveal">Začnite brezplačno</a>
+  </div>
+</section>
+
+<!-- ===== INTERACTIVE DEMO ===== -->
+<section id="demo" class="py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-4 reveal">Poglejte vašo AI<br>ekipo v akciji</h2>
+    <p class="text-gray-500 mb-8 reveal">Kliknite po zaslonu in poglejte kako Konta obdeluje dokumente, usklajuje banko in pripravlja poročila.</p>
+
+    <div class="rounded-2xl overflow-hidden shadow-xl border border-gray-200 reveal" style="box-shadow:0 20px 50px rgba(0,0,0,0.1);">
+      <div class="flex items-center gap-2 px-4 py-2.5" style="background:#37352F;">
+        <div class="flex gap-1.5"><div class="w-2.5 h-2.5 rounded-full" style="background:#FF5F57"></div><div class="w-2.5 h-2.5 rounded-full" style="background:#FEBC2E"></div><div class="w-2.5 h-2.5 rounded-full" style="background:#28C840"></div></div>
+        <div class="flex-1 mx-3 rounded text-center text-xs py-0.5" style="color:#9B9A97;background:rgba(255,255,255,0.08);">app.konta.si</div>
+      </div>
+      <div class="flex demo-app-bg" style="height:420px;">
+        <div class="demo-sidebar w-44 flex-shrink-0 flex flex-col py-3 px-2 hidden md:flex">
+          <div class="font-satoshi font-bold text-sm px-2 mb-4" style="color:#37352F">konta.</div>
+          <div class="mb-1"><div class="demo-nav-group-label">Pregled</div>
+            <button onclick="showDemoScreen('dashboard')" id="nav-dashboard" class="demo-nav-item active w-full text-left flex items-center gap-2 px-2 py-1 rounded"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Nadzorna plošča</button></div>
+          <div class="mb-1"><div class="demo-nav-group-label mt-1">Delo</div>
+            <button onclick="showDemoScreen('clients')" id="nav-clients" class="demo-nav-item w-full text-left flex items-center gap-2 px-2 py-1 rounded"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.7"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Stranke</button>
+            <button onclick="showDemoScreen('documents')" id="nav-documents" class="demo-nav-item w-full text-left flex items-center gap-2 px-2 py-1 rounded"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.7"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Dokumenti</button></div>
+          <div class="mb-1"><div class="demo-nav-group-label mt-1">Poročanje</div>
+            <button onclick="showDemoScreen('reconciliation')" id="nav-reconciliation" class="demo-nav-item w-full text-left flex items-center gap-2 px-2 py-1 rounded"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.7"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Usklajevanje</button>
+            <button onclick="showDemoScreen('reports')" id="nav-reports" class="demo-nav-item w-full text-left flex items-center gap-2 px-2 py-1 rounded"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.7"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Poročila</button>
+            <button onclick="showDemoScreen('payroll')" id="nav-payroll" class="demo-nav-item w-full text-left flex items-center gap-2 px-2 py-1 rounded"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.7"><path d="M17 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Plače</button></div>
+          <div class="mt-auto"><div class="rounded-md px-2 py-1.5" style="background:#EFF6FF;border:1px solid #BFDBFE;"><div style="font-size:11px;font-weight:600;color:#0073ff;">Konta AI</div><div style="font-size:10px;color:#6b7280;">4 čakajo</div></div></div>
+        </div>
+        <div class="flex-1 overflow-auto" style="background:#F7F6F3;">
+          <div class="demo-screen active p-4" id="screen-dashboard">
+            <div class="flex items-center justify-between mb-3"><div><div class="font-satoshi font-semibold" style="font-size:12px;color:#37352F">Dobrodošli, Ana</div><div style="font-size:10px;color:#9B9A97">Sobota, 29. mar 2025</div></div><button style="background:#0073ff;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Satoshi,sans-serif">+ Naloži</button></div>
+            <div class="grid grid-cols-4 gap-2 mb-3">
+              <div class="demo-stat-card"><div style="font-size:10px;color:#9B9A97">Stranke</div><div class="text-lg font-bold font-satoshi" style="color:#37352F">47</div></div>
+              <div class="demo-stat-card"><div style="font-size:10px;color:#9B9A97">Dokumenti</div><div class="text-lg font-bold font-satoshi" style="color:#37352F">284</div></div>
+              <div class="demo-stat-card"><div style="font-size:10px;color:#9B9A97">Prihodki</div><div class="text-lg font-bold font-satoshi" style="color:#37352F">€42.8k</div></div>
+              <div class="demo-stat-card"><div style="font-size:10px;color:#9B9A97">DDV</div><div class="text-lg font-bold font-satoshi" style="color:#37352F">€6.180</div></div>
+            </div>
+            <div class="bg-white rounded-lg p-3 border" style="border-color:#E9E9E7">
+              <div class="font-satoshi font-semibold mb-2" style="font-size:11px;color:#37352F">Prihodki vs. Odhodki</div>
+              <div class="flex items-end gap-1" style="height:70px">
+                <div class="flex-1 flex gap-0.5"><div class="flex-1 rounded-t" style="background:#0073ff;height:40px"></div><div class="flex-1 rounded-t" style="background:#E9E9E7;height:24px"></div></div>
+                <div class="flex-1 flex gap-0.5"><div class="flex-1 rounded-t" style="background:#0073ff;height:48px"></div><div class="flex-1 rounded-t" style="background:#E9E9E7;height:28px"></div></div>
+                <div class="flex-1 flex gap-0.5"><div class="flex-1 rounded-t" style="background:#0073ff;height:60px"></div><div class="flex-1 rounded-t" style="background:#E9E9E7;height:35px"></div></div>
+                <div class="flex-1 flex gap-0.5"><div class="flex-1 rounded-t" style="background:#93c5fd;height:38px"></div><div class="flex-1 rounded-t" style="background:#E9E9E7;height:22px"></div></div>
+                <div class="flex-1 flex gap-0.5"><div class="flex-1 rounded-t" style="background:#93c5fd;height:44px"></div><div class="flex-1 rounded-t" style="background:#E9E9E7;height:26px"></div></div>
+                <div class="flex-1 flex gap-0.5"><div class="flex-1 rounded-t" style="background:#0073ff;height:65px"></div><div class="flex-1 rounded-t" style="background:#E9E9E7;height:38px"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-screen p-4" id="screen-clients">
+            <div class="font-satoshi font-semibold mb-3" style="font-size:12px;color:#37352F">Stranke <span style="color:#9B9A97;font-weight:400">47</span></div>
+            <div class="bg-white rounded-lg border overflow-hidden" style="border-color:#E9E9E7;font-size:11px"><table class="w-full"><thead><tr style="border-bottom:1px solid #EFEFEC;background:#FAFAFA"><th class="text-left p-2.5 font-semibold font-satoshi" style="color:#9B9A97">Stranka</th><th class="text-left p-2.5 font-semibold font-satoshi" style="color:#9B9A97">Davčna</th><th class="text-left p-2.5 font-semibold font-satoshi" style="color:#9B9A97">Status</th></tr></thead><tbody>
+              <tr style="border-bottom:1px solid #EFEFEC"><td class="p-2.5 font-satoshi font-medium" style="color:#37352F">Petrol d.o.o.</td><td class="p-2.5" style="color:#9B9A97">SI12345678</td><td class="p-2.5"><span class="demo-badge-green">Aktivna</span></td></tr>
+              <tr style="border-bottom:1px solid #EFEFEC"><td class="p-2.5 font-satoshi font-medium" style="color:#37352F">Novak d.o.o.</td><td class="p-2.5" style="color:#9B9A97">SI87654321</td><td class="p-2.5"><span class="demo-badge-green">Aktivna</span></td></tr>
+              <tr><td class="p-2.5 font-satoshi font-medium" style="color:#37352F">Merkur Trade</td><td class="p-2.5" style="color:#9B9A97">SI11223344</td><td class="p-2.5"><span class="demo-badge-yellow">Pregled</span></td></tr>
+            </tbody></table></div>
+          </div>
+          <div class="demo-screen p-4" id="screen-documents">
+            <div class="font-satoshi font-semibold mb-3" style="font-size:12px;color:#37352F">Dokumenti</div>
+            <div class="rounded-lg p-3 text-center mb-3 border-2 border-dashed" style="border-color:#E9E9E7;background:#FAFAFA;font-size:11px;color:#9B9A97">Povlecite račune sem ali <span style="color:#0073ff">izberite</span></div>
+            <div class="bg-white rounded-lg border overflow-hidden" style="border-color:#E9E9E7;font-size:11px">
+              <div class="p-2.5 flex justify-between" style="border-bottom:1px solid #EFEFEC"><div class="font-satoshi font-medium" style="color:#37352F">Račun_Petrol.pdf &middot; €1.240</div><span class="demo-badge-green">Obdelano</span></div>
+              <div class="p-2.5 flex justify-between"><div class="font-satoshi font-medium" style="color:#37352F">Merkur_feb.pdf &middot; €562</div><span class="demo-badge-yellow">V obdelavi</span></div>
+            </div>
+          </div>
+          <div class="demo-screen p-4" id="screen-reconciliation">
+            <div class="font-satoshi font-semibold mb-3" style="font-size:12px;color:#37352F">Usklajevanje <span style="color:#9B9A97;font-weight:400">Mar 2025</span></div>
+            <div class="grid grid-cols-3 gap-2 mb-3">
+              <div class="demo-stat-card text-center"><div style="font-size:10px;color:#9B9A97">Ujema</div><div class="text-lg font-bold font-satoshi" style="color:#16a34a">142</div></div>
+              <div class="demo-stat-card text-center"><div style="font-size:10px;color:#9B9A97">Čaka</div><div class="text-lg font-bold font-satoshi" style="color:#92400e">7</div></div>
+              <div class="demo-stat-card text-center"><div style="font-size:10px;color:#9B9A97">Razlika</div><div class="text-lg font-bold font-satoshi" style="color:#37352F">€0</div></div>
+            </div>
+            <div class="bg-white rounded-lg border overflow-hidden" style="border-color:#E9E9E7;font-size:11px">
+              <div class="p-2.5 flex justify-between" style="border-bottom:1px solid #EFEFEC;border-left:3px solid #16a34a"><div class="font-satoshi font-medium" style="color:#37352F">Petrol — €1.240</div><span class="demo-badge-green">Ujema</span></div>
+              <div class="p-2.5 flex justify-between" style="border-left:3px solid #d97706"><div class="font-satoshi font-medium" style="color:#37352F">Neznano — SKB</div><span class="demo-badge-yellow">Čaka</span></div>
+            </div>
+          </div>
+          <div class="demo-screen p-4" id="screen-reports">
+            <div class="font-satoshi font-semibold mb-3" style="font-size:12px;color:#37352F">Poročila</div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-white rounded-lg p-2.5 border" style="border-color:#E9E9E7;border-left:3px solid #0073ff"><div style="font-size:10px;color:#9B9A97">DDV-O</div><div class="font-bold font-satoshi" style="font-size:13px;color:#37352F">€6.180</div><div style="font-size:10px;color:#16a34a">Pripravljeno</div></div>
+              <div class="bg-white rounded-lg p-2.5 border" style="border-color:#E9E9E7;border-left:3px solid #10B981"><div style="font-size:10px;color:#9B9A97">KPR</div><div class="font-bold font-satoshi" style="font-size:13px;color:#37352F">148</div><div style="font-size:10px;color:#16a34a">Pripravljeno</div></div>
+              <div class="bg-white rounded-lg p-2.5 border" style="border-color:#E9E9E7;border-left:3px solid #7C3AED"><div style="font-size:10px;color:#9B9A97">KIR</div><div class="font-bold font-satoshi" style="font-size:13px;color:#37352F">92</div><div style="font-size:10px;color:#0073ff">AI generira...</div></div>
+              <div class="bg-white rounded-lg p-2.5 border" style="border-color:#E9E9E7;border-left:3px solid #F59E0B"><div style="font-size:10px;color:#9B9A97">REK-O</div><div class="font-bold font-satoshi" style="font-size:13px;color:#37352F">5</div><div style="font-size:10px;color:#16a34a">Pripravljeno</div></div>
+            </div>
+          </div>
+          <div class="demo-screen p-4" id="screen-payroll">
+            <div class="font-satoshi font-semibold mb-3" style="font-size:12px;color:#37352F">Plače <span style="color:#9B9A97;font-weight:400">Mar 2025</span></div>
+            <div class="grid grid-cols-3 gap-2 mb-3">
+              <div class="demo-stat-card"><div style="font-size:10px;color:#9B9A97">Zaposleni</div><div class="text-lg font-bold font-satoshi" style="color:#37352F">6</div></div>
+              <div class="demo-stat-card"><div style="font-size:10px;color:#9B9A97">Bruto</div><div class="font-bold font-satoshi" style="color:#37352F;font-size:14px">€14.200</div></div>
+              <div class="demo-stat-card"><div style="font-size:10px;color:#9B9A97">REK-1</div><div class="text-lg font-bold font-satoshi" style="color:#16a34a">&#10003;</div></div>
+            </div>
+            <div class="bg-white rounded-lg border overflow-hidden" style="border-color:#E9E9E7;font-size:11px">
+              <div class="p-2.5 flex justify-between" style="border-bottom:1px solid #EFEFEC"><div class="font-satoshi font-medium" style="color:#37352F">Ana Kovačič</div><div><span class="font-semibold" style="color:#37352F">€1.820</span> <span class="demo-badge-green">Izplačano</span></div></div>
+              <div class="p-2.5 flex justify-between"><div class="font-satoshi font-medium" style="color:#37352F">Marko Novak</div><div><span class="font-semibold" style="color:#37352F">€2.100</span> <span class="demo-badge-green">Izplačano</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing" class="py-20 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-3 reveal">Rast ne bi smela<br>biti tako enostavna.<br>Ampak je.</h2>
+    <p class="text-gray-500 mb-14 reveal">30 dni brezplačno. Brez kreditne kartice.</p>
+
+    <div class="grid md:grid-cols-3 gap-6 items-start text-left">
+      <div class="bg-white rounded-2xl border border-gray-200 p-7 reveal">
+        <div class="text-sm font-black text-gray-900 mb-1 uppercase">Solo</div>
+        <div class="text-3xl font-black text-gray-900 mb-1">€39<span class="text-sm font-normal text-gray-400">/mesec</span></div>
+        <p class="text-xs text-gray-400 mb-5">Za samostojne računovodje.</p>
+        <a href="#" class="block text-center text-sm font-bold py-3 rounded-lg border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors mb-5">Začnite brezplačno</a>
+        <div class="space-y-2.5 text-xs text-gray-500">
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Do 20 strank</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>200 AI obdelav/mesec</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>DDV-O, KIR, KPR</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Bančno usklajevanje</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-7 reveal relative" style="border:3px solid #FFD60A;">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow text-gray-900 text-xs font-black uppercase px-4 py-1 rounded-full tracking-wide">Najpopularnejši</div>
+        <div class="text-sm font-black text-gray-900 mb-1 uppercase">Pro</div>
+        <div class="text-3xl font-black text-gray-900 mb-1">€89<span class="text-sm font-normal text-gray-400">/mesec</span></div>
+        <p class="text-xs text-gray-400 mb-5">Za rastoče pisarne.</p>
+        <a href="#" class="block text-center text-sm font-bold py-3 rounded-lg bg-yellow text-gray-900 hover:brightness-95 transition-all mb-5">Začnite brezplačno</a>
+        <div class="space-y-2.5 text-xs text-gray-500">
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Do 75 strank</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>1.000 AI obdelav/mesec</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Plače + REK-O + SEPA</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Do 5 uporabnikov</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Portal za stranke</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-gray-200 p-7 reveal">
+        <div class="text-sm font-black text-gray-900 mb-1 uppercase">Agencija</div>
+        <div class="text-3xl font-black text-gray-900 mb-1">Po meri</div>
+        <p class="text-xs text-gray-400 mb-5">Za velike pisarne.</p>
+        <a href="#" class="block text-center text-sm font-bold py-3 rounded-lg border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors mb-5">Kontaktirajte nas</a>
+        <div class="space-y-2.5 text-xs text-gray-500">
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Neomejene stranke</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Neomejeni uporabniki</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>Custom integracije</div>
+          <div class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>SLA 99.9%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" class="py-20 bg-white">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-12 text-center reveal">Vprašanja?</h2>
+    <div class="grid md:grid-cols-2 gap-4 reveal">
+      <div class="faq-item bg-blue-50 rounded-2xl p-5 cursor-pointer" onclick="this.classList.toggle('open')">
+        <div class="flex justify-between items-start gap-2"><span class="text-sm font-bold text-gray-900">Ali moram karkoli namestiti?</span><span class="faq-icon text-lg text-gray-400 font-light">+</span></div>
+        <div class="faq-answer"><p class="text-xs text-gray-500 mt-2 leading-relaxed">Ne. Konta deluje v brskalniku. Brez namestitve, brez uvoza, brez konfiguracije.</p></div>
+      </div>
+      <div class="faq-item bg-yellow/20 rounded-2xl p-5 cursor-pointer" onclick="this.classList.toggle('open')">
+        <div class="flex justify-between items-start gap-2"><span class="text-sm font-bold text-gray-900">Ali je res brezplačno za preizkus?</span><span class="faq-icon text-lg text-gray-400 font-light">+</span></div>
+        <div class="faq-answer"><p class="text-xs text-gray-500 mt-2 leading-relaxed">Da. 30 dni brezplačno, brez kreditne kartice. Prekličite kadarkoli.</p></div>
+      </div>
+      <div class="faq-item bg-green-50 rounded-2xl p-5 cursor-pointer" onclick="this.classList.toggle('open')">
+        <div class="flex justify-between items-start gap-2"><span class="text-sm font-bold text-gray-900">Ali podpirate slovensko zakonodajo?</span><span class="faq-icon text-lg text-gray-400 font-light">+</span></div>
+        <div class="faq-answer"><p class="text-xs text-gray-500 mt-2 leading-relaxed">Da. DDV-O, KIR, KPR, REK-O z aktualnimi slovenskimi stopnjami. FURS XML izvoz.</p></div>
+      </div>
+      <div class="faq-item bg-purple-50 rounded-2xl p-5 cursor-pointer" onclick="this.classList.toggle('open')">
+        <div class="flex justify-between items-start gap-2"><span class="text-sm font-bold text-gray-900">Katere banke podpirate?</span><span class="faq-icon text-lg text-gray-400 font-light">+</span></div>
+        <div class="faq-answer"><p class="text-xs text-gray-500 mt-2 leading-relaxed">NLB, SKB, Sparkasse, Nova KBM, Addiko, UniCredit. Formati: CSV, MT940, XML.</p></div>
+      </div>
+      <div class="faq-item bg-red-50 rounded-2xl p-5 cursor-pointer" onclick="this.classList.toggle('open')">
+        <div class="flex justify-between items-start gap-2"><span class="text-sm font-bold text-gray-900">Ali lahko upravljam več podjetij?</span><span class="faq-icon text-lg text-gray-400 font-light">+</span></div>
+        <div class="faq-answer"><p class="text-xs text-gray-500 mt-2 leading-relaxed">Da. Pro plan podpira do 75 strank, Agencija pa neomejeno. Vsaka stranka ima svoj profil.</p></div>
+      </div>
+      <div class="faq-item bg-orange-50 rounded-2xl p-5 cursor-pointer" onclick="this.classList.toggle('open')">
+        <div class="flex justify-between items-start gap-2"><span class="text-sm font-bold text-gray-900">Ali AI zaposlenci delajo ponoči?</span><span class="faq-icon text-lg text-gray-400 font-light">+</span></div>
+        <div class="faq-answer"><p class="text-xs text-gray-500 mt-2 leading-relaxed">Da. Konta AI obdeluje dokumente 24/7. Ko pridete zjutraj, je delo že opravljeno.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="py-20 bg-gray-900">
+  <div class="max-w-4xl mx-auto px-6 text-center reveal">
+    <h2 class="text-3xl md:text-4xl font-black text-white uppercase tracking-tight leading-tight">Začnite z vašo AI<br>ekipo <span class="text-yellow">danes</span>.</h2>
+    <p class="text-gray-400 mt-4 text-base">30 dni brezplačno. Brez kreditne kartice. Brez tveganja.</p>
+    <a href="#" class="mt-10 inline-block bg-yellow hover:brightness-95 text-gray-900 px-10 py-4 rounded-lg font-black text-base uppercase tracking-wide transition-all">Začnite brezplačno</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-gray-900 py-12 border-t border-gray-800">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+      <div><div class="text-white text-lg font-black mb-3">KONTA.</div><p class="text-sm text-gray-500">AI računovodstvo za moderne pisarne.</p></div>
+      <div><div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Platforma</div><a href="#" class="block text-sm text-gray-400 hover:text-white mb-1.5">Funkcije</a><a href="#" class="block text-sm text-gray-400 hover:text-white mb-1.5">Cenik</a><a href="#" class="block text-sm text-gray-400 hover:text-white">Varnost</a></div>
+      <div><div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Podjetje</div><a href="#" class="block text-sm text-gray-400 hover:text-white mb-1.5">O nas</a><a href="#" class="block text-sm text-gray-400 hover:text-white mb-1.5">Blog</a><a href="#" class="block text-sm text-gray-400 hover:text-white">Kontakt</a></div>
+      <div><div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Pravno</div><a href="#" class="block text-sm text-gray-400 hover:text-white mb-1.5">Pogoji</a><a href="#" class="block text-sm text-gray-400 hover:text-white mb-1.5">Zasebnost</a><a href="#" class="block text-sm text-gray-400 hover:text-white">GDPR</a></div>
+    </div>
+    <div class="border-t border-gray-800 pt-6 text-xs text-gray-600">&copy; 2025 Konta. Vse pravice pridržane.</div>
+  </div>
+</footer>
+
+<script>
+function showDemoScreen(s){document.querySelectorAll('.demo-screen').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.demo-nav-item').forEach(e=>e.classList.remove('active'));var el=document.getElementById('screen-'+s),nav=document.getElementById('nav-'+s);if(el)el.classList.add('active');if(nav)nav.classList.add('active');}
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(e=>obs.observe(e));
+setTimeout(()=>{document.querySelectorAll('.reveal').forEach(e=>{if(e.getBoundingClientRect().top<window.innerHeight)e.classList.add('visible')})},100);
+document.querySelectorAll('a[href^="#"]').forEach(l=>{l.addEventListener('click',e=>{const t=document.querySelector(l.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}})});
+</script>
+</body>
+</html>
