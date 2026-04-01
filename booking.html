@@ -10,19 +10,17 @@
 <style>
   body { font-family: 'Inter', sans-serif }
 
-  /* Calendar table */
   .cal-table { width: 100%; border-collapse: separate; border-spacing: 0; }
   .cal-table th {
     font-weight: 700; font-size: 13px; color: #1e40af; letter-spacing: 0.04em;
     padding: 12px 0; text-align: center;
     border-bottom: 2px solid #dbeafe;
   }
-  .cal-table td { padding: 4px 0; text-align: center; }
+  .cal-table td { padding: 5px 0; text-align: center; }
   .cal-table tr.week-row:nth-child(even) td { background: #f0f7ff; }
 
-  /* Day cell */
   .cal-cell {
-    width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center;
+    width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center;
     font-size: 15px; color: #9ca3af; border-radius: 50%; cursor: default;
     transition: all 0.15s; user-select: none;
   }
@@ -31,20 +29,13 @@
   .cal-cell.selected { background: #2563eb; color: #fff; font-weight: 700; box-shadow: 0 3px 12px rgba(37,99,235,0.35); }
   .cal-cell.today:not(.selected) { border: 2.5px solid #2563eb; color: #2563eb; font-weight: 700; }
 
-  /* Arrows */
   .cal-arrow { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border: none; background: none; cursor: pointer; color: #1e40af; transition: all 0.15s; border-radius: 12px; }
   .cal-arrow:hover { background: #dbeafe; color: #2563eb; }
   .cal-arrow svg { width: 22px; height: 22px; }
 
-  /* Time buttons */
   .time-btn { transition: all 0.15s; }
   .time-btn:hover { border-color: #2563eb; color: #2563eb; background: #eff6ff; }
   .time-btn.selected { background: #2563eb; color: #fff; border-color: #2563eb; box-shadow: 0 3px 12px rgba(37,99,235,0.35); }
-
-  /* Step indicator */
-  .step-dot { width: 10px; height: 10px; border-radius: 50%; transition: all 0.2s; }
-  .step-dot.active { background: #2563eb; }
-  .step-dot.inactive { background: #d1d5db; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -56,43 +47,41 @@
   </nav>
 
   <!-- Main -->
-  <main class="flex-1 flex items-center justify-center px-4 py-12">
+  <main class="flex-1 px-4 py-10">
+    <div class="max-w-7xl mx-auto">
 
-    <!-- ===== STEP 1: Info ===== -->
-    <div id="step-info" class="w-full max-w-lg">
       <h1 class="text-3xl font-extrabold text-gray-900 text-center mb-2">Dogovorite se za klic</h1>
-      <p class="text-gray-500 text-center mb-8">Izpolnite podatke in nato izberite termin klica.</p>
+      <p class="text-gray-500 text-center mb-10">Izpolnite podatke in izberite termin. Poklicali vas bomo ob izbranem času.</p>
 
-      <!-- Step dots -->
-      <div class="flex items-center justify-center gap-2 mb-8">
-        <div class="step-dot active"></div>
-        <div class="step-dot inactive"></div>
-      </div>
+      <div id="booking-layout" class="flex flex-col lg:flex-row gap-6 items-start">
 
-      <div class="bg-white rounded-2xl border border-gray-200 p-8 space-y-5">
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Ime in priimek *</label>
-          <input type="text" id="f-name" required class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Janez Novak">
-        </div>
+        <!-- LEFT: Info (30%) -->
+        <div class="w-full lg:w-[30%] bg-white rounded-2xl border border-gray-200 p-7 space-y-4 lg:sticky lg:top-8">
+          <h2 class="text-base font-bold text-gray-900">Vaši podatki</h2>
 
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Ime podjetja / pisarne *</label>
-          <input type="text" id="f-firm" required class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Računovodstvo Novak d.o.o.">
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">E-pošta *</label>
-          <input type="email" id="f-email" required class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="janez@podjetje.si">
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Telefon</label>
-            <input type="tel" id="f-phone" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="+386 ...">
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Ime in priimek *</label>
+            <input type="text" id="f-name" required class="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Janez Novak">
           </div>
+
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Število strank</label>
-            <select id="f-clients" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition text-gray-700">
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Podjetje / pisarna *</label>
+            <input type="text" id="f-firm" required class="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Računovodstvo Novak d.o.o.">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">E-pošta *</label>
+            <input type="email" id="f-email" required class="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="janez@podjetje.si">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Telefon</label>
+            <input type="tel" id="f-phone" class="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="+386 ...">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Število strank</label>
+            <select id="f-clients" class="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition text-gray-700">
               <option value="">Izberite...</option>
               <option value="50-100">50 – 100</option>
               <option value="100-200">100 – 200</option>
@@ -100,65 +89,40 @@
               <option value="500+">500+</option>
             </select>
           </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Sporočilo</label>
+            <textarea id="f-message" rows="2" class="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition resize-none" placeholder="Neobvezno..."></textarea>
+          </div>
         </div>
 
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Sporočilo (neobvezno)</label>
-          <textarea id="f-message" rows="3" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition resize-none" placeholder="Povejte nam o vaših potrebah..."></textarea>
-        </div>
+        <!-- RIGHT: Calendar (70%) -->
+        <div class="w-full lg:w-[70%] bg-white rounded-2xl border border-gray-200 p-8">
+          <h2 class="text-base font-bold text-gray-900 mb-5">Izberite termin</h2>
 
-        <button type="button" id="btn-next" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2">
-          Izberite termin
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-        </button>
-
-        <div id="info-error" class="hidden text-red-600 text-sm text-center font-medium"></div>
-      </div>
-    </div>
-
-    <!-- ===== STEP 2: Calendar ===== -->
-    <div id="step-calendar" class="hidden w-full" style="max-width:70%;">
-      <h1 class="text-3xl font-extrabold text-gray-900 text-center mb-2">Izberite termin</h1>
-      <p class="text-gray-500 text-center mb-8">Kliknite na datum in izberite uro klica.</p>
-
-      <!-- Step dots -->
-      <div class="flex items-center justify-center gap-2 mb-8">
-        <div class="step-dot inactive"></div>
-        <div class="step-dot active"></div>
-      </div>
-
-      <!-- Back button -->
-      <button type="button" id="btn-back" class="mb-5 text-sm text-gray-500 hover:text-blue-600 font-semibold flex items-center gap-1 transition">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-        Nazaj
-      </button>
-
-      <div class="bg-white rounded-2xl border border-gray-200 p-8">
-
-        <!-- Calendar -->
-        <div class="mb-6">
+          <!-- Month nav -->
           <div class="flex items-center justify-between mb-5">
             <button type="button" id="cal-prev" class="cal-arrow">
               <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
             </button>
-            <span id="cal-title" class="text-lg font-extrabold text-gray-900 tracking-tight"></span>
+            <span id="cal-title" class="text-xl font-extrabold text-gray-900 tracking-tight"></span>
             <button type="button" id="cal-next" class="cal-arrow">
               <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
             </button>
           </div>
+
+          <!-- Calendar table -->
           <table class="cal-table">
             <thead>
               <tr><th>Po</th><th>To</th><th>Sr</th><th>Če</th><th>Pe</th><th>So</th><th>Ne</th></tr>
             </thead>
             <tbody id="cal-body"></tbody>
           </table>
-        </div>
 
-        <!-- Divider -->
-        <div class="border-t border-gray-100 my-6"></div>
+          <!-- Divider -->
+          <div class="border-t border-gray-100 my-6"></div>
 
-        <!-- Time slots -->
-        <div>
+          <!-- Time slots -->
           <p class="text-sm font-bold text-gray-900 mb-3">Izberite uro</p>
           <div class="grid grid-cols-4 gap-3">
             <button type="button" class="time-btn border-2 border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-600 cursor-pointer text-center" data-time="10:00">10:00</button>
@@ -166,36 +130,36 @@
             <button type="button" class="time-btn border-2 border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-600 cursor-pointer text-center" data-time="14:00">14:00</button>
             <button type="button" class="time-btn border-2 border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-600 cursor-pointer text-center" data-time="16:00">16:00</button>
           </div>
+
+          <!-- Summary + Submit -->
+          <div id="selected-summary" class="hidden mt-5 text-sm font-bold text-center py-3 px-4 bg-blue-50 text-blue-700 rounded-xl border border-blue-200"></div>
+
+          <input type="hidden" id="f-date">
+          <input type="hidden" id="f-time">
+
+          <button type="button" id="btn-submit" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            Rezerviraj termin
+          </button>
+
+          <div id="form-error" class="hidden mt-3 text-red-600 text-sm text-center font-medium"></div>
         </div>
 
-        <!-- Selected summary -->
-        <div id="selected-summary" class="hidden mt-5 text-sm font-bold text-center py-3 px-4 bg-blue-50 text-blue-700 rounded-xl border border-blue-200"></div>
-
-        <!-- Hidden inputs -->
-        <input type="hidden" id="f-date">
-        <input type="hidden" id="f-time">
-
-        <button type="button" id="btn-submit" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-          Rezerviraj termin
-        </button>
-
-        <div id="form-error" class="hidden mt-3 text-red-600 text-sm text-center font-medium"></div>
       </div>
-    </div>
 
-    <!-- ===== SUCCESS ===== -->
-    <div id="step-success" class="hidden w-full max-w-lg">
-      <div class="bg-white rounded-2xl border border-gray-200 p-10 text-center">
-        <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5">
-          <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      <!-- Success -->
+      <div id="step-success" class="hidden max-w-lg mx-auto mt-10">
+        <div class="bg-white rounded-2xl border border-gray-200 p-10 text-center">
+          <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">Termin rezerviran!</h2>
+          <p class="text-gray-500 mb-1">Hvala za vaše zanimanje. Poklicali vas bomo ob izbranem času.</p>
+          <p class="text-gray-400 text-sm">Potrditev smo poslali na vaš e-poštni naslov.</p>
+          <a href="konta-landing.html" class="inline-block mt-6 text-blue-600 hover:underline text-sm font-semibold">Nazaj na domačo stran</a>
         </div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">Termin rezerviran!</h2>
-        <p class="text-gray-500 mb-1">Hvala za vaše zanimanje. Poklicali vas bomo ob izbranem času.</p>
-        <p class="text-gray-400 text-sm">Potrditev smo poslali na vaš e-poštni naslov.</p>
-        <a href="konta-landing.html" class="inline-block mt-6 text-blue-600 hover:underline text-sm font-semibold">Nazaj na domačo stran</a>
       </div>
-    </div>
 
+    </div>
   </main>
 
   <!-- Footer -->
@@ -214,36 +178,6 @@
   calYear = now.getFullYear();
   calMonth = now.getMonth();
 
-  // ── Step navigation ──
-  document.getElementById('btn-next').addEventListener('click', function() {
-    const name = document.getElementById('f-name').value.trim();
-    const firm = document.getElementById('f-firm').value.trim();
-    const email = document.getElementById('f-email').value.trim();
-    const errEl = document.getElementById('info-error');
-
-    if (!name || !firm || !email) {
-      errEl.textContent = 'Izpolnite vsa obvezna polja (ime, podjetje, e-pošta).';
-      errEl.classList.remove('hidden');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errEl.textContent = 'Vnesite veljaven e-poštni naslov.';
-      errEl.classList.remove('hidden');
-      return;
-    }
-    errEl.classList.add('hidden');
-
-    document.getElementById('step-info').classList.add('hidden');
-    document.getElementById('step-calendar').classList.remove('hidden');
-    renderCalendar();
-  });
-
-  document.getElementById('btn-back').addEventListener('click', function() {
-    document.getElementById('step-calendar').classList.add('hidden');
-    document.getElementById('step-info').classList.remove('hidden');
-  });
-
-  // ── Calendar ──
   function renderCalendar() {
     document.getElementById('cal-title').textContent = MONTHS_SL[calMonth] + ' ' + calYear;
     const tbody = document.getElementById('cal-body');
@@ -332,12 +266,23 @@
     renderCalendar();
   });
 
-  // ── Submit ──
+  renderCalendar();
+
+  // Submit
   document.getElementById('btn-submit').addEventListener('click', async function() {
     const btn = this;
     const errEl = document.getElementById('form-error');
     errEl.classList.add('hidden');
 
+    // Validate info fields
+    const name = document.getElementById('f-name').value.trim();
+    const firm = document.getElementById('f-firm').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    if (!name || !firm || !email) {
+      errEl.textContent = 'Izpolnite vsa obvezna polja na levi (ime, podjetje, e-pošta).';
+      errEl.classList.remove('hidden');
+      return;
+    }
     if (!selectedDate || !selectedTime) {
       errEl.textContent = 'Izberite datum in uro.';
       errEl.classList.remove('hidden');
@@ -347,9 +292,9 @@
     btn.disabled = true; btn.textContent = 'Pošiljam...';
 
     const data = {
-      contact_name: document.getElementById('f-name').value.trim(),
-      firm_name: document.getElementById('f-firm').value.trim(),
-      email: document.getElementById('f-email').value.trim(),
+      contact_name: name,
+      firm_name: firm,
+      email: email,
       phone: document.getElementById('f-phone').value.trim() || null,
       num_clients: document.getElementById('f-clients').value || null,
       preferred_date: document.getElementById('f-date').value,
@@ -366,7 +311,7 @@
       return;
     }
 
-    document.getElementById('step-calendar').classList.add('hidden');
+    document.getElementById('booking-layout').classList.add('hidden');
     document.getElementById('step-success').classList.remove('hidden');
   });
 </script>
