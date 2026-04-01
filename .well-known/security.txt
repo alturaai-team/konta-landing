@@ -1,0 +1,4 @@
+Contact: mailto:support@konta.si
+Preferred-Languages: sl, en
+Canonical: https://konta.si/.well-known/security.txt
+Expires: 2027-04-01T00:00:00.000Z
