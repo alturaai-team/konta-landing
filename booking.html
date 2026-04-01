@@ -9,19 +9,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   body { font-family: 'Inter', sans-serif }
-  /* Calendar header cells */
-  .cal-header { font-weight: 700; font-size: 13px; color: #1e1b4b; padding: 10px 0; border-bottom: 2px solid #e5e7eb; }
-  /* Calendar day cells */
-  .cal-day { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #6b7280; border-radius: 12px; cursor: pointer; transition: all 0.15s; position: relative; }
-  .cal-day:not(.disabled):hover { background: #ede9fe; color: #4f46e5; }
-  .cal-day.selected { background: #4f46e5; color: #fff; font-weight: 700; box-shadow: 0 2px 8px rgba(79,70,229,0.3); }
-  .cal-day.disabled { color: #d1d5db; cursor: default; }
-  .cal-day.today:not(.selected) { border: 2px solid #4f46e5; color: #4f46e5; font-weight: 600; }
-  .cal-day.available:not(.selected):not(:hover) { color: #1e1b4b; font-weight: 500; }
-  /* Time slot buttons */
-  .time-btn { transition: all 0.15s }
+
+  /* Calendar table */
+  .cal-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .cal-table th {
+    font-weight: 700; font-size: 13px; color: #312e81;
+    padding: 10px 0; text-align: center;
+    border: 1.5px solid #e0e0ef; background: #fafaff;
+  }
+  .cal-table th:first-child { border-radius: 10px 0 0 10px; }
+  .cal-table th:last-child { border-radius: 0 10px 10px 0; }
+  .cal-table td { padding: 4px; text-align: center; }
+
+  /* Day cell */
+  .cal-cell {
+    width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #9ca3af; border-radius: 50%; cursor: default;
+    transition: all 0.15s; user-select: none;
+  }
+  .cal-cell.available { color: #1e1b4b; font-weight: 500; cursor: pointer; }
+  .cal-cell.available:hover { background: #ede9fe; color: #4f46e5; }
+  .cal-cell.selected { background: #4f46e5; color: #fff; font-weight: 700; box-shadow: 0 2px 10px rgba(79,70,229,0.35); }
+  .cal-cell.today:not(.selected) { border: 2.5px solid #4f46e5; color: #4f46e5; font-weight: 700; }
+
+  /* Arrows */
+  .cal-arrow { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border: none; background: none; cursor: pointer; color: #312e81; transition: color 0.15s; }
+  .cal-arrow:hover { color: #4f46e5; }
+  .cal-arrow svg { width: 22px; height: 22px; }
+
+  /* Time buttons */
+  .time-btn { transition: all 0.15s; }
   .time-btn:hover { border-color: #4f46e5; color: #4f46e5; background: #ede9fe; }
-  .time-btn.selected { background: #4f46e5; color: #fff; border-color: #4f46e5; box-shadow: 0 2px 8px rgba(79,70,229,0.3); }
+  .time-btn.selected { background: #4f46e5; color: #fff; border-color: #4f46e5; box-shadow: 0 2px 10px rgba(79,70,229,0.35); }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -77,31 +96,34 @@
         <!-- Calendar + Time picker -->
         <div>
           <label class="block text-sm font-semibold text-gray-700 mb-3">Izberite datum in uro *</label>
-          <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-6">
+          <div class="flex flex-col sm:flex-row gap-6">
 
             <!-- Calendar -->
-            <div class="border border-gray-200 rounded-2xl p-5 bg-white shadow-sm">
-              <!-- Month nav -->
-              <div class="flex items-center justify-between mb-5">
-                <button type="button" id="cal-prev" class="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition">
-                  <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            <div class="flex-1 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+              <!-- Month nav row -->
+              <div class="flex items-center justify-between mb-4">
+                <button type="button" id="cal-prev" class="cal-arrow">
+                  <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <span id="cal-title" class="text-base font-extrabold text-gray-900 tracking-tight"></span>
-                <button type="button" id="cal-next" class="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition">
-                  <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                <span id="cal-title" class="text-lg font-extrabold text-indigo-950 tracking-tight"></span>
+                <button type="button" id="cal-next" class="cal-arrow">
+                  <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                 </button>
               </div>
-              <!-- Day headers -->
-              <div class="grid grid-cols-7 text-center mb-1">
-                <div class="cal-header">Po</div><div class="cal-header">To</div><div class="cal-header">Sr</div><div class="cal-header">Če</div><div class="cal-header">Pe</div><div class="cal-header">So</div><div class="cal-header">Ne</div>
-              </div>
-              <!-- Day grid -->
-              <div id="cal-grid" class="grid grid-cols-7 justify-items-center gap-y-1 pt-2"></div>
+              <!-- Table calendar -->
+              <table class="cal-table">
+                <thead>
+                  <tr>
+                    <th>Po</th><th>To</th><th>Sr</th><th>Če</th><th>Pe</th><th>So</th><th>Ne</th>
+                  </tr>
+                </thead>
+                <tbody id="cal-body"></tbody>
+              </table>
             </div>
 
             <!-- Time slots -->
-            <div class="flex flex-col gap-3 min-w-[130px]">
-              <p class="text-xs font-bold text-gray-900 uppercase tracking-widest mb-1">Ura</p>
+            <div class="flex flex-col gap-3 sm:min-w-[130px] sm:pt-14">
+              <p class="text-xs font-bold text-indigo-950 uppercase tracking-widest mb-1">Ura</p>
               <button type="button" class="time-btn border-2 border-gray-200 rounded-xl px-5 py-3 text-sm font-semibold text-gray-600 cursor-pointer" data-time="10:00">10:00</button>
               <button type="button" class="time-btn border-2 border-gray-200 rounded-xl px-5 py-3 text-sm font-semibold text-gray-600 cursor-pointer" data-time="12:00">12:00</button>
               <button type="button" class="time-btn border-2 border-gray-200 rounded-xl px-5 py-3 text-sm font-semibold text-gray-600 cursor-pointer" data-time="14:00">14:00</button>
@@ -113,7 +135,7 @@
           <div id="selected-summary" class="hidden mt-4 text-sm font-bold text-center py-2.5 px-4 bg-indigo-50 text-indigo-700 rounded-xl"></div>
         </div>
 
-        <!-- Hidden inputs for form data -->
+        <!-- Hidden inputs -->
         <input type="hidden" id="f-date" required>
         <input type="hidden" id="f-time" required>
 
@@ -122,7 +144,7 @@
           <textarea id="f-message" rows="3" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition resize-none" placeholder="Povejte nam o vaših potrebah..."></textarea>
         </div>
 
-        <button type="submit" id="btn-submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+        <button type="submit" id="btn-submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
           Rezerviraj termin
         </button>
 
@@ -157,67 +179,71 @@
 
   let calYear, calMonth, selectedDate = null, selectedTime = null;
 
-  // Init to current month
   const now = new Date();
   calYear = now.getFullYear();
   calMonth = now.getMonth();
 
   function renderCalendar() {
-    const title = document.getElementById('cal-title');
-    const grid = document.getElementById('cal-grid');
-    title.textContent = MONTHS_SL[calMonth] + ' ' + calYear;
+    document.getElementById('cal-title').textContent = MONTHS_SL[calMonth] + ' ' + calYear;
+    const tbody = document.getElementById('cal-body');
 
     const firstDay = new Date(calYear, calMonth, 1);
     const lastDay = new Date(calYear, calMonth + 1, 0);
-    // Monday = 0, Sunday = 6
-    let startIdx = (firstDay.getDay() + 6) % 7;
+    let startIdx = (firstDay.getDay() + 6) % 7; // Monday=0
 
-    const today = new Date();
-    today.setHours(0,0,0,0);
-    const minDate = new Date(today);
-    minDate.setDate(minDate.getDate() + 1); // at least tomorrow
+    const today = new Date(); today.setHours(0,0,0,0);
+    const minDate = new Date(today); minDate.setDate(minDate.getDate() + 1);
+
+    // Build weeks as rows
+    let cells = [];
+    for (let i = 0; i < startIdx; i++) cells.push(null);
+    for (let d = 1; d <= lastDay.getDate(); d++) cells.push(d);
+    while (cells.length % 7 !== 0) cells.push(null);
 
     let html = '';
-    // Empty cells before first day
-    for (let i = 0; i < startIdx; i++) {
-      html += '<div class="cal-day" style="cursor:default"></div>';
-    }
-    for (let d = 1; d <= lastDay.getDate(); d++) {
-      const date = new Date(calYear, calMonth, d);
-      const dayOfWeek = date.getDay();
-      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-      const isPast = date < minDate;
-      const isDisabled = isWeekend || isPast;
-      const isToday = date.getTime() === today.getTime();
-      const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+    for (let r = 0; r < cells.length; r += 7) {
+      html += '<tr>';
+      for (let c = 0; c < 7; c++) {
+        const d = cells[r + c];
+        html += '<td>';
+        if (d === null) {
+          html += '<span class="cal-cell"></span>';
+        } else {
+          const date = new Date(calYear, calMonth, d);
+          const dayOfWeek = date.getDay();
+          const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+          const isPast = date < minDate;
+          const isDisabled = isWeekend || isPast;
+          const isToday = date.getTime() === today.getTime();
+          const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+          const dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
 
-      const dateStr = calYear + '-' + String(calMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+          let cls = 'cal-cell';
+          if (!isDisabled) cls += ' available';
+          if (isToday && !isSelected) cls += ' today';
+          if (isSelected) cls += ' selected';
 
-      let cls = 'cal-day';
-      if (isDisabled) cls += ' disabled';
-      else cls += ' available';
-      if (isToday && !isSelected) cls += ' today';
-      if (isSelected) cls += ' selected';
-
-      if (isDisabled) {
-        html += '<div class="' + cls + '">' + d + '</div>';
-      } else {
-        html += '<div class="' + cls + '" data-date="' + dateStr + '" onclick="selectDate(this)">' + d + '</div>';
+          if (isDisabled) {
+            html += '<span class="' + cls + '">' + d + '</span>';
+          } else {
+            html += '<span class="' + cls + '" data-date="' + dateStr + '" onclick="selectDate(this)">' + d + '</span>';
+          }
+        }
+        html += '</td>';
       }
+      html += '</tr>';
     }
-    grid.innerHTML = html;
+    tbody.innerHTML = html;
   }
 
   function selectDate(el) {
-    const dateStr = el.dataset.date;
-    const parts = dateStr.split('-');
+    const parts = el.dataset.date.split('-');
     selectedDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-    document.getElementById('f-date').value = dateStr;
+    document.getElementById('f-date').value = el.dataset.date;
     renderCalendar();
     updateSummary();
   }
 
-  // Time buttons
   document.querySelectorAll('.time-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.time-btn').forEach(function(b) { b.classList.remove('selected'); });
@@ -232,9 +258,7 @@
     const el = document.getElementById('selected-summary');
     const submitBtn = document.getElementById('btn-submit');
     if (selectedDate && selectedTime) {
-      const day = selectedDate.getDate();
-      const month = MONTHS_SL[selectedDate.getMonth()];
-      el.textContent = day + '. ' + month + ' ' + selectedDate.getFullYear() + ' ob ' + selectedTime;
+      el.textContent = selectedDate.getDate() + '. ' + MONTHS_SL[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear() + ' ob ' + selectedTime;
       el.classList.remove('hidden');
       submitBtn.disabled = false;
     } else {
@@ -243,11 +267,8 @@
     }
   }
 
-  // Nav buttons
   document.getElementById('cal-prev').addEventListener('click', function() {
-    const minMonth = now.getMonth();
-    const minYear = now.getFullYear();
-    if (calYear > minYear || (calYear === minYear && calMonth > minMonth)) {
+    if (calYear > now.getFullYear() || (calYear === now.getFullYear() && calMonth > now.getMonth())) {
       calMonth--;
       if (calMonth < 0) { calMonth = 11; calYear--; }
       renderCalendar();
