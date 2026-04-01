@@ -1428,15 +1428,7 @@
   function demoStartProcessing(input) {
     const file = input.files && input.files[0];
     if (!file) return;
-    const name = file.name;
-    document.getElementById('demo-proc-filename').textContent = name;
-    document.getElementById('demo-result-filename').textContent = name;
-    document.getElementById('demo-state-upload').classList.add('hidden');
-    document.getElementById('demo-state-processing').classList.remove('hidden');
-
-    const stepTimings = [300, 900, 1600, 2400];
-    stepTimings.forEach((ms, i) => setTimeout(() => demoTickStep(i), ms));
-    setTimeout(() => demoShowResult(), 2900);
+    window.location.href = 'https://app.konta.si';
   }
 
   // ── FAQ accordion ──
