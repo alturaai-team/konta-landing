@@ -334,9 +334,14 @@
       message: document.getElementById('f-message').value.trim() || null,
     };
 
-    const { error } = await sb.from('booking_requests').insert(data);
+    const res = await fetch(SB_URL + '/functions/v1/booking-notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json().catch(function() { return {}; });
 
-    if (error) {
+    if (!res.ok || result.error) {
       errEl.textContent = 'Napaka pri pošiljanju. Poskusite znova.';
       errEl.classList.remove('hidden');
       btn.disabled = false; btn.textContent = 'Rezerviraj termin';
