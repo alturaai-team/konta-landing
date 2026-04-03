@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Konta</title>
+<meta name="description" content="Konta blog o avtomatizaciji računovodstva, DDV-O vodičih, KIR/KPR evidencah in AI orodjih za slovenske računovodske pisarne.">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="canonical" href="https://konta.si/blog/">
+<meta property="og:title" content="Blog — Konta">
+<meta property="og:description" content="Vodiči in članki o avtomatizaciji računovodstva, DDV-O, KIR/KPR in AI orodjih za slovenske računovodje.">
+<meta property="og:image" content="https://placehold.co/1200x630/2563EB/ffffff?text=Konta+Blog&font=inter">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://konta.si/blog/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog — Konta">
+<meta name="twitter:description" content="Vodiči in članki o avtomatizaciji računovodstva, DDV-O, KIR/KPR in AI orodjih za slovenske računovodje.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .blog-card { border: 1px solid #e5e7eb; border-radius: 1rem; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+  .blog-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
+</style>
+</head>
+<body class="bg-white">
+
+<!-- NAV -->
+<nav class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+  <div id="navbar-pill" class="pointer-events-auto bg-white/95 backdrop-blur-md border border-gray-200 rounded-full px-6 py-3 shadow-lg flex items-center justify-between w-full max-w-3xl">
+    <div class="flex items-center gap-7">
+      <a href="../konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+      <div class="hidden md:flex items-center gap-5 text-sm text-gray-500">
+        <a href="../konta-landing.html#how-it-works" class="hover:text-gray-900 transition-colors">Kako deluje</a>
+        <a href="../konta-landing.html#examples" class="hover:text-gray-900 transition-colors">Primeri</a>
+        <a href="../konta-landing.html#pricing" class="hover:text-gray-900 transition-colors">Cene</a>
+        <a href="index.html" class="text-gray-900 font-medium">Blog</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="https://app.konta.si" class="text-sm text-gray-500 hover:text-gray-900 transition-colors px-3 py-1.5 hidden md:block">Prijavite se</a>
+      <a href="https://app.konta.si" class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-colors font-semibold">Začnite brezplačno</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<main class="pt-32 pb-20">
+  <div class="max-w-4xl mx-auto px-6">
+
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
+        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+        Blog
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">Vodiči in novosti</h1>
+      <p class="text-lg text-gray-500 max-w-xl mx-auto">Praktični vodiči za slovenske računovodje — DDV, KIR/KPR, avtomatizacija in več.</p>
+    </div>
+
+    <!-- BLOG GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Card 1: DDV-O -->
+      <a href="kako-oddati-ddv-o.html" class="blog-card bg-white flex flex-col">
+        <div class="bg-blue-50 px-6 py-10 flex items-center justify-center">
+          <span class="text-4xl font-extrabold text-blue-600">DDV-O</span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Vodič</span>
+            <span class="text-xs text-gray-400">3. apr 2026</span>
+          </div>
+          <h2 class="text-lg font-bold text-gray-900 mb-2 leading-snug">Kako oddati DDV-O na eDavke — Vodič 2026</h2>
+          <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-1">Korak za korakom vodič za pripravo in oddajo DDV-O obrazca na portal eDavki. Roki, pogoste napake in avtomatizacija.</p>
+          <span class="text-sm font-semibold text-blue-600">Preberite več &rarr;</span>
+        </div>
+      </a>
+
+      <!-- Card 2: KIR/KPR -->
+      <a href="kir-kpr-vodic.html" class="blog-card bg-white flex flex-col">
+        <div class="bg-blue-50 px-6 py-10 flex items-center justify-center">
+          <span class="text-4xl font-extrabold text-blue-600">KIR/KPR</span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Vodič</span>
+            <span class="text-xs text-gray-400">3. apr 2026</span>
+          </div>
+          <h2 class="text-lg font-bold text-gray-900 mb-2 leading-snug">KIR in KPR — Vse kar morate vedeti (2026)</h2>
+          <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-1">Kaj sta knjiga izdanih in prejetih računov, katere podatke vsebujeta, zakonske zahteve FURS in kako ju avtomatizirati.</p>
+          <span class="text-sm font-semibold text-blue-600">Preberite več &rarr;</span>
+        </div>
+      </a>
+
+      <!-- Card 3: Avtomatizacija -->
+      <a href="avtomatizacija-racunovodstva.html" class="blog-card bg-white flex flex-col">
+        <div class="bg-blue-50 px-6 py-10 flex items-center justify-center">
+          <span class="text-4xl font-extrabold text-blue-600">AI</span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Članek</span>
+            <span class="text-xs text-gray-400">3. apr 2026</span>
+          </div>
+          <h2 class="text-lg font-bold text-gray-900 mb-2 leading-snug">Avtomatizacija računovodstva z AI — Vodič 2026</h2>
+          <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-1">Kako AI spreminja računovodstvo v Sloveniji. Katere naloge lahko avtomatizirate in koliko časa prihranite.</p>
+          <span class="text-sm font-semibold text-blue-600">Preberite več &rarr;</span>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-gray-50 border-t border-gray-100 py-12">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div class="col-span-2 md:col-span-1">
+        <a href="../konta-landing.html" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
+        <p class="mt-2 text-sm text-gray-400 leading-relaxed">AI računovodska platforma za slovensko pisarno.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Platforma</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="../konta-landing.html#how-it-works" class="hover:text-gray-700 transition-colors">Kako deluje</a></li>
+          <li><a href="../konta-landing.html#examples" class="hover:text-gray-700 transition-colors">Funkcije</a></li>
+          <li><a href="../konta-landing.html#pricing" class="hover:text-gray-700 transition-colors">Cene</a></li>
+          <li><a href="../security.html" class="hover:text-gray-700 transition-colors">Varnost</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Podjetje</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="../about.html" class="hover:text-gray-700 transition-colors">O nas</a></li>
+          <li><a href="index.html" class="font-medium text-blue-600">Blog</a></li>
+          <li><a href="../careers.html" class="hover:text-gray-700 transition-colors">Kariere</a></li>
+          <li><a href="../contact.html" class="hover:text-gray-700 transition-colors">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-gray-700 text-sm mb-3">Pravno</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="../terms.html" class="hover:text-gray-700 transition-colors">Pogoji uporabe</a></li>
+          <li><a href="../privacy.html" class="hover:text-gray-700 transition-colors">Zasebnost</a></li>
+          <li><a href="../cookies.html" class="hover:text-gray-700 transition-colors">Piškotki</a></li>
+          <li><a href="../dpa.html" class="hover:text-gray-700 transition-colors">Pogodba o obdelavi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-100 pt-6 flex items-center justify-between">
+      <p class="text-xs text-gray-400">&copy; 2025 Konta. Vse pravice pridržane.</p>
+      <p class="text-xs text-gray-400">Narejen v Sloveniji</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navPill = document.getElementById('navbar-pill');
+  window.addEventListener('scroll', () => {
+    navPill.style.boxShadow = window.scrollY > 20
+      ? '0 4px 24px rgba(0,0,0,0.12)'
+      : '0 1px 8px rgba(0,0,0,0.06)';
+  });
+</script>
+</body>
+</html>
