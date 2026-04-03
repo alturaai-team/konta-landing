@@ -20,9 +20,12 @@
   .cal-table tr.week-row:nth-child(even) td { background: #f0f7ff; }
 
   .cal-cell {
-    width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center;
-    font-size: 15px; color: #9ca3af; border-radius: 50%; cursor: default;
+    width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #9ca3af; border-radius: 50%; cursor: default;
     transition: all 0.15s; user-select: none;
+  }
+  @media (min-width: 768px) {
+    .cal-cell { width: 46px; height: 46px; font-size: 15px; }
   }
   .cal-cell.available { color: #1e3a5f; font-weight: 500; cursor: pointer; }
   .cal-cell.available:hover { background: #dbeafe; color: #2563eb; }
@@ -56,7 +59,7 @@
       <div id="booking-layout" class="flex flex-col lg:flex-row gap-6 items-stretch">
 
         <!-- LEFT: Info (30%) -->
-        <div class="w-full lg:w-[30%] bg-white rounded-2xl border border-gray-200 p-7 space-y-4 flex flex-col">
+        <div class="w-full lg:w-[30%] bg-white rounded-2xl border border-gray-200 p-5 md:p-7 space-y-4 flex flex-col">
           <h2 class="text-base font-bold text-gray-900">Vaši podatki</h2>
 
           <div>
@@ -129,7 +132,7 @@
         </div>
 
         <!-- RIGHT: Calendar (70%) -->
-        <div class="w-full lg:w-[70%] bg-white rounded-2xl border border-gray-200 p-8">
+        <div class="w-full lg:w-[70%] bg-white rounded-2xl border border-gray-200 p-5 md:p-8">
           <h2 class="text-base font-bold text-gray-900 mb-5">Izberite termin</h2>
 
           <!-- Month nav -->
@@ -156,7 +159,7 @@
 
           <!-- Time slots -->
           <p class="text-sm font-bold text-gray-900 mb-3">Izberite uro</p>
-          <div class="grid grid-cols-4 gap-3">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             <button type="button" class="time-btn border-2 border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-600 cursor-pointer text-center" data-time="10:00">10:00</button>
             <button type="button" class="time-btn border-2 border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-600 cursor-pointer text-center" data-time="12:00">12:00</button>
             <button type="button" class="time-btn border-2 border-gray-200 rounded-xl py-3 text-sm font-semibold text-gray-600 cursor-pointer text-center" data-time="14:00">14:00</button>
