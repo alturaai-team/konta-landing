@@ -790,45 +790,40 @@ HIDDEN_SECTION_END -->
       <p class="text-lg text-gray-500">Oglejte si, kaj Konta naredi namesto vas — vsak dan, za vsako stranko.</p>
     </div>
     <div class="grid md:grid-cols-3 gap-6 items-stretch">
-      <!-- Example 1 -->
+      <!-- Example 1: App mockup — Document extraction -->
       <div class="reveal reveal-delay-1 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-5 flex items-center justify-center" style="min-height:220px;">
-          <div class="bg-white rounded-2xl p-4 shadow-md text-xs w-full" style="font-family:'Satoshi',sans-serif;">
-            <!-- File row -->
-            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2 mb-3 border border-gray-100">
-              <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-              </div>
-              <div class="flex-1 min-w-0">
-                <p class="font-semibold text-gray-800 truncate">racun-telekom-042.jpg</p>
-                <p class="text-gray-400 text-[10px]">Skeniran račun · 1,2 MB</p>
-              </div>
-              <span class="badge-green shrink-0">✓ prebran</span>
+        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
+          <!-- Mini app mockup -->
+          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
+            <!-- Sidebar -->
+            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
+              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             </div>
-            <!-- Extracted fields -->
-            <div class="space-y-1.5">
-              <div class="flex items-center justify-between py-1 border-b border-gray-50">
-                <span class="text-gray-400">Dobavitelj</span>
-                <span class="font-semibold text-blue-600">Telekom SI</span>
+            <!-- Main content -->
+            <div style="flex:1;padding:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <div style="font-weight:700;color:#37352F;font-size:12px;">Dokumenti</div>
+                <span style="font-size:9px;color:#fff;background:#0073ff;padding:2px 8px;border-radius:10px;font-weight:600;">Obdelano</span>
               </div>
-              <div class="flex items-center justify-between py-1 border-b border-gray-50">
-                <span class="text-gray-400">Znesek neto</span>
-                <span class="font-semibold text-gray-800">€73,28</span>
-              </div>
-              <div class="flex items-center justify-between py-1 border-b border-gray-50">
-                <span class="text-gray-400">DDV 22%</span>
-                <span class="font-semibold text-gray-800">€16,12</span>
-              </div>
-              <div class="flex items-center justify-between py-1">
-                <span class="text-gray-400">Kategorija</span>
-                <span class="font-semibold text-blue-600">→ Telefonija</span>
-              </div>
-            </div>
-            <div class="mt-3 flex items-center justify-between bg-blue-50 rounded-lg px-3 py-2">
-              <span class="text-blue-700 font-semibold">AI zaupanje</span>
-              <div class="flex items-center gap-1.5">
-                <div class="w-16 h-1.5 bg-blue-200 rounded-full overflow-hidden"><div class="progress-bar h-full bg-blue-600 rounded-full" style="--w:98%"></div></div>
-                <span class="text-blue-700 font-bold">98%</span>
+              <!-- File card -->
+              <div style="background:#f9fafb;border:1px solid #efefec;border-radius:10px;padding:8px 10px;margin-bottom:8px;">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                  <div style="width:24px;height:24px;background:#fee2e2;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div><div style="font-weight:600;color:#37352F;">racun-telekom-042.pdf</div><div style="color:#9B9A97;font-size:9px;">PDF · 1,2 MB · Prebrano</div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Dobavitelj</div><div style="font-weight:600;color:#0073ff;">Telekom SI</div></div>
+                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Skupaj</div><div style="font-weight:600;color:#37352F;">€89,40</div></div>
+                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">DDV 22%</div><div style="font-weight:600;color:#37352F;">€16,12</div></div>
+                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Datum</div><div style="font-weight:600;color:#37352F;">15.03.2026</div></div>
+                </div>
+                <div style="margin-top:6px;display:flex;align-items:center;gap:6px;background:#eff6ff;border-radius:6px;padding:4px 8px;">
+                  <div style="flex:1;height:4px;background:#dbeafe;border-radius:4px;overflow:hidden;"><div style="width:97%;height:100%;background:#0073ff;border-radius:4px;"></div></div>
+                  <span style="font-weight:700;color:#0073ff;font-size:9px;">97%</span>
+                </div>
               </div>
             </div>
           </div>
@@ -836,38 +831,46 @@ HIDDEN_SECTION_END -->
         <div class="p-5 flex flex-col flex-1">
           <span class="text-xs font-semibold text-blue-600 uppercase tracking-wide">Ekstrakcija dokumentov</span>
           <h3 class="font-bold text-gray-900 mt-1 mb-2">Račun naložen. Podatki že tam.</h3>
-          <p class="text-sm text-gray-500 leading-relaxed flex-1">Strankin dobavitelj je poslal skeniran račun v JPG formatu. Konta ga prebere, izvleče dobavitelja, znesek, DDV in datum — in ga samodejno razvrsti v pravo kategorijo. Vi samo potrdite.</p>
+          <p class="text-sm text-gray-500 leading-relaxed flex-1">Strankin dobavitelj je poslal skeniran račun. Konta ga prebere, izvleče dobavitelja, znesek, DDV in datum — in ga samodejno razvrsti v pravo kategorijo. Vi samo potrdite.</p>
         </div>
       </div>
-      <!-- Example 2 -->
+      <!-- Example 2: App mockup — Clients dashboard -->
       <div class="reveal reveal-delay-2 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-5 flex items-center justify-center" style="min-height:220px;">
-          <div class="bg-white rounded-2xl p-4 shadow-md text-xs w-full" style="font-family:'Satoshi',sans-serif;">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-3">
-              <div>
-                <p class="font-semibold text-gray-800">Stranke</p>
-                <p class="text-gray-400 text-[10px]">Nadzorna plošča · Marec 2025</p>
-              </div>
-              <span class="badge-green">4 aktivne</span>
+        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
+          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
+            <!-- Sidebar -->
+            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
+              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             </div>
-            <!-- Client list -->
-            <div class="border border-gray-100 rounded-xl overflow-hidden divide-y divide-gray-50">
-              <div class="flex items-center justify-between px-3 py-2">
-                <span class="text-gray-700">Strokovnjak d.o.o.</span>
-                <div class="flex items-center gap-2"><span class="text-gray-400">12 dok</span><span class="badge-green">✓</span></div>
+            <!-- Main content -->
+            <div style="flex:1;padding:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <div style="font-weight:700;color:#37352F;font-size:12px;">Stranke</div>
+                <div style="display:flex;gap:4px;">
+                  <span style="font-size:9px;color:#16a34a;background:#dcfce7;padding:2px 8px;border-radius:10px;font-weight:600;">4 aktivne</span>
+                </div>
               </div>
-              <div class="flex items-center justify-between px-3 py-2">
-                <span class="text-gray-700">Hitri prevozi s.p.</span>
-                <div class="flex items-center gap-2"><span class="text-gray-400">7 dok</span><span class="badge-green">✓</span></div>
-              </div>
-              <div class="flex items-center justify-between px-3 py-2">
-                <span class="text-gray-700">Nova trgovina d.o.o.</span>
-                <div class="flex items-center gap-2"><span class="text-gray-400">9 dok</span><span class="badge-green">✓</span></div>
-              </div>
-              <div class="flex items-center justify-between px-3 py-2 bg-yellow-50">
-                <span class="text-gray-600">Zelena kmetija s.p.</span>
-                <div class="flex items-center gap-2"><span class="text-gray-400">2 dok</span><span class="badge-yellow">Čaka</span></div>
+              <!-- Client rows -->
+              <div style="border:1px solid #efefec;border-radius:8px;overflow:hidden;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2563eb;font-size:9px;">S</div><span style="font-weight:500;color:#37352F;">Strokovnjak d.o.o.</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">12 dok</span><span style="color:#16a34a;">✓</span></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#fce7f3;display:flex;align-items:center;justify-content:center;font-weight:700;color:#db2777;font-size:9px;">H</div><span style="font-weight:500;color:#37352F;">Hitri prevozi s.p.</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">7 dok</span><span style="color:#16a34a;">✓</span></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-weight:700;color:#16a34a;font-size:9px;">N</div><span style="font-weight:500;color:#37352F;">Nova trgovina d.o.o.</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">9 dok</span><span style="color:#16a34a;">✓</span></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#fefce8;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-weight:700;color:#d97706;font-size:9px;">Z</div><span style="font-weight:500;color:#37352F;">Zelena kmetija s.p.</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">2 dok</span><span style="font-size:9px;color:#d97706;background:#fef3c7;padding:1px 6px;border-radius:8px;font-weight:600;">Čaka</span></div>
+                </div>
               </div>
             </div>
           </div>
@@ -878,43 +881,55 @@ HIDDEN_SECTION_END -->
           <p class="text-sm text-gray-500 leading-relaxed flex-1">Na nadzorni plošči vidite vsako stranko, koliko dokumentov ste obdelali in kdo še čaka. Brez iskanja po mapah, brez e-poštnih verig.</p>
         </div>
       </div>
-      <!-- Example 3 -->
+      <!-- Example 3: App mockup — KIR/KPR Export -->
       <div class="reveal reveal-delay-3 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="bg-gradient-to-br from-purple-50 to-violet-100 p-5 flex items-center justify-center" style="min-height:220px;">
-          <div class="bg-white rounded-2xl p-4 shadow-md text-xs w-full" style="font-family:'Satoshi',sans-serif;">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-3">
-              <div>
-                <p class="font-semibold text-gray-800">Pregled transakcij</p>
-                <p class="text-gray-400 text-[10px]">Strokovnjak d.o.o. · Marec 2025</p>
-              </div>
-              <span class="badge-green">16 potrjenih</span>
+        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
+          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
+            <!-- Sidebar -->
+            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
+              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             </div>
-            <!-- Transaction rows -->
-            <div class="border border-gray-100 rounded-xl overflow-hidden divide-y divide-gray-50 mb-3">
-              <div class="flex justify-between items-center px-3 py-2">
-                <span class="text-gray-700">Telekom SI</span>
-                <div class="flex items-center gap-2"><span class="font-semibold">€73,28</span><span class="badge-green">✓</span></div>
+            <!-- Main content -->
+            <div style="flex:1;padding:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                <div style="font-weight:700;color:#37352F;font-size:12px;">KPR · Marec 2026</div>
+                <div style="font-size:9px;color:#fff;background:#7c3aed;padding:2px 8px;border-radius:10px;font-weight:600;">XML pripravljen</div>
               </div>
-              <div class="flex justify-between items-center px-3 py-2">
-                <span class="text-gray-700">Real d.o.o.</span>
-                <div class="flex items-center gap-2"><span class="font-semibold">€532,79</span><span class="badge-green">✓</span></div>
+              <!-- Transaction table -->
+              <div style="border:1px solid #efefec;border-radius:8px;overflow:hidden;margin-bottom:8px;">
+                <div style="display:grid;grid-template-columns:1fr auto auto;gap:0;font-size:9px;">
+                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;">Dobavitelj</div>
+                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;text-align:right;">Neto</div>
+                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;text-align:right;">DDV</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;">Telekom SI</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€73,28</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€16,12</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;">Real d.o.o.</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€532,79</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€117,21</div>
+                  <div style="padding:5px 8px;color:#37352F;">OMV</div>
+                  <div style="padding:5px 8px;color:#37352F;text-align:right;font-weight:500;">€245,08</div>
+                  <div style="padding:5px 8px;color:#37352F;text-align:right;font-weight:500;">€53,92</div>
+                </div>
               </div>
-              <div class="flex justify-between items-center px-3 py-2">
-                <span class="text-gray-700">OMV</span>
-                <div class="flex items-center gap-2"><span class="font-semibold">€245,08</span><span class="badge-green">✓</span></div>
+              <!-- Export button -->
+              <div style="display:flex;align-items:center;gap:6px;">
+                <div style="flex:1;background:#f3e8ff;border-radius:8px;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+                  <span style="font-weight:600;color:#7c3aed;">Skupaj: €851,15</span>
+                  <span style="font-weight:600;color:#7c3aed;">DDV: €187,25</span>
+                </div>
               </div>
-              <div class="flex justify-between items-center px-3 py-2 bg-purple-50">
-                <span class="text-purple-700 font-medium">Skupaj neto</span>
-                <span class="font-bold text-purple-800">€859,35</span>
-              </div>
+              <div style="margin-top:6px;background:#7c3aed;color:#fff;text-align:center;padding:5px;border-radius:8px;font-weight:600;font-size:9px;">↓ Izvozi KPR XML za eDavke</div>
             </div>
           </div>
         </div>
         <div class="p-5 flex flex-col flex-1">
-          <span class="text-xs font-semibold text-purple-600 uppercase tracking-wide">Pregled transakcij</span>
-          <h3 class="font-bold text-gray-900 mt-1 mb-2">Vsaka transakcija na svojem mestu.</h3>
-          <p class="text-sm text-gray-500 leading-relaxed flex-1">Ko so računi prebrani, so transakcije takoj razvrščene po kategorijah in vidne v pregledu. En pogled — in točno veste, kaj je pri kateri stranki.</p>
+          <span class="text-xs font-semibold text-purple-600 uppercase tracking-wide">KIR/KPR izvoz</span>
+          <h3 class="font-bold text-gray-900 mt-1 mb-2">En klik do eDavkov.</h3>
+          <p class="text-sm text-gray-500 leading-relaxed flex-1">Ko so transakcije potrjene, Konta zgradi KPR ali KIR evidenco in generira XML v formatu, ki ga eDavke sprejmejo. Brez ročnega prepisovanja.</p>
         </div>
       </div>
     </div>
