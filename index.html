@@ -146,11 +146,6 @@
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
   .float-anim { animation: float 6s ease-in-out infinite; }
 
-  /* ── Respect reduced motion ── */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  }
-
   /* ── Scroll reveal ── */
   .reveal       { opacity: 0; transform: translateY(28px);  transition: opacity 0.65s ease, transform 0.65s ease; }
   .reveal-left  { opacity: 0; transform: translateX(-28px); transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -205,7 +200,7 @@
 <nav id="navbar" class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300 pointer-events-none">
   <div id="navbar-pill" class="pointer-events-auto bg-white/95 backdrop-blur-md border border-gray-200 rounded-full px-4 md:px-6 py-3 shadow-lg flex items-center justify-between w-full max-w-3xl">
     <div class="flex items-center gap-4 md:gap-7">
-      <a href="#" class="flex items-center"><img src="konta-logo-t2.webp" alt="Konta." style="height:28px;"></a>
+      <a href="#" class="text-lg font-extrabold text-gray-900 tracking-tight">Konta.</a>
       <div class="hidden md:flex items-center gap-5 text-sm text-gray-500">
         <a href="#how-it-works-steps" class="hover:text-gray-900 transition-colors">Kako deluje</a>
         <a href="#examples" class="hover:text-gray-900 transition-colors">Primeri</a>
@@ -216,11 +211,13 @@
     <div class="flex items-center gap-2 md:gap-3">
       <a href="https://app.konta.si" class="text-sm text-gray-500 hover:text-gray-900 transition-colors px-3 py-1.5 hidden md:block">Prijavite se</a>
       <a href="https://app.konta.si" class="text-xs md:text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 md:px-4 py-2 rounded-full transition-colors font-semibold">Začnite brezplačno</a>
+      <!-- Mobile menu button -->
       <button id="mobile-menu-btn" class="md:hidden w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
         <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
   </div>
+  <!-- Mobile dropdown menu -->
   <div id="mobile-menu" class="hidden pointer-events-auto md:hidden mt-2 bg-white/95 backdrop-blur-md border border-gray-200 rounded-2xl px-6 py-4 shadow-lg w-full max-w-3xl mx-auto">
     <div class="flex flex-col gap-3 text-sm">
       <a href="#how-it-works-steps" class="text-gray-600 hover:text-gray-900 py-1.5 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Kako deluje</a>
@@ -269,15 +266,15 @@
   </div>
 
   <!-- Demo widget -->
-  <div class="w-[92%] md:w-[75%] lg:w-[60%] mx-auto mt-8 reveal">
+  <div class="w-full md:w-[60%] mx-auto mt-8 reveal px-4 md:px-0">
     <div class="rounded-2xl overflow-hidden shadow-2xl border border-gray-200">
-          <div class="bg-gray-100 px-2 sm:px-4 py-3 flex items-center gap-2 sm:gap-3 border-b border-gray-200">
-            <div class="hidden sm:flex gap-1.5">
+          <div class="bg-gray-100 px-4 py-3 flex items-center gap-3 border-b border-gray-200">
+            <div class="flex gap-1.5">
               <div class="w-3 h-3 rounded-full bg-red-400"></div>
               <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
               <div class="w-3 h-3 rounded-full bg-green-400"></div>
             </div>
-            <div class="flex items-center gap-1 sm:ml-2 overflow-x-auto">
+            <div class="flex items-center gap-1 ml-2 overflow-x-auto">
               <button onclick="switchTab('docs')" id="tab-docs" class="px-3 py-1 text-xs font-semibold rounded-md bg-white shadow-sm text-blue-600 border border-blue-200 flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">1</span>Dokumenti</button>
               <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
               <button onclick="switchTab('reconcile')" id="tab-reconcile" class="px-3 py-1 text-xs font-semibold rounded-md text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-[10px] font-bold shrink-0" id="step-num-2">2</span>Stranke</button>
@@ -287,7 +284,7 @@
           </div>
 
           <!-- Tab: Dokumenti — interactive upload demo -->
-          <div id="demo-docs" class="bg-gray-50 p-4 sm:p-6" style="min-height:360px; font-family:'Satoshi',sans-serif;">
+          <div id="demo-docs" class="bg-gray-50 p-6" style="min-height:460px; font-family:'Satoshi',sans-serif;">
 
             <!-- STATE 1: Upload zone -->
             <div id="demo-state-upload">
@@ -298,7 +295,7 @@
                 </div>
               </div>
               <div id="demo-drop-zone"
-                   class="border-2 border-dashed border-blue-200 bg-white rounded-xl p-6 sm:p-10 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 transition-all"
+                   class="border-2 border-dashed border-blue-200 bg-white rounded-xl p-10 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 transition-all"
                    onclick="document.getElementById('demo-file-input').click()"
                    ondragover="event.preventDefault(); this.classList.add('border-blue-500','bg-blue-50');"
                    ondragleave="this.classList.remove('border-blue-500','bg-blue-50');"
@@ -499,7 +496,7 @@
     <!-- Empathy banner: before / after -->
     <div class="reveal rounded-3xl overflow-hidden mb-16 shadow-lg border border-gray-200 grid md:grid-cols-2">
       <!-- Before: stressed accountant -->
-      <div class="relative" style="min-height:240px;">
+      <div class="relative" style="min-height:320px;">
         <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&h=480&fit=crop&q=80" alt="Računovodkinja z gorami papirjev" class="w-full h-full object-cover absolute inset-0">
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent"></div>
         <div class="absolute top-4 left-4">
@@ -511,7 +508,7 @@
         </div>
       </div>
       <!-- After: happy with laptop -->
-      <div class="relative" style="min-height:240px;">
+      <div class="relative" style="min-height:320px;">
         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=700&h=480&fit=crop&crop=faces&q=80" alt="Računovodkinja z Konto" class="w-full h-full object-cover absolute inset-0" style="object-position: left center;">
         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/70 via-blue-900/20 to-transparent"></div>
         <div class="absolute top-4 left-4">
@@ -524,8 +521,266 @@
       </div>
     </div>
 
+
   </div>
 </section>
+
+<!-- HOW IT WORKS section removed — content moved to hero and walkthrough -->
+<!-- HIDDEN_SECTION_START
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Prepričajte se sami</h2>
+      <p class="text-lg text-gray-500">Naložite pravi račun — oglejte si, kako ga Konta prebere v sekundah.</p>
+    </div>
+    <div class="grid lg:grid-cols-5 gap-10 items-center">
+      <!-- App mockup tabs -->
+      <div class="lg:col-span-3 reveal-left">
+        <div class="rounded-2xl overflow-hidden shadow-2xl border border-gray-200">
+          <div class="bg-gray-100 px-4 py-3 flex items-center gap-3 border-b border-gray-200">
+            <div class="flex gap-1.5">
+              <div class="w-3 h-3 rounded-full bg-red-400"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div class="w-3 h-3 rounded-full bg-green-400"></div>
+            </div>
+            <div class="flex items-center gap-1 ml-2 overflow-x-auto">
+              <button onclick="switchTab('docs')" id="tab-docs" class="px-3 py-1 text-xs font-semibold rounded-md bg-white shadow-sm text-blue-600 border border-blue-200 flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">1</span>Dokumenti</button>
+              <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+              <button onclick="switchTab('reconcile')" id="tab-reconcile" class="px-3 py-1 text-xs font-semibold rounded-md text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-[10px] font-bold shrink-0" id="step-num-2">2</span>Stranke</button>
+              <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+              <button onclick="switchTab('reports')" id="tab-reports" class="px-3 py-1 text-xs font-semibold rounded-md text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1.5"><span class="w-4 h-4 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-[10px] font-bold shrink-0" id="step-num-3">3</span>Transakcije</button>
+            </div>
+          </div>
+
+          <!-- Tab: Dokumenti — interactive upload demo -->
+          <div id="demo-docs" class="bg-gray-50 p-6" style="min-height:460px; font-family:'Satoshi',sans-serif;">
+
+            <!-- STATE 1: Upload zone -->
+            <div id="demo-state-upload">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="text-base font-bold text-gray-900">Naloži dokument</h3>
+                  <p class="text-sm text-gray-400">PDF, JPG ali PNG</p>
+                </div>
+              </div>
+              <div id="demo-drop-zone"
+                   class="border-2 border-dashed border-blue-200 bg-white rounded-xl p-10 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 transition-all"
+                   onclick="document.getElementById('demo-file-input').click()"
+                   ondragover="event.preventDefault(); this.classList.add('border-blue-500','bg-blue-50');"
+                   ondragleave="this.classList.remove('border-blue-500','bg-blue-50');"
+                   ondrop="event.preventDefault(); this.classList.remove('border-blue-500','bg-blue-50'); demoStartProcessing({files: event.dataTransfer.files});">
+                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-blue-100">
+                  <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                </div>
+                <p class="text-base font-bold text-gray-800 mb-1">Povlecite račun sem</p>
+                <p class="text-sm text-gray-400 mb-5">ali</p>
+                <span class="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold pointer-events-none inline-block">Izberite datoteko</span>
+                <input type="file" id="demo-file-input" class="hidden" accept=".pdf,.jpg,.jpeg,.png" onchange="demoStartProcessing(this)">
+              </div>
+              <p class="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                Demo ne pošilja vaše datoteke nikamor.
+              </p>
+            </div>
+
+            <!-- STATE 2: Processing -->
+            <div id="demo-state-processing" class="hidden">
+              <div class="flex items-center justify-between mb-5">
+                <div>
+                  <h3 class="text-base font-bold text-gray-900">AI obdelava</h3>
+                  <p class="text-sm text-gray-400 truncate max-w-[200px]" id="demo-proc-filename">dokument.pdf</p>
+                </div>
+                <span class="text-sm font-semibold text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping inline-block"></span>Obdelava...
+                </span>
+              </div>
+              <div class="bg-white rounded-xl border border-gray-100 p-5 space-y-4 mb-4">
+                <div id="proc-s1" class="flex items-center gap-3 text-sm text-gray-400 transition-all duration-300">
+                  <span class="proc-icon w-6 h-6 rounded-full border-2 border-gray-200 bg-white flex items-center justify-center shrink-0 transition-all duration-300"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>
+                  <span>Branje dokumenta</span>
+                </div>
+                <div id="proc-s2" class="flex items-center gap-3 text-sm text-gray-400 transition-all duration-300">
+                  <span class="proc-icon w-6 h-6 rounded-full border-2 border-gray-200 bg-white flex items-center justify-center shrink-0 transition-all duration-300"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>
+                  <span>Prepoznavanje dobavitelja</span>
+                </div>
+                <div id="proc-s3" class="flex items-center gap-3 text-sm text-gray-400 transition-all duration-300">
+                  <span class="proc-icon w-6 h-6 rounded-full border-2 border-gray-200 bg-white flex items-center justify-center shrink-0 transition-all duration-300"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>
+                  <span>Ekstrakcija zneskov in DDV</span>
+                </div>
+                <div id="proc-s4" class="flex items-center gap-3 text-sm text-gray-400 transition-all duration-300">
+                  <span class="proc-icon w-6 h-6 rounded-full border-2 border-gray-200 bg-white flex items-center justify-center shrink-0 transition-all duration-300"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>
+                  <span>Določanje kategorije</span>
+                </div>
+              </div>
+              <div class="bg-blue-50 rounded-xl p-3.5 flex items-center gap-3">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <p class="text-sm text-blue-800 font-medium">Konta AI analizira vaš dokument...</p>
+              </div>
+            </div>
+
+            <!-- STATE 3: Result + checkout CTA -->
+            <div id="demo-state-result" class="hidden">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="text-base font-bold text-gray-900">Preglejte izvlečene podatke</h3>
+                  <p class="text-sm text-gray-400 truncate max-w-[200px]" id="demo-result-filename">dokument.pdf</p>
+                </div>
+                <span class="text-sm font-semibold text-green-700 bg-green-50 border border-green-200 px-2.5 py-1 rounded-full">✓ Prebrano</span>
+              </div>
+              <div class="bg-white rounded-xl border border-gray-100 overflow-hidden mb-3 text-sm divide-y divide-gray-50">
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-gray-400">Dobavitelj</span><span class="font-semibold text-gray-900" data-field="dobavitelj">—</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-gray-400">Datum računa</span><span class="font-semibold text-gray-900" data-field="datum">—</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-gray-400">Znesek brez DDV</span><span class="font-semibold text-gray-900" data-field="brezDdv">—</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-gray-400">DDV</span><span class="font-semibold text-gray-900" data-field="ddv">—</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3 bg-blue-50">
+                  <span class="text-blue-700 font-bold">Skupaj</span><span class="font-extrabold text-blue-700" data-field="skupaj">—</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-gray-400">Kategorija</span><span class="badge-blue" data-field="kategorija">—</span>
+                </div>
+              </div>
+              <button onclick="window.location.href='https://app.konta.si?plan=starter'"
+                      class="w-full flex items-center justify-center gap-2 text-base font-semibold text-white bg-green-600 hover:bg-green-700 py-3.5 rounded-xl transition-colors shadow-sm">
+                Potrdi in začnite brezplačno
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+              </button>
+              <p class="text-xs text-gray-400 text-center mt-2">14-dnevni preizkus · odpovejte kadarkoli</p>
+            </div>
+
+          </div>
+
+          <!-- Tab: Stranke -->
+          <div id="demo-reconcile" class="hidden bg-gray-50 p-5" style="min-height:320px; font-family:'Satoshi',sans-serif;">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-sm font-bold text-gray-900">Nadzorna plošča strank</h3>
+                <p class="text-xs text-gray-400">Vaša pisarna · Marec 2025</p>
+              </div>
+              <button class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg font-semibold">+ Stranka</button>
+            </div>
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden text-xs divide-y divide-gray-50 mb-3">
+              <div class="grid grid-cols-12 px-4 py-2 font-semibold text-gray-400 uppercase tracking-wide border-b border-gray-50">
+                <div class="col-span-5">Stranka</div><div class="col-span-3 text-right">Dokumenti</div><div class="col-span-4 text-right">Status</div>
+              </div>
+              <div class="grid grid-cols-12 px-4 py-2.5 items-center">
+                <div class="col-span-5 text-gray-700 font-medium">Strokovnjak d.o.o.</div>
+                <div class="col-span-3 text-right text-gray-500">12 docs</div>
+                <div class="col-span-4 flex justify-end"><span class="badge-green">✓ ažurno</span></div>
+              </div>
+              <div class="grid grid-cols-12 px-4 py-2.5 items-center">
+                <div class="col-span-5 text-gray-700 font-medium">Hitri prevozi s.p.</div>
+                <div class="col-span-3 text-right text-gray-500">8 docs</div>
+                <div class="col-span-4 flex justify-end"><span class="badge-green">✓ ažurno</span></div>
+              </div>
+              <div class="grid grid-cols-12 px-4 py-2.5 items-center bg-yellow-50">
+                <div class="col-span-5 text-gray-700 font-medium">Nova trgovina d.o.o.</div>
+                <div class="col-span-3 text-right text-gray-500">3 docs</div>
+                <div class="col-span-4 flex justify-end"><span class="badge-yellow">Čaka</span></div>
+              </div>
+              <div class="grid grid-cols-12 px-4 py-2.5 items-center">
+                <div class="col-span-5 text-gray-700 font-medium">Zelena kmetija s.p.</div>
+                <div class="col-span-3 text-right text-gray-500">5 docs</div>
+                <div class="col-span-4 flex justify-end"><span class="badge-green">✓ ažurno</span></div>
+              </div>
+            </div>
+            <div class="bg-blue-50 rounded-xl p-3 flex items-center gap-3">
+              <div class="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+              </div>
+              <p class="text-xs text-blue-800 font-medium">4 stranke · 28 dokumentov ta mesec · 1 čaka na dokumente</p>
+            </div>
+            <button onclick="switchTab('reports')" class="mt-3 w-full flex items-center justify-center gap-2 text-sm font-semibold text-white bg-green-600 hover:bg-green-700 py-3 rounded-xl transition-colors shadow-sm">
+              Naslednji korak: Pregled transakcij
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Tab: Transakcije -->
+          <div id="demo-reports" class="hidden bg-gray-50 p-5" style="min-height:320px; font-family:'Satoshi',sans-serif;">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-sm font-bold text-gray-900">Pregled transakcij</h3>
+                <p class="text-xs text-gray-400">Strokovnjak d.o.o. · Marec 2025</p>
+              </div>
+              <button class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg font-semibold">Filter ↓</button>
+            </div>
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden text-xs divide-y divide-gray-50 mb-3">
+              <div class="grid grid-cols-12 px-4 py-2 font-semibold text-gray-400 uppercase tracking-wide border-b border-gray-50">
+                <div class="col-span-4">Dobavitelj</div><div class="col-span-3">Kategorija</div><div class="col-span-2 text-right">Neto</div><div class="col-span-3 text-right">Status</div>
+              </div>
+              <div class="grid grid-cols-12 px-4 py-2.5 items-center">
+                <div class="col-span-4 text-gray-700">Telekom SI</div>
+                <div class="col-span-3 text-gray-400">Telefonija</div>
+                <div class="col-span-2 text-right font-semibold">€73,28</div>
+                <div class="col-span-3 flex justify-end"><span class="badge-green">✓ potrjeno</span></div>
+              </div>
+              <div class="grid grid-cols-12 px-4 py-2.5 items-center">
+                <div class="col-span-4 text-gray-700">Real d.o.o.</div>
+                <div class="col-span-3 text-gray-400">Najem</div>
+                <div class="col-span-2 text-right font-semibold">€532,79</div>
+                <div class="col-span-3 flex justify-end"><span class="badge-green">✓ potrjeno</span></div>
+              </div>
+              <div class="grid grid-cols-12 px-4 py-2.5 items-center">
+                <div class="col-span-4 text-gray-700">OMV</div>
+                <div class="col-span-3 text-gray-400">Gorivo</div>
+                <div class="col-span-2 text-right font-semibold">€245,08</div>
+                <div class="col-span-3 flex justify-end"><span class="badge-green">✓ potrjeno</span></div>
+              </div>
+              <div class="grid grid-cols-12 px-4 py-2.5 items-center bg-yellow-50">
+                <div class="col-span-4 text-gray-700">Office365</div>
+                <div class="col-span-3 text-gray-400">?</div>
+                <div class="col-span-2 text-right font-semibold">€8,20</div>
+                <div class="col-span-3 flex justify-end"><span class="badge-yellow">Preglej</span></div>
+              </div>
+            </div>
+            <div class="bg-green-50 rounded-xl p-3 flex items-center gap-3 border border-green-100">
+              <div class="w-7 h-7 bg-green-600 rounded-lg flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-green-900">16 transakcij potrjenih · skupaj €859,35</p>
+                <p class="text-xs text-green-700 mt-0.5">1 čaka na kategorijo · popravite z enim klikom</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steps -->
+      <div class="lg:col-span-2 space-y-8 reveal-right reveal-delay-1">
+        <div class="flex gap-4">
+          <div class="step-number">1</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Naložite račune</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">Povlecite PDF-e, slike ali skenane račune naravnost v Konto. Hkrati jih lahko naložite stotine. Ni omejitev formatov.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="step-number">2</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">AI prebere in kategorizira</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">Naša umetna inteligenca prebere vsak račun — dobavitelja, znesek, DDV, kategorijo. Brez tipkanja. 98 % natančnost.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="step-number">3</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Pregled čez vse stranke</h3>
+            <p class="text-sm text-gray-500 leading-relaxed">Vse potrjene transakcije so takoj vidne na nadzorni plošči. Vidite vsako stranko, vsak dokument, vsak znesek — na enem mestu.</p>
+          </div>
+        </div>
+        <a href="https://app.konta.si" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-colors shadow-sm">Začnite brezplačno →</a>
+      </div>
+HIDDEN_SECTION_END -->
 
 <!-- EXAMPLES -->
 <section id="examples" class="py-20 bg-gray-50">
@@ -535,45 +790,40 @@
       <p class="text-lg text-gray-500">Oglejte si, kaj Konta naredi namesto vas — vsak dan, za vsako stranko.</p>
     </div>
     <div class="grid md:grid-cols-3 gap-6 items-stretch">
-      <!-- Example 1 -->
+      <!-- Example 1: App mockup — Document extraction -->
       <div class="reveal reveal-delay-1 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-5 flex items-center justify-center" style="min-height:220px;">
-          <div class="bg-white rounded-2xl p-4 shadow-md text-xs w-full" style="font-family:'Satoshi',sans-serif;">
-            <!-- File row -->
-            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2 mb-3 border border-gray-100">
-              <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-              </div>
-              <div class="flex-1 min-w-0">
-                <p class="font-semibold text-gray-800 truncate">racun-telekom-042.jpg</p>
-                <p class="text-gray-400 text-[10px]">Skeniran račun · 1,2 MB</p>
-              </div>
-              <span class="badge-green shrink-0">✓ prebran</span>
+        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
+          <!-- Mini app mockup -->
+          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
+            <!-- Sidebar -->
+            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
+              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             </div>
-            <!-- Extracted fields -->
-            <div class="space-y-1.5">
-              <div class="flex items-center justify-between py-1 border-b border-gray-50">
-                <span class="text-gray-400">Dobavitelj</span>
-                <span class="font-semibold text-blue-600">Telekom SI</span>
+            <!-- Main content -->
+            <div style="flex:1;padding:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <div style="font-weight:700;color:#37352F;font-size:12px;">Dokumenti</div>
+                <span style="font-size:9px;color:#fff;background:#0073ff;padding:2px 8px;border-radius:10px;font-weight:600;">Obdelano</span>
               </div>
-              <div class="flex items-center justify-between py-1 border-b border-gray-50">
-                <span class="text-gray-400">Znesek neto</span>
-                <span class="font-semibold text-gray-800">€73,28</span>
-              </div>
-              <div class="flex items-center justify-between py-1 border-b border-gray-50">
-                <span class="text-gray-400">DDV 22%</span>
-                <span class="font-semibold text-gray-800">€16,12</span>
-              </div>
-              <div class="flex items-center justify-between py-1">
-                <span class="text-gray-400">Kategorija</span>
-                <span class="font-semibold text-blue-600">→ Telefonija</span>
-              </div>
-            </div>
-            <div class="mt-3 flex items-center justify-between bg-blue-50 rounded-lg px-3 py-2">
-              <span class="text-blue-700 font-semibold">AI zaupanje</span>
-              <div class="flex items-center gap-1.5">
-                <div class="w-16 h-1.5 bg-blue-200 rounded-full overflow-hidden"><div class="progress-bar h-full bg-blue-600 rounded-full" style="--w:98%"></div></div>
-                <span class="text-blue-700 font-bold">98%</span>
+              <!-- File card -->
+              <div style="background:#f9fafb;border:1px solid #efefec;border-radius:10px;padding:8px 10px;margin-bottom:8px;">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                  <div style="width:24px;height:24px;background:#fee2e2;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                  <div><div style="font-weight:600;color:#37352F;">racun-telekom-042.pdf</div><div style="color:#9B9A97;font-size:9px;">PDF · 1,2 MB · Prebrano</div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Dobavitelj</div><div style="font-weight:600;color:#0073ff;">Telekom SI</div></div>
+                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Skupaj</div><div style="font-weight:600;color:#37352F;">€89,40</div></div>
+                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">DDV 22%</div><div style="font-weight:600;color:#37352F;">€16,12</div></div>
+                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Datum</div><div style="font-weight:600;color:#37352F;">15.03.2026</div></div>
+                </div>
+                <div style="margin-top:6px;display:flex;align-items:center;gap:6px;background:#eff6ff;border-radius:6px;padding:4px 8px;">
+                  <div style="flex:1;height:4px;background:#dbeafe;border-radius:4px;overflow:hidden;"><div style="width:97%;height:100%;background:#0073ff;border-radius:4px;"></div></div>
+                  <span style="font-weight:700;color:#0073ff;font-size:9px;">97%</span>
+                </div>
               </div>
             </div>
           </div>
@@ -581,38 +831,46 @@
         <div class="p-5 flex flex-col flex-1">
           <span class="text-xs font-semibold text-blue-600 uppercase tracking-wide">Ekstrakcija dokumentov</span>
           <h3 class="font-bold text-gray-900 mt-1 mb-2">Račun naložen. Podatki že tam.</h3>
-          <p class="text-sm text-gray-500 leading-relaxed flex-1">Strankin dobavitelj je poslal skeniran račun v JPG formatu. Konta ga prebere, izvleče dobavitelja, znesek, DDV in datum — in ga samodejno razvrsti v pravo kategorijo. Vi samo potrdite.</p>
+          <p class="text-sm text-gray-500 leading-relaxed flex-1">Strankin dobavitelj je poslal skeniran račun. Konta ga prebere, izvleče dobavitelja, znesek, DDV in datum — in ga samodejno razvrsti v pravo kategorijo. Vi samo potrdite.</p>
         </div>
       </div>
-      <!-- Example 2 -->
+      <!-- Example 2: App mockup — Clients dashboard -->
       <div class="reveal reveal-delay-2 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-5 flex items-center justify-center" style="min-height:220px;">
-          <div class="bg-white rounded-2xl p-4 shadow-md text-xs w-full" style="font-family:'Satoshi',sans-serif;">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-3">
-              <div>
-                <p class="font-semibold text-gray-800">Stranke</p>
-                <p class="text-gray-400 text-[10px]">Nadzorna plošča · Marec 2025</p>
-              </div>
-              <span class="badge-green">4 aktivne</span>
+        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
+          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
+            <!-- Sidebar -->
+            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
+              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             </div>
-            <!-- Client list -->
-            <div class="border border-gray-100 rounded-xl overflow-hidden divide-y divide-gray-50">
-              <div class="flex items-center justify-between px-3 py-2">
-                <span class="text-gray-700">Strokovnjak d.o.o.</span>
-                <div class="flex items-center gap-2"><span class="text-gray-400">12 dok</span><span class="badge-green">✓</span></div>
+            <!-- Main content -->
+            <div style="flex:1;padding:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <div style="font-weight:700;color:#37352F;font-size:12px;">Stranke</div>
+                <div style="display:flex;gap:4px;">
+                  <span style="font-size:9px;color:#16a34a;background:#dcfce7;padding:2px 8px;border-radius:10px;font-weight:600;">4 aktivne</span>
+                </div>
               </div>
-              <div class="flex items-center justify-between px-3 py-2">
-                <span class="text-gray-700">Hitri prevozi s.p.</span>
-                <div class="flex items-center gap-2"><span class="text-gray-400">7 dok</span><span class="badge-green">✓</span></div>
-              </div>
-              <div class="flex items-center justify-between px-3 py-2">
-                <span class="text-gray-700">Nova trgovina d.o.o.</span>
-                <div class="flex items-center gap-2"><span class="text-gray-400">9 dok</span><span class="badge-green">✓</span></div>
-              </div>
-              <div class="flex items-center justify-between px-3 py-2 bg-yellow-50">
-                <span class="text-gray-600">Zelena kmetija s.p.</span>
-                <div class="flex items-center gap-2"><span class="text-gray-400">2 dok</span><span class="badge-yellow">Čaka</span></div>
+              <!-- Client rows -->
+              <div style="border:1px solid #efefec;border-radius:8px;overflow:hidden;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2563eb;font-size:9px;">S</div><span style="font-weight:500;color:#37352F;">Strokovnjak d.o.o.</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">12 dok</span><span style="color:#16a34a;">✓</span></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#fce7f3;display:flex;align-items:center;justify-content:center;font-weight:700;color:#db2777;font-size:9px;">H</div><span style="font-weight:500;color:#37352F;">Hitri prevozi s.p.</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">7 dok</span><span style="color:#16a34a;">✓</span></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-weight:700;color:#16a34a;font-size:9px;">N</div><span style="font-weight:500;color:#37352F;">Nova trgovina d.o.o.</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">9 dok</span><span style="color:#16a34a;">✓</span></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#fefce8;">
+                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-weight:700;color:#d97706;font-size:9px;">Z</div><span style="font-weight:500;color:#37352F;">Zelena kmetija s.p.</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">2 dok</span><span style="font-size:9px;color:#d97706;background:#fef3c7;padding:1px 6px;border-radius:8px;font-weight:600;">Čaka</span></div>
+                </div>
               </div>
             </div>
           </div>
@@ -623,43 +881,55 @@
           <p class="text-sm text-gray-500 leading-relaxed flex-1">Na nadzorni plošči vidite vsako stranko, koliko dokumentov ste obdelali in kdo še čaka. Brez iskanja po mapah, brez e-poštnih verig.</p>
         </div>
       </div>
-      <!-- Example 3 -->
+      <!-- Example 3: App mockup — KIR/KPR Export -->
       <div class="reveal reveal-delay-3 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="bg-gradient-to-br from-purple-50 to-violet-100 p-5 flex items-center justify-center" style="min-height:220px;">
-          <div class="bg-white rounded-2xl p-4 shadow-md text-xs w-full" style="font-family:'Satoshi',sans-serif;">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-3">
-              <div>
-                <p class="font-semibold text-gray-800">Pregled transakcij</p>
-                <p class="text-gray-400 text-[10px]">Strokovnjak d.o.o. · Marec 2025</p>
-              </div>
-              <span class="badge-green">16 potrjenih</span>
+        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
+          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
+            <!-- Sidebar -->
+            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
+              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             </div>
-            <!-- Transaction rows -->
-            <div class="border border-gray-100 rounded-xl overflow-hidden divide-y divide-gray-50 mb-3">
-              <div class="flex justify-between items-center px-3 py-2">
-                <span class="text-gray-700">Telekom SI</span>
-                <div class="flex items-center gap-2"><span class="font-semibold">€73,28</span><span class="badge-green">✓</span></div>
+            <!-- Main content -->
+            <div style="flex:1;padding:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                <div style="font-weight:700;color:#37352F;font-size:12px;">KPR · Marec 2026</div>
+                <div style="font-size:9px;color:#fff;background:#7c3aed;padding:2px 8px;border-radius:10px;font-weight:600;">XML pripravljen</div>
               </div>
-              <div class="flex justify-between items-center px-3 py-2">
-                <span class="text-gray-700">Real d.o.o.</span>
-                <div class="flex items-center gap-2"><span class="font-semibold">€532,79</span><span class="badge-green">✓</span></div>
+              <!-- Transaction table -->
+              <div style="border:1px solid #efefec;border-radius:8px;overflow:hidden;margin-bottom:8px;">
+                <div style="display:grid;grid-template-columns:1fr auto auto;gap:0;font-size:9px;">
+                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;">Dobavitelj</div>
+                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;text-align:right;">Neto</div>
+                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;text-align:right;">DDV</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;">Telekom SI</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€73,28</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€16,12</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;">Real d.o.o.</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€532,79</div>
+                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€117,21</div>
+                  <div style="padding:5px 8px;color:#37352F;">OMV</div>
+                  <div style="padding:5px 8px;color:#37352F;text-align:right;font-weight:500;">€245,08</div>
+                  <div style="padding:5px 8px;color:#37352F;text-align:right;font-weight:500;">€53,92</div>
+                </div>
               </div>
-              <div class="flex justify-between items-center px-3 py-2">
-                <span class="text-gray-700">OMV</span>
-                <div class="flex items-center gap-2"><span class="font-semibold">€245,08</span><span class="badge-green">✓</span></div>
+              <!-- Export button -->
+              <div style="display:flex;align-items:center;gap:6px;">
+                <div style="flex:1;background:#f3e8ff;border-radius:8px;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+                  <span style="font-weight:600;color:#7c3aed;">Skupaj: €851,15</span>
+                  <span style="font-weight:600;color:#7c3aed;">DDV: €187,25</span>
+                </div>
               </div>
-              <div class="flex justify-between items-center px-3 py-2 bg-purple-50">
-                <span class="text-purple-700 font-medium">Skupaj neto</span>
-                <span class="font-bold text-purple-800">€859,35</span>
-              </div>
+              <div style="margin-top:6px;background:#7c3aed;color:#fff;text-align:center;padding:5px;border-radius:8px;font-weight:600;font-size:9px;">↓ Izvozi KPR XML za eDavke</div>
             </div>
           </div>
         </div>
         <div class="p-5 flex flex-col flex-1">
-          <span class="text-xs font-semibold text-purple-600 uppercase tracking-wide">Pregled transakcij</span>
-          <h3 class="font-bold text-gray-900 mt-1 mb-2">Vsaka transakcija na svojem mestu.</h3>
-          <p class="text-sm text-gray-500 leading-relaxed flex-1">Ko so računi prebrani, so transakcije takoj razvrščene po kategorijah in vidne v pregledu. En pogled — in točno veste, kaj je pri kateri stranki.</p>
+          <span class="text-xs font-semibold text-purple-600 uppercase tracking-wide">KIR/KPR izvoz</span>
+          <h3 class="font-bold text-gray-900 mt-1 mb-2">En klik do eDavkov.</h3>
+          <p class="text-sm text-gray-500 leading-relaxed flex-1">Ko so transakcije potrjene, Konta zgradi KPR ali KIR evidenco in generira XML v formatu, ki ga eDavke sprejmejo. Brez ročnega prepisovanja.</p>
         </div>
       </div>
     </div>
@@ -1033,7 +1303,7 @@
       <a href="https://app.konta.si" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-xl font-semibold text-sm transition-colors">Začnite brezplačno →</a>
       <a href="contact.html" class="w-full sm:w-auto bg-transparent hover:bg-white/10 text-white border border-white/20 px-8 py-3.5 rounded-xl font-semibold text-sm transition-colors">Imam vprašanje — pišite mi</a>
     </div>
-    <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-gray-500">
+    <div class="flex items-center justify-center gap-6 text-xs text-gray-500">
       <span>🔒 GDPR skladno</span>
       <span>🇪🇺 EU strežniki</span>
       <span>🛡 Vaši podatki, vedno varni</span>
@@ -1047,7 +1317,7 @@
 <footer class="bg-gray-50 border-t border-gray-100">
   <div class="max-w-7xl mx-auto px-6 py-14">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-      <div class="sm:col-span-2 md:col-span-1">
+      <div class="col-span-2 md:col-span-1">
         <a href="#" class="text-xl font-extrabold text-gray-900 tracking-tight block mb-2">Konta.</a>
         <p class="text-sm text-gray-400 leading-relaxed">AI računovodski pomočnik za slovenske pisarne. Od računa do eDavkov.</p>
       </div>
@@ -1079,7 +1349,7 @@
         </ul>
       </div>
     </div>
-    <div class="border-t border-gray-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+    <div class="border-t border-gray-100 pt-6 flex items-center justify-between">
       <p class="text-xs text-gray-400">© 2026 Konta. Vse pravice pridržane.</p>
       <p class="text-xs text-gray-400">Narejen v Sloveniji 🇸🇮</p>
     </div>

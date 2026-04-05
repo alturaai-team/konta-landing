@@ -1,6 +1,6 @@
 {
   "regions": ["fra1"],
-  "rewrites": [{ "source": "/", "destination": "/konta-landing.html" }],
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/",
