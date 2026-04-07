@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konta. | AI računovodstvo za slovenske pisarne</title>
+<meta name="description" content="Naložite račun. AI prebere, razvrsti in pripravi knjižbo. Od dokumenta do eDavkov v minutah.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+      colors: {
+        brand: { 50:'#EFF6FF',100:'#DBEAFE',200:'#BFDBFE',500:'#3B82F6',600:'#2563EB',700:'#1D4ED8',800:'#1E40AF',900:'#1E3A8A' },
+        violet: { 500:'#7C3AED',600:'#6D28D9' }
+      }
+    }
+  }
+}
+</script>
+<style>
+/* ── Animations ── */
+@keyframes gradient-pan { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+@keyframes blob-float { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-20px) scale(1.05)} 66%{transform:translate(-20px,15px) scale(.95)} }
+@keyframes pulse-glow { 0%,100%{box-shadow:0 0 20px rgba(37,99,235,.3)} 50%{box-shadow:0 0 40px rgba(37,99,235,.6)} }
+@keyframes fade-in-left { from{opacity:0;transform:translateX(-30px)} to{opacity:1;transform:translateX(0)} }
+@keyframes fade-in-right { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+@keyframes fade-in-up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes draw-line { from{stroke-dashoffset:200} to{stroke-dashoffset:0} }
+@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+@keyframes progress-fill { 0%{width:0} 100%{width:100%} }
+@keyframes dot-pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+@keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+/* Flow animation cycle — 8s total, loops */
+@keyframes flow-doc-1 { 0%,5%{opacity:0;transform:translateX(-20px)} 10%,85%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(-20px)} }
+@keyframes flow-doc-2 { 0%,10%{opacity:0;transform:translateX(-20px)} 15%,85%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(-20px)} }
+@keyframes flow-doc-3 { 0%,15%{opacity:0;transform:translateX(-20px)} 20%,85%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(-20px)} }
+@keyframes flow-doc-4 { 0%,20%{opacity:0;transform:translateX(-20px)} 25%,85%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(-20px)} }
+@keyframes flow-line-draw { 0%,25%{stroke-dashoffset:150} 40%,80%{stroke-dashoffset:0} 90%,100%{stroke-dashoffset:150} }
+@keyframes flow-ai-pulse { 0%,30%{transform:scale(.8);opacity:0} 40%,75%{transform:scale(1);opacity:1} 85%,100%{transform:scale(.8);opacity:0} }
+@keyframes flow-result-1 { 0%,45%{opacity:0;transform:translateX(20px)} 55%,80%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(20px)} }
+@keyframes flow-result-2 { 0%,50%{opacity:0;transform:translateX(20px)} 60%,80%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(20px)} }
+@keyframes flow-result-3 { 0%,55%{opacity:0;transform:translateX(20px)} 65%,80%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(20px)} }
+@keyframes flow-result-4 { 0%,60%{opacity:0;transform:translateX(20px)} 70%,80%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(20px)} }
+@keyframes flow-result-5 { 0%,65%{opacity:0;transform:translateX(20px)} 75%,80%{opacity:1;transform:translateX(0)} 90%,100%{opacity:0;transform:translateX(20px)} }
+
+.flow-doc-1 { animation: flow-doc-1 8s ease infinite; }
+.flow-doc-2 { animation: flow-doc-2 8s ease infinite; }
+.flow-doc-3 { animation: flow-doc-3 8s ease infinite; }
+.flow-doc-4 { animation: flow-doc-4 8s ease infinite; }
+.flow-line { stroke-dasharray:150; animation: flow-line-draw 8s ease infinite; }
+.flow-ai { animation: flow-ai-pulse 8s ease infinite; }
+.flow-r1 { animation: flow-result-1 8s ease infinite; }
+.flow-r2 { animation: flow-result-2 8s ease infinite; }
+.flow-r3 { animation: flow-result-3 8s ease infinite; }
+.flow-r4 { animation: flow-result-4 8s ease infinite; }
+.flow-r5 { animation: flow-result-5 8s ease infinite; }
+
+.gradient-text { background:linear-gradient(90deg,#2563EB,#7C3AED,#2563EB); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:gradient-pan 4s ease infinite; }
+.blob { animation:blob-float 9s ease-in-out infinite; }
+.shimmer-btn { position:relative;overflow:hidden; }
+.shimmer-btn::after { content:'';position:absolute;top:0;left:0;right:0;bottom:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent); background-size:200% 100%; animation:shimmer 3s linear infinite; }
+
+/* Scroll reveal */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* Demo widget */
+.demo-file { transition:all .2s; }
+.demo-file:hover { background:#EFF6FF; }
+.demo-file.active { background:#DBEAFE; border-color:#2563EB; }
+.demo-progress-bar { transition:width .8s ease; }
+
+/* Mobile menu */
+.mobile-menu { max-height:0; overflow:hidden; transition:max-height .3s ease; }
+.mobile-menu.open { max-height:400px; }
+
+/* Doc intelligence — inactive tags */
+.di-inactive-tag { cursor:pointer; transition:all .25s ease; }
+.di-inactive-tag:hover { border-color:#9CA3AF; transform:translateY(-1px); box-shadow:0 2px 8px rgba(0,0,0,.06); }
+
+/* Doc intelligence — card field animations */
+#di-card .di-field { animation: fade-in-up .3s ease forwards; opacity:0; }
+#di-card .di-field:nth-child(1) { animation-delay:.05s }
+#di-card .di-field:nth-child(2) { animation-delay:.1s }
+#di-card .di-field:nth-child(3) { animation-delay:.15s }
+#di-card .di-field:nth-child(4) { animation-delay:.2s }
+#di-card .di-field:nth-child(5) { animation-delay:.25s }
+#di-card .di-field:nth-child(6) { animation-delay:.3s }
+#di-card .di-field:nth-child(7) { animation-delay:.35s }
+#di-card .di-field:nth-child(8) { animation-delay:.4s }
+#di-card .di-field:nth-child(9) { animation-delay:.45s }
+#di-card .di-field:nth-child(10) { animation-delay:.5s }
+#di-card .di-table { animation: fade-in-up .4s ease .25s forwards; opacity:0; }
+
+/* Connecting line animation */
+@keyframes dash-flow { from{stroke-dashoffset:20} to{stroke-dashoffset:0} }
+.di-connect-line { animation:dash-flow .8s linear infinite; }
+.di-connect-dot { transition:opacity .3s; }
+
+/* Active button pop-in */
+@keyframes pop-in { 0%{transform:scale(.85);opacity:0} 50%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
+#di-active-btn.pop { animation:pop-in .35s ease forwards; }
+
+/* Card content fade */
+@keyframes card-fade-in { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.di-card-enter { animation:card-fade-in .35s ease forwards; }
+</style>
+</head>
+<body class="font-sans antialiased text-gray-900 bg-white">
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 1. NAVBAR                                    -->
+<!-- ════════════════════════════════════════════ -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4">
+  <div class="flex items-center justify-between w-full max-w-5xl bg-white/90 backdrop-blur-md border border-gray-200 rounded-full px-6 py-3 shadow-sm">
+    <a href="#" class="text-xl font-bold text-gray-900">Konta.</a>
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+      <a href="#demo" class="hover:text-gray-900 transition">Kako deluje</a>
+      <a href="#flow" class="hover:text-gray-900 transition">Primeri</a>
+      <a href="#pricing" class="hover:text-gray-900 transition">Cene</a>
+      <a href="blog/" class="hover:text-gray-900 transition">Blog</a>
+    </div>
+    <div class="hidden md:flex items-center gap-3">
+      <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition">Prijavite se</a>
+      <a href="#pricing" class="text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 px-5 py-2 rounded-full transition shimmer-btn">Začnite brezplačno</a>
+    </div>
+    <!-- Mobile hamburger -->
+    <button onclick="document.getElementById('mob-menu').classList.toggle('open')" class="md:hidden p-2 -mr-2">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <!-- Mobile dropdown -->
+  <div id="mob-menu" class="mobile-menu absolute top-full left-4 right-4 mt-2 bg-white border border-gray-200 rounded-2xl shadow-lg">
+    <div class="flex flex-col p-4 gap-3 text-sm font-medium text-gray-700">
+      <a href="#demo" class="py-2 hover:text-brand-600">Kako deluje</a>
+      <a href="#flow" class="py-2 hover:text-brand-600">Primeri</a>
+      <a href="#pricing" class="py-2 hover:text-brand-600">Cene</a>
+      <a href="blog/" class="py-2 hover:text-brand-600">Blog</a>
+      <a href="#" class="py-2 hover:text-brand-600">Prijavite se</a>
+      <a href="#pricing" class="mt-2 text-center text-white bg-brand-600 rounded-full py-2.5 font-semibold">Začnite brezplačno</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 2. HERO                                      -->
+<!-- ════════════════════════════════════════════ -->
+<section class="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
+  <!-- Blobs -->
+  <div class="absolute top-20 left-1/4 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl blob"></div>
+  <div class="absolute top-40 right-1/4 w-64 h-64 bg-violet-400/20 rounded-full blur-3xl blob" style="animation-delay:-3s"></div>
+  <div class="absolute bottom-0 left-1/2 w-80 h-80 bg-sky-300/15 rounded-full blur-3xl blob" style="animation-delay:-6s"></div>
+
+  <div class="relative max-w-4xl mx-auto text-center px-4">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 bg-blue-50 text-brand-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6 border border-blue-100">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/></svg>
+      AI računovodski pomočnik za slovenske pisarne
+    </div>
+
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6">
+      Avtomatizirajte vaše<br><span class="gradient-text">računovodstvo</span>
+    </h1>
+    <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+      Naložite račun. AI prebere, razvrsti in pripravi knjižbo.<br class="hidden md:block"> Od dokumenta do eDavkov v minutah.
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+      <a href="#pricing" class="shimmer-btn inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3.5 rounded-full text-base transition shadow-lg shadow-blue-500/25">
+        Začnite brezplačno
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <a href="#demo" class="inline-flex items-center gap-2 border border-gray-300 hover:border-gray-400 text-gray-700 font-medium px-8 py-3.5 rounded-full text-base transition">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1.5-4.5l5-3.5-5-3.5v7z"/></svg>
+        Oglejte si demo
+      </a>
+    </div>
+
+    <!-- Trust stats -->
+    <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        Obdelano 10.000+ dokumentov
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        99,2% natančnost
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        14 dni brezplačno
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 3. SOCIAL PROOF                              -->
+<!-- ════════════════════════════════════════════ -->
+<section class="py-12 border-t border-b border-gray-100">
+  <div class="max-w-5xl mx-auto px-4 text-center">
+    <p class="text-sm text-gray-400 font-medium mb-8 uppercase tracking-wider">Zaupajo nam računovodske pisarne po Sloveniji</p>
+    <div class="flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-40 grayscale">
+      <img src="https://placehold.co/120x40/e5e7eb/9ca3af?text=Pisarna+1" alt="Partner" class="h-8">
+      <img src="https://placehold.co/120x40/e5e7eb/9ca3af?text=Pisarna+2" alt="Partner" class="h-8">
+      <img src="https://placehold.co/120x40/e5e7eb/9ca3af?text=Pisarna+3" alt="Partner" class="h-8">
+      <img src="https://placehold.co/120x40/e5e7eb/9ca3af?text=Pisarna+4" alt="Partner" class="h-8">
+      <img src="https://placehold.co/120x40/e5e7eb/9ca3af?text=Pisarna+5" alt="Partner" class="h-8">
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 3B. DOCUMENT INTELLIGENCE                    -->
+<!-- ════════════════════════════════════════════ -->
+<section class="py-20 md:py-28 overflow-hidden" id="di-section">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-8 lg:gap-4 items-start reveal">
+      <!-- Left: Text + tags -->
+      <div class="relative">
+        <p class="text-sm font-semibold text-brand-600 uppercase tracking-wider mb-3">Dokumentna inteligenca</p>
+        <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-5">
+          Najboljša <span class="text-brand-600">ekstrakcija</span><br>dokumentov
+        </h2>
+        <p class="text-gray-500 leading-relaxed mb-8">
+          AI pretvori vsak dokument v strukturiran, zanesljiv objekt. Rokopisi, tabele, kompleksno oblikovanje — Konta prebere vse in izvleče točno to, kar potrebujete.
+        </p>
+
+        <!-- Active tag (top, with connecting line) -->
+        <div class="mb-6 relative" id="di-active-area">
+          <div class="inline-flex items-center relative" id="di-active-wrap">
+            <button id="di-active-btn" class="inline-flex items-center gap-2.5 border-2 border-brand-600 text-brand-600 bg-blue-50 font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-300 cursor-default shadow-sm shadow-blue-100">
+              <span id="di-active-icon" class="w-5 h-5 flex items-center justify-center"></span>
+              <span id="di-active-label"></span>
+            </button>
+            <!-- Connecting line (desktop only) -->
+            <div class="hidden md:block absolute left-full top-1/2 -translate-y-1/2" id="di-line-wrap" style="width:calc(100vw)">
+              <svg class="h-2 overflow-visible" style="width:100%">
+                <line x1="0" y1="4" x2="100%" y2="4" stroke="#2563EB" stroke-width="2" stroke-dasharray="6 4" class="di-connect-line"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inactive tags grid -->
+        <div class="flex flex-wrap gap-2.5" id="di-inactive-tags">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Right: Extraction preview card -->
+      <div class="relative" id="di-card-wrap">
+        <!-- Connecting line endpoint dot -->
+        <div class="hidden md:block absolute -left-2 top-12 w-3 h-3 bg-brand-600 rounded-full border-2 border-white shadow-md z-10 di-connect-dot" style="animation:pulse-glow 2s ease infinite"></div>
+        <div id="di-card" class="bg-white border border-gray-200 rounded-2xl shadow-xl overflow-hidden transition-all duration-300">
+          <!-- File tab -->
+          <div class="flex items-center gap-2 px-5 pt-4 pb-0">
+            <div class="inline-flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-600">
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+              <span id="di-filename">racun-telekom.pdf</span>
+            </div>
+          </div>
+          <!-- Tabs: Pregled | JSON -->
+          <div class="flex items-center gap-4 px-5 pt-3 pb-0 border-b border-gray-100">
+            <button class="di-view-tab text-sm font-semibold text-brand-600 pb-2 border-b-2 border-brand-600" data-tab="viewer" onclick="diShowViewer()">Pregled</button>
+            <button class="di-view-tab text-sm font-medium text-gray-400 pb-2 border-b-2 border-transparent hover:text-gray-600" onclick="diToggleJson()" data-tab="json">JSON</button>
+          </div>
+          <!-- Content: Viewer -->
+          <div id="di-viewer" class="p-5 space-y-0">
+            <!-- Fields injected by JS -->
+          </div>
+          <!-- Content: JSON (hidden) -->
+          <div id="di-json" class="hidden p-5">
+            <pre class="bg-gray-50 rounded-xl p-4 text-xs text-gray-700 font-mono overflow-x-auto max-h-80 leading-relaxed" id="di-json-content"></pre>
+          </div>
+          <!-- Download button -->
+          <div class="px-5 pb-4 flex justify-end">
+            <button onclick="diDownload()" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              PRENESI JSON
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 4. INTERACTIVE DEMO                          -->
+<!-- ════════════════════════════════════════════ -->
+<section id="demo" class="py-20 md:py-28">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <p class="text-sm font-semibold text-brand-600 uppercase tracking-wider mb-3">Demo v živo</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Poglejte, kako deluje</h2>
+      <p class="text-gray-500 max-w-xl mx-auto">Izberite vzorčni dokument in opazujte, kako ga Konta AI obdela v realnem času.</p>
+    </div>
+
+    <div class="reveal bg-white border border-gray-200 rounded-2xl shadow-xl overflow-hidden">
+      <div class="grid md:grid-cols-5">
+        <!-- Left: File list -->
+        <div class="md:col-span-2 border-r border-gray-100 p-5">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Vzorčni dokumenti</p>
+          <div class="space-y-1" id="demo-files">
+            <button onclick="demoSelect(0)" class="demo-file w-full flex items-center gap-3 p-3 rounded-xl border border-transparent text-left">
+              <div class="w-9 h-9 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">racun-telekom.pdf</p>
+                <p class="text-xs text-gray-400">245 KB</p>
+              </div>
+              <svg class="w-4 h-4 text-gray-300 ml-auto flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button onclick="demoSelect(1)" class="demo-file w-full flex items-center gap-3 p-3 rounded-xl border border-transparent text-left">
+              <div class="w-9 h-9 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">racun-petrol.pdf</p>
+                <p class="text-xs text-gray-400">189 KB</p>
+              </div>
+              <svg class="w-4 h-4 text-gray-300 ml-auto flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button onclick="demoSelect(2)" class="demo-file w-full flex items-center gap-3 p-3 rounded-xl border border-transparent text-left">
+              <div class="w-9 h-9 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">avans-001.pdf</p>
+                <p class="text-xs text-gray-400">312 KB</p>
+              </div>
+              <svg class="w-4 h-4 text-gray-300 ml-auto flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button onclick="demoSelect(3)" class="demo-file w-full flex items-center gap-3 p-3 rounded-xl border border-transparent text-left">
+              <div class="w-9 h-9 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">dobropis-003.pdf</p>
+                <p class="text-xs text-gray-400">156 KB</p>
+              </div>
+              <svg class="w-4 h-4 text-gray-300 ml-auto flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button onclick="demoSelect(4)" class="demo-file w-full flex items-center gap-3 p-3 rounded-xl border border-transparent text-left">
+              <div class="w-9 h-9 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">blagajniski-prejemek.pdf</p>
+                <p class="text-xs text-gray-400">98 KB</p>
+              </div>
+              <svg class="w-4 h-4 text-gray-300 ml-auto flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <p class="text-xs text-gray-400 mt-4 px-3">Kliknite na dokument za prikaz obdelave.</p>
+        </div>
+
+        <!-- Right: Processing / Result -->
+        <div class="md:col-span-3 p-6 md:p-8 min-h-[380px] flex items-center justify-center" id="demo-right">
+          <!-- Idle state -->
+          <div id="demo-idle" class="text-center">
+            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13"/></svg>
+            </div>
+            <p class="font-semibold text-gray-900 mb-1">Izberite dokument</p>
+            <p class="text-sm text-gray-400">Kliknite na datoteko na levi<br>za prikaz AI obdelave.</p>
+          </div>
+
+          <!-- Processing state -->
+          <div id="demo-processing" class="hidden w-full">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-10 h-10 border-2 border-brand-600 border-t-transparent rounded-full" style="animation:spin-slow 1s linear infinite"></div>
+              <div>
+                <p class="font-semibold text-gray-900" id="demo-stage-text">Branje dokumenta...</p>
+                <p class="text-xs text-gray-400" id="demo-stage-sub">OCR obdelava</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold" id="stage-1-icon"><div class="w-2 h-2 bg-brand-600 rounded-full" style="animation:dot-pulse 1s infinite"></div></div>
+                <span class="text-sm" id="stage-1-text">OCR branje</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold" id="stage-2-icon"><div class="w-2 h-2 bg-gray-300 rounded-full"></div></div>
+                <span class="text-sm text-gray-400" id="stage-2-text">AI ekstrakcija</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold" id="stage-3-icon"><div class="w-2 h-2 bg-gray-300 rounded-full"></div></div>
+                <span class="text-sm text-gray-400" id="stage-3-text">Validacija</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold" id="stage-4-icon"><div class="w-2 h-2 bg-gray-300 rounded-full"></div></div>
+                <span class="text-sm text-gray-400" id="stage-4-text">Končano</span>
+              </div>
+            </div>
+            <div class="mt-6 bg-gray-100 rounded-full h-2 overflow-hidden">
+              <div class="bg-brand-600 h-full rounded-full demo-progress-bar" id="demo-bar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <!-- Result state -->
+          <div id="demo-result" class="hidden w-full">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="text-sm font-semibold text-green-700">Uspešno obdelano</span>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-3" id="demo-result-fields">
+              <!-- Fields injected by JS -->
+            </div>
+            <button onclick="demoReset()" class="mt-4 text-sm font-medium text-brand-600 hover:text-brand-700 transition">
+              ← Poskusite drug dokument
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 5. ANIMATED FLOW SECTION                     -->
+<!-- ════════════════════════════════════════════ -->
+<section id="flow" class="py-20 md:py-28 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Od dokumenta do knjižbe. <span class="gradient-text">Zanesljivo.</span></h2>
+      <p class="text-gray-500 max-w-xl mx-auto">Vsak tip dokumenta gre skozi isti AI postopek — OCR, ekstrakcija, validacija. Rezultat je strukturiran in pripravljen za oddajo.</p>
+    </div>
+
+    <!-- Flow animation -->
+    <div class="reveal flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0">
+
+      <!-- Left: Document types -->
+      <div class="flex flex-col gap-3 md:w-48 flex-shrink-0">
+        <div class="flow-doc-1 flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
+          <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-brand-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <span class="text-sm font-medium">Račun</span>
+        </div>
+        <div class="flow-doc-2 flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
+          <div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <span class="text-sm font-medium">Dobropis</span>
+        </div>
+        <div class="flow-doc-3 flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
+          <div class="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <span class="text-sm font-medium">Avans</span>
+        </div>
+        <div class="flow-doc-4 flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
+          <div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <span class="text-sm font-medium">Blagajniški</span>
+        </div>
+      </div>
+
+      <!-- Center: Connecting lines + AI node -->
+      <div class="hidden md:flex flex-col items-center justify-center mx-4 md:mx-8 relative" style="width:180px;height:260px">
+        <svg width="180" height="260" class="absolute inset-0">
+          <line x1="0" y1="40" x2="90" y2="130" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4"/>
+          <line x1="0" y1="100" x2="90" y2="130" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:.2s"/>
+          <line x1="0" y1="160" x2="90" y2="130" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:.4s"/>
+          <line x1="0" y1="220" x2="90" y2="130" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:.6s"/>
+          <line x1="90" y1="130" x2="180" y2="50" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:1s"/>
+          <line x1="90" y1="130" x2="180" y2="100" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:1.2s"/>
+          <line x1="90" y1="130" x2="180" y2="150" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:1.4s"/>
+          <line x1="90" y1="130" x2="180" y2="200" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:1.6s"/>
+        </svg>
+        <!-- AI node -->
+        <div class="flow-ai relative z-10 w-16 h-16 bg-brand-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30" style="animation:flow-ai-pulse 8s ease infinite, pulse-glow 2s ease infinite">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/></svg>
+        </div>
+      </div>
+
+      <!-- Mobile: Arrow -->
+      <div class="md:hidden flex items-center justify-center py-2">
+        <div class="flow-ai w-14 h-14 bg-brand-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30" style="animation:flow-ai-pulse 8s ease infinite, pulse-glow 2s ease infinite">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+        </div>
+      </div>
+
+      <!-- Right: Result card -->
+      <div class="bg-white border border-gray-200 rounded-2xl shadow-lg p-5 md:w-64 flex-shrink-0">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+            <svg class="w-3.5 h-3.5 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <span class="text-sm font-bold text-gray-900">Rezultat</span>
+        </div>
+        <div class="space-y-2.5 text-sm">
+          <div class="flow-r1 flex justify-between">
+            <span class="text-gray-400">Izdajatelj</span>
+            <span class="font-medium text-gray-900">Telekom d.d.</span>
+          </div>
+          <div class="flow-r2 flex justify-between">
+            <span class="text-gray-400">Znesek</span>
+            <span class="font-semibold text-gray-900">&euro;127,43</span>
+          </div>
+          <div class="flow-r3 flex justify-between">
+            <span class="text-gray-400">DDV</span>
+            <span class="font-medium text-brand-600">&euro;27,43 (22%)</span>
+          </div>
+          <div class="flow-r4 flex justify-between">
+            <span class="text-gray-400">Datum</span>
+            <span class="font-medium text-gray-900">15.03.2025</span>
+          </div>
+          <div class="flow-r5 flex justify-between">
+            <span class="text-gray-400">Kategorija</span>
+            <span class="inline-flex items-center bg-blue-50 text-brand-600 text-xs font-medium px-2 py-0.5 rounded-full">Telekomunikacije</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 6. FEATURE CARDS                             -->
+<!-- ════════════════════════════════════════════ -->
+<section class="py-20 md:py-28">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="reveal bg-white border border-gray-200 rounded-2xl p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold mb-2">OCR + AI branje</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Prebere vsak dokument — skeniran, fotografiran ali PDF. Podpira slovenščino in več jezikov.</p>
+      </div>
+      <div class="reveal bg-white border border-gray-200 rounded-2xl p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-300" style="transition-delay:.1s">
+        <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold mb-2">Avtomatska razvrstitev</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Razvrsti v KPR, KIR ali blagajno brez ročnega dela. AI sam prepozna tip dokumenta.</p>
+      </div>
+      <div class="reveal bg-white border border-gray-200 rounded-2xl p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-300" style="transition-delay:.2s">
+        <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold mb-2">DDV validacija</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Preveri DDV številke, izračune in datumske konsistence. VIES preverba partnerja.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 7. HOW IT WORKS                              -->
+<!-- ════════════════════════════════════════════ -->
+<section class="py-20 md:py-28 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="text-center mb-14 reveal">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Kako deluje</h2>
+      <p class="text-gray-500 max-w-lg mx-auto">Tri preproste korake od dokumenta do oddaje.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="reveal text-center md:text-left">
+        <div class="w-12 h-12 bg-blue-100 text-brand-600 rounded-2xl flex items-center justify-center text-lg font-bold mb-5 mx-auto md:mx-0">1</div>
+        <h3 class="text-lg font-bold mb-2">Naložite dokument</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Drag & drop ali povežite e-pošto. Podpiramo PDF, slike in skenirane dokumente.</p>
+      </div>
+      <div class="reveal text-center md:text-left" style="transition-delay:.1s">
+        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-lg font-bold mb-5 mx-auto md:mx-0">2</div>
+        <h3 class="text-lg font-bold mb-2">AI obdela</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">OCR, ekstrakcija polj, DDV validacija in razvrstitev — vse v nekaj sekundah.</p>
+      </div>
+      <div class="reveal text-center md:text-left" style="transition-delay:.2s">
+        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-lg font-bold mb-5 mx-auto md:mx-0">3</div>
+        <h3 class="text-lg font-bold mb-2">Potrdite in oddajte</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Preglejte ekstrakcijo, potrdite knjižbo in izvozite XML za eDavke ali računovodski program.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 8. SECURITY                                  -->
+<!-- ════════════════════════════════════════════ -->
+<section class="py-20 md:py-28">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="reveal bg-gray-50 border border-gray-200 rounded-3xl p-8 md:p-12">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <p class="text-sm font-semibold text-brand-600 uppercase tracking-wider mb-3">Varnost in skladnost</p>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Popolnoma varno. <span class="gradient-text">Vedno.</span></h2>
+          <p class="text-gray-500 leading-relaxed mb-6">Vaši dokumenti so šifrirani in shranjeni v EU. Brez dostopa tretjih oseb. Izpolnjujemo najvišje standarde informacijske varnosti.</p>
+          <a href="security.html" class="text-sm font-semibold text-brand-600 hover:text-brand-700 transition inline-flex items-center gap-1">
+            Preberite našo varnostno politiko
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+        <div class="flex flex-wrap gap-4 justify-center md:justify-end">
+          <div class="bg-white border border-gray-200 rounded-xl px-5 py-4 text-center shadow-sm">
+            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-2">
+              <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+            </div>
+            <p class="text-xs font-bold text-gray-900">GDPR</p>
+            <p class="text-xs text-gray-400">Skladno</p>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-xl px-5 py-4 text-center shadow-sm">
+            <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center mx-auto mb-2">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+            </div>
+            <p class="text-xs font-bold text-gray-900">Šifrirano</p>
+            <p class="text-xs text-gray-400">AES-256</p>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-xl px-5 py-4 text-center shadow-sm">
+            <div class="w-10 h-10 bg-violet-50 rounded-lg flex items-center justify-center mx-auto mb-2">
+              <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 9.75c0 .746-.092 1.472-.264 2.165m-15.572-6.333C3.786 7.416 3 8.52 3 9.75c0 .746.092 1.472.264 2.165"/></svg>
+            </div>
+            <p class="text-xs font-bold text-gray-900">EU gostovanje</p>
+            <p class="text-xs text-gray-400">Frankfurt</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 9. PRICING                                   -->
+<!-- ════════════════════════════════════════════ -->
+<section id="pricing" class="py-20 md:py-28 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Enostavne cene. Brez presenečenj.</h2>
+      <p class="text-gray-500 max-w-lg mx-auto mb-8">Začnite brezplačno. Nadgradite, ko rastete.</p>
+      <!-- Toggle -->
+      <div class="inline-flex items-center bg-white border border-gray-200 rounded-full p-1 gap-1">
+        <button onclick="setPricing('monthly')" id="tog-m" class="px-5 py-2 text-sm font-medium rounded-full transition bg-brand-600 text-white">Mesečno</button>
+        <button onclick="setPricing('yearly')" id="tog-y" class="px-5 py-2 text-sm font-medium rounded-full transition text-gray-500 hover:text-gray-700">Letno <span class="text-xs text-green-600 font-semibold">-17%</span></button>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 reveal">
+      <!-- Starter -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-7 flex flex-col">
+        <h3 class="text-lg font-bold mb-1">Starter</h3>
+        <p class="text-sm text-gray-400 mb-5">Za samostojne računovodje</p>
+        <div class="mb-1">
+          <span class="text-4xl font-bold" id="price-starter">29</span>
+          <span class="text-gray-400">&euro;/mesec</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-6" id="price-starter-sub">Do 15 strank</p>
+        <div class="bg-blue-50 text-brand-600 text-sm font-semibold text-center py-2 rounded-lg mb-6" id="per-client-starter">&euro;1,93 / stranka</div>
+        <ul class="space-y-3 text-sm text-gray-600 mb-8 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>AI ekstrakcija dokumentov</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>KPR / KIR evidenca</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>DDV-O priprava</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>XML izvoz za eDavke</li>
+        </ul>
+        <a href="#" class="block text-center border-2 border-gray-200 hover:border-brand-600 text-gray-700 hover:text-brand-600 font-semibold py-3 rounded-full transition">Začnite brezplačno</a>
+      </div>
+
+      <!-- Pro (popular) -->
+      <div class="bg-white border-2 border-brand-600 rounded-2xl p-7 flex flex-col relative shadow-lg shadow-blue-500/10">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs font-bold px-4 py-1 rounded-full">Najbolj priljubljen</div>
+        <h3 class="text-lg font-bold mb-1">Pro</h3>
+        <p class="text-sm text-gray-400 mb-5">Za rastoče pisarne</p>
+        <div class="mb-1">
+          <span class="text-4xl font-bold" id="price-pro">69</span>
+          <span class="text-gray-400">&euro;/mesec</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-6" id="price-pro-sub">Do 50 strank</p>
+        <div class="bg-blue-50 text-brand-600 text-sm font-semibold text-center py-2 rounded-lg mb-6" id="per-client-pro">&euro;1,38 / stranka</div>
+        <ul class="space-y-3 text-sm text-gray-600 mb-8 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Vse iz Starter</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>AI chatbot pomočnik</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Povezave za nalaganje</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Prednostna podpora</li>
+        </ul>
+        <a href="#" class="shimmer-btn block text-center bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-full transition">Začnite brezplačno</a>
+      </div>
+
+      <!-- Firma -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-7 flex flex-col">
+        <h3 class="text-lg font-bold mb-1">Firma</h3>
+        <p class="text-sm text-gray-400 mb-5">Za večje pisarne</p>
+        <div class="mb-1">
+          <span class="text-4xl font-bold">Po meri</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-6">Neomejeno strank</p>
+        <div class="bg-green-50 text-green-700 text-sm font-semibold text-center py-2 rounded-lg mb-6">od &euro;0,50 / stranka</div>
+        <ul class="space-y-3 text-sm text-gray-600 mb-8 flex-1">
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Vse iz Pro</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Prilagojene funkcije</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Namenski upravitelj</li>
+          <li class="flex items-start gap-2"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>SLA garancija</li>
+        </ul>
+        <a href="booking.html" class="block text-center border-2 border-gray-200 hover:border-gray-400 text-gray-700 font-semibold py-3 rounded-full transition">Dogovorite se za klic</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 10. CTA BANNER                               -->
+<!-- ════════════════════════════════════════════ -->
+<section class="py-20 md:py-28">
+  <div class="max-w-3xl mx-auto px-4 text-center reveal">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">Preizkusite Konto brezplačno</h2>
+    <p class="text-gray-500 mb-8">14 dni brezplačno. Brez obveznosti. Prekinite kadarkoli.</p>
+    <a href="#pricing" class="shimmer-btn inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-10 py-4 rounded-full text-lg transition shadow-lg shadow-blue-500/25">
+      Začnite brezplačno
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+    </a>
+    <p class="text-xs text-gray-400 mt-4">Brez kreditne kartice za začetek.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- 11. FOOTER                                   -->
+<!-- ════════════════════════════════════════════ -->
+<footer class="bg-gray-900 text-gray-400 py-12">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="grid md:grid-cols-4 gap-8 mb-10">
+      <div>
+        <p class="text-white font-bold text-lg mb-3">Konta.</p>
+        <p class="text-sm leading-relaxed">AI računovodski pomočnik za slovenske računovodske pisarne.</p>
+      </div>
+      <div>
+        <p class="text-white text-sm font-semibold mb-3">Produkt</p>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#demo" class="hover:text-white transition">Kako deluje</a></li>
+          <li><a href="#pricing" class="hover:text-white transition">Cene</a></li>
+          <li><a href="security.html" class="hover:text-white transition">Varnost</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-white text-sm font-semibold mb-3">Podjetje</p>
+        <ul class="space-y-2 text-sm">
+          <li><a href="blog/" class="hover:text-white transition">Blog</a></li>
+          <li><a href="contact.html" class="hover:text-white transition">Kontakt</a></li>
+          <li><a href="careers.html" class="hover:text-white transition">Kariera</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-white text-sm font-semibold mb-3">Pravno</p>
+        <ul class="space-y-2 text-sm">
+          <li><a href="privacy.html" class="hover:text-white transition">Zasebnost</a></li>
+          <li><a href="terms.html" class="hover:text-white transition">Pogoji uporabe</a></li>
+          <li><a href="dpa.html" class="hover:text-white transition">DPA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+      <p>&copy; 2025 Konta. Vse pravice pridržane.</p>
+      <p>Narejeno v Sloveniji 🇸🇮</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                   -->
+<!-- ════════════════════════════════════════════ -->
+<script>
+// ── Scroll Reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Pricing Toggle ──
+function setPricing(mode) {
+  const m = mode === 'monthly';
+  document.getElementById('tog-m').className = `px-5 py-2 text-sm font-medium rounded-full transition ${m?'bg-brand-600 text-white':'text-gray-500 hover:text-gray-700'}`;
+  document.getElementById('tog-y').className = `px-5 py-2 text-sm font-medium rounded-full transition ${!m?'bg-brand-600 text-white':'text-gray-500 hover:text-gray-700'}`;
+  document.getElementById('price-starter').textContent = m ? '29' : '24';
+  document.getElementById('price-pro').textContent = m ? '69' : '57';
+  document.getElementById('price-starter-sub').textContent = m ? 'Do 15 strank' : 'Do 15 strank · Letno obračunano';
+  document.getElementById('price-pro-sub').textContent = m ? 'Do 50 strank' : 'Do 50 strank · Letno obračunano';
+  document.getElementById('per-client-starter').textContent = m ? '€1,93 / stranka' : '€1,60 / stranka';
+  document.getElementById('per-client-pro').textContent = m ? '€1,38 / stranka' : '€1,14 / stranka';
+}
+
+// ── Demo Widget ──
+const DEMO_DATA = [
+  { name:'racun-telekom.pdf', fields:[
+    {l:'Izdajatelj', v:'Telekom Slovenije d.d.'},
+    {l:'Davčna št.', v:'SI12345678'},
+    {l:'Znesek', v:'€127,43', bold:true},
+    {l:'DDV (22%)', v:'€23,07'},
+    {l:'Datum', v:'15.03.2025'},
+    {l:'Tip', v:'Račun', badge:'blue'},
+    {l:'Smer', v:'KPR (prejeti)', badge:'green'}
+  ]},
+  { name:'racun-petrol.pdf', fields:[
+    {l:'Izdajatelj', v:'Petrol d.d., Ljubljana'},
+    {l:'Davčna št.', v:'SI87654321'},
+    {l:'Znesek', v:'€84,92', bold:true},
+    {l:'DDV (22%)', v:'€15,34'},
+    {l:'Datum', v:'22.03.2025'},
+    {l:'Tip', v:'Račun', badge:'blue'},
+    {l:'Smer', v:'KPR (prejeti)', badge:'green'}
+  ]},
+  { name:'avans-001.pdf', fields:[
+    {l:'Izdajatelj', v:'ABC Storitve d.o.o.'},
+    {l:'Davčna št.', v:'SI11223344'},
+    {l:'Znesek', v:'€500,00', bold:true},
+    {l:'DDV (22%)', v:'€90,16'},
+    {l:'Datum', v:'01.03.2025'},
+    {l:'Tip', v:'Avansni račun', badge:'orange'},
+    {l:'Smer', v:'KIR (izdani)', badge:'purple'}
+  ]},
+  { name:'dobropis-003.pdf', fields:[
+    {l:'Izdajatelj', v:'Mega Trade d.o.o.'},
+    {l:'Davčna št.', v:'SI99887766'},
+    {l:'Znesek', v:'-€245,00', bold:true},
+    {l:'DDV (22%)', v:'-€44,26'},
+    {l:'Datum', v:'10.03.2025'},
+    {l:'Tip', v:'Dobropis', badge:'purple'},
+    {l:'Smer', v:'KPR (prejeti)', badge:'green'}
+  ]},
+  { name:'blagajniski-prejemek.pdf', fields:[
+    {l:'Izdajatelj', v:'Blagajna - Pisarna'},
+    {l:'Prejemnik', v:'Janez Novak'},
+    {l:'Znesek', v:'€35,00', bold:true},
+    {l:'Namen', v:'Pisarniški material'},
+    {l:'Datum', v:'18.03.2025'},
+    {l:'Tip', v:'Blagajniški prejemek', badge:'green'},
+    {l:'Evidenca', v:'Blagajna', badge:'gray'}
+  ]}
+];
+
+let demoActive = -1;
+
+function demoSelect(i) {
+  if (demoActive === i) return;
+  demoActive = i;
+  // Highlight file
+  document.querySelectorAll('.demo-file').forEach((f,idx) => {
+    f.classList.toggle('active', idx===i);
+    f.classList.toggle('border-brand-600', idx===i);
+  });
+  // Show processing
+  document.getElementById('demo-idle').classList.add('hidden');
+  document.getElementById('demo-result').classList.add('hidden');
+  const proc = document.getElementById('demo-processing');
+  proc.classList.remove('hidden');
+
+  const stages = [
+    {text:'Branje dokumenta...', sub:'OCR obdelava', pct:'25'},
+    {text:'Ekstrakcija polj...', sub:'AI analiza vsebine', pct:'55'},
+    {text:'Validacija podatkov...', sub:'DDV preverba', pct:'80'},
+    {text:'Končano!', sub:'Vsi podatki preverjeni', pct:'100'}
+  ];
+
+  let s = 0;
+  updateStage(s, stages);
+  document.getElementById('demo-bar').style.width = stages[0].pct+'%';
+
+  const iv = setInterval(() => {
+    s++;
+    if (s >= stages.length) {
+      clearInterval(iv);
+      setTimeout(() => showResult(i), 400);
+      return;
+    }
+    updateStage(s, stages);
+    document.getElementById('demo-bar').style.width = stages[s].pct+'%';
+  }, 800);
+}
+
+function updateStage(s, stages) {
+  document.getElementById('demo-stage-text').textContent = stages[s].text;
+  document.getElementById('demo-stage-sub').textContent = stages[s].sub;
+  for (let j=1;j<=4;j++){
+    const icon = document.getElementById('stage-'+j+'-icon');
+    const txt = document.getElementById('stage-'+j+'-text');
+    if(j-1 < s) {
+      icon.innerHTML = '<svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>';
+      txt.className = 'text-sm text-gray-900';
+    } else if(j-1 === s) {
+      icon.innerHTML = '<div class="w-2 h-2 bg-brand-600 rounded-full" style="animation:dot-pulse 1s infinite"></div>';
+      txt.className = 'text-sm text-brand-600 font-medium';
+    } else {
+      icon.innerHTML = '<div class="w-2 h-2 bg-gray-300 rounded-full"></div>';
+      txt.className = 'text-sm text-gray-400';
+    }
+  }
+}
+
+function showResult(i) {
+  document.getElementById('demo-processing').classList.add('hidden');
+  const res = document.getElementById('demo-result');
+  res.classList.remove('hidden');
+  const container = document.getElementById('demo-result-fields');
+  const data = DEMO_DATA[i];
+  container.innerHTML = data.fields.map(f => {
+    let val = f.bold ? `<span class="font-bold text-gray-900">${f.v}</span>` : `<span class="text-gray-900">${f.v}</span>`;
+    if(f.badge) {
+      const colors = {blue:'bg-blue-50 text-blue-700',green:'bg-green-50 text-green-700',orange:'bg-orange-50 text-orange-700',purple:'bg-purple-50 text-purple-700',gray:'bg-gray-100 text-gray-600'};
+      val = `<span class="inline-flex items-center ${colors[f.badge]} text-xs font-medium px-2 py-0.5 rounded-full">${f.v}</span>`;
+    }
+    return `<div class="flex items-center justify-between py-1.5 border-b border-gray-100 last:border-0"><span class="text-sm text-gray-400">${f.l}</span>${val}</div>`;
+  }).join('');
+}
+
+function demoReset() {
+  demoActive = -1;
+  document.querySelectorAll('.demo-file').forEach(f => { f.classList.remove('active','border-brand-600'); });
+  document.getElementById('demo-result').classList.add('hidden');
+  document.getElementById('demo-processing').classList.add('hidden');
+  document.getElementById('demo-idle').classList.remove('hidden');
+  document.getElementById('demo-bar').style.width = '0%';
+}
+
+// ── Close mobile menu on link click ──
+document.querySelectorAll('#mob-menu a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('mob-menu').classList.remove('open'));
+});
+
+// ── Document Intelligence Section ──
+const DI_DOCS = [
+  {
+    file: 'racun-telekom.pdf',
+    fields: [
+      { k:'IZDAJATELJ', v:'Telekom Slovenije d.d.' },
+      { k:'DAVČNA ŠTEVILKA', v:'SI50858269', bold:true },
+      { k:'DATUM IZDAJE', v:'2025-03-15' },
+      { k:'ROK PLAČILA', v:'2025-04-14' },
+      { k:'OSNOVA', v:'€104,36' },
+      { k:'DDV (22%)', v:'€22,96' },
+      { k:'SKUPAJ', v:'€127,32', bold:true },
+      { k:'IBAN', v:'SI56 0510 0801 5006 462' },
+      { k:'SKLIC', v:'SI00 234-56789-2025' },
+      { k:'SMER', v:'KPR (prejeti)', badge:'green' }
+    ],
+    json: {
+      izdajatelj: 'Telekom Slovenije d.d.',
+      davcna_stevilka: 'SI50858269',
+      datum_izdaje: '2025-03-15',
+      rok_placila: '2025-04-14',
+      osnova: 104.36,
+      ddv_stopnja: 22,
+      ddv_znesek: 22.96,
+      skupaj: 127.32,
+      iban: 'SI56 0510 0801 5006 462',
+      sklic: 'SI00 234-56789-2025',
+      smer: 'KPR',
+      tip: 'racun'
+    }
+  },
+  {
+    file: 'dobropis-mega-trade.pdf',
+    fields: [
+      { k:'IZDAJATELJ', v:'Mega Trade d.o.o.' },
+      { k:'DAVČNA ŠTEVILKA', v:'SI98765432', bold:true },
+      { k:'DATUM IZDAJE', v:'2025-03-10' },
+      { k:'ORIGINALNI RAČUN', v:'R-2025-0342' },
+      { k:'RAZLOG', v:'Količinska razlika' },
+      { k:'OSNOVA', v:'-€200,82' },
+      { k:'DDV (22%)', v:'-€44,18' },
+      { k:'SKUPAJ', v:'-€245,00', bold:true },
+      { k:'SMER', v:'KPR (prejeti)', badge:'green' },
+      { k:'TIP', v:'Dobropis', badge:'purple' }
+    ],
+    json: {
+      izdajatelj: 'Mega Trade d.o.o.',
+      davcna_stevilka: 'SI98765432',
+      datum_izdaje: '2025-03-10',
+      originalni_racun: 'R-2025-0342',
+      razlog: 'Količinska razlika',
+      osnova: -200.82,
+      ddv_stopnja: 22,
+      ddv_znesek: -44.18,
+      skupaj: -245.00,
+      smer: 'KPR',
+      tip: 'dobropis'
+    }
+  },
+  {
+    file: 'avans-001.pdf',
+    fields: [
+      { k:'IZDAJATELJ', v:'ABC Storitve d.o.o.' },
+      { k:'DAVČNA ŠTEVILKA', v:'SI11223344', bold:true },
+      { k:'DATUM IZDAJE', v:'2025-03-01' },
+      { k:'NAMEN', v:'Avans za projekt Alpha' },
+      { k:'OSNOVA', v:'€409,84' },
+      { k:'DDV (22%)', v:'€90,16' },
+      { k:'SKUPAJ', v:'€500,00', bold:true },
+      { k:'SMER', v:'KIR (izdani)', badge:'blue' },
+      { k:'TIP', v:'Avansni račun', badge:'orange' }
+    ],
+    json: {
+      izdajatelj: 'ABC Storitve d.o.o.',
+      davcna_stevilka: 'SI11223344',
+      datum_izdaje: '2025-03-01',
+      namen: 'Avans za projekt Alpha',
+      osnova: 409.84,
+      ddv_stopnja: 22,
+      ddv_znesek: 90.16,
+      skupaj: 500.00,
+      smer: 'KIR',
+      tip: 'avansni_racun'
+    }
+  },
+  {
+    file: 'blagajniski-prejemek.pdf',
+    fields: [
+      { k:'BLAGAJNIK', v:'Marija Horvat' },
+      { k:'PREJEMNIK', v:'Janez Novak' },
+      { k:'DATUM', v:'2025-03-18' },
+      { k:'NAMEN', v:'Pisarniški material' },
+      { k:'ZNESEK', v:'€35,00', bold:true },
+      { k:'ŠTEVILKA', v:'BP-2025-012' },
+      { k:'EVIDENCA', v:'Blagajna', badge:'green' },
+      { k:'TIP', v:'Blagajniški prejemek', badge:'gray' }
+    ],
+    json: {
+      blagajnik: 'Marija Horvat',
+      prejemnik: 'Janez Novak',
+      datum: '2025-03-18',
+      namen: 'Pisarniški material',
+      znesek: 35.00,
+      stevilka: 'BP-2025-012',
+      evidenca: 'blagajna',
+      tip: 'blagajniski_prejemek'
+    }
+  },
+  {
+    file: 'kir-marec-2025.pdf',
+    fields: [
+      { k:'OBDOBJE', v:'Marec 2025' },
+      { k:'DAVČNI ZAVEZANEC', v:'Moja Pisarna d.o.o.', bold:true },
+      { k:'DAVČNA ŠTEVILKA', v:'SI55667788' },
+      { k:'ŠTEVILO RAČUNOV', v:'4', badge:'blue' }
+    ],
+    table: {
+      head: ['ŠT. RAČUNA','KUPEC','DATUM','OSNOVA','DDV','SKUPAJ'],
+      rows: [
+        ['R-2025-041','Podjetje A d.o.o.','05.03.2025','€820,00','€180,40','€1.000,40'],
+        ['R-2025-042','Studio B s.p.','12.03.2025','€450,00','€99,00','€549,00'],
+        ['R-2025-043','Trgovina C d.o.o.','18.03.2025','€1.230,00','€270,60','€1.500,60'],
+        ['R-2025-044','Obrt D s.p.','25.03.2025','€320,00','€70,40','€390,40']
+      ]
+    },
+    json: {
+      obdobje: '2025-03',
+      davcni_zavezanec: 'Moja Pisarna d.o.o.',
+      davcna_stevilka: 'SI55667788',
+      racuni: [
+        { stevilka:'R-2025-041', kupec:'Podjetje A d.o.o.', datum:'2025-03-05', osnova:820.00, ddv:180.40, skupaj:1000.40 },
+        { stevilka:'R-2025-042', kupec:'Studio B s.p.', datum:'2025-03-12', osnova:450.00, ddv:99.00, skupaj:549.00 },
+        { stevilka:'R-2025-043', kupec:'Trgovina C d.o.o.', datum:'2025-03-18', osnova:1230.00, ddv:270.60, skupaj:1500.60 },
+        { stevilka:'R-2025-044', kupec:'Obrt D s.p.', datum:'2025-03-25', osnova:320.00, ddv:70.40, skupaj:390.40 }
+      ],
+      tip: 'kir'
+    }
+  },
+  {
+    file: 'pos-zbir-18-03.pdf',
+    fields: [
+      { k:'DATUM', v:'18.03.2025' },
+      { k:'LOKACIJA', v:'Poslovalnica Center, Ljubljana', bold:true },
+      { k:'BLAGAJNA', v:'POS-01' },
+      { k:'GOTOVINA', v:'€1.245,80' },
+      { k:'KARTICA', v:'€3.892,40' },
+      { k:'SKUPAJ PROMET', v:'€5.138,20', bold:true },
+      { k:'DDV (22%)', v:'€927,03' },
+      { k:'DDV (9.5%)', v:'€148,25' },
+      { k:'ŠTEVILO RAČUNOV', v:'87', badge:'blue' },
+      { k:'TIP', v:'POS dnevni zbir', badge:'orange' }
+    ],
+    json: {
+      datum: '2025-03-18',
+      lokacija: 'Poslovalnica Center, Ljubljana',
+      blagajna: 'POS-01',
+      gotovina: 1245.80,
+      kartica: 3892.40,
+      skupaj_promet: 5138.20,
+      ddv_22: 927.03,
+      ddv_9_5: 148.25,
+      stevilo_racunov: 87,
+      tip: 'pos_zbir'
+    }
+  }
+];
+
+// Tag metadata (icons as SVG strings)
+const DI_TAGS = [
+  { label:'Račun', icon:'<svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>' },
+  { label:'Dobropis', icon:'<svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/></svg>' },
+  { label:'Avansni račun', icon:'<svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75"/></svg>' },
+  { label:'Blagajniški prejemek', icon:'<svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg>' },
+  { label:'KIR tabela', icon:'<svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375"/></svg>' },
+  { label:'POS zbir', icon:'<svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg>' }
+];
+
+let diCurrent = 0;
+let diIsJson = false;
+
+function diBuildInactiveTags() {
+  const wrap = document.getElementById('di-inactive-tags');
+  wrap.innerHTML = '';
+  DI_TAGS.forEach((tag, i) => {
+    if (i === diCurrent) return; // skip active
+    const btn = document.createElement('button');
+    btn.className = 'di-inactive-tag inline-flex items-center gap-2 border border-gray-200 text-gray-600 bg-white font-medium text-sm px-4 py-2.5 rounded-full';
+    btn.innerHTML = `<span class="w-4 h-4 flex items-center justify-center">${tag.icon}</span> ${tag.label}`;
+    btn.onclick = () => diSelect(i);
+    // Staggered entrance
+    btn.style.opacity = '0';
+    btn.style.transform = 'translateY(6px)';
+    setTimeout(() => {
+      btn.style.transition = 'all .25s ease';
+      btn.style.opacity = '1';
+      btn.style.transform = 'translateY(0)';
+    }, 50 * (i > diCurrent ? i - 1 : i));
+    wrap.appendChild(btn);
+  });
+}
+
+function diSetActive(i) {
+  const tag = DI_TAGS[i];
+  const btn = document.getElementById('di-active-btn');
+  document.getElementById('di-active-icon').innerHTML = tag.icon;
+  document.getElementById('di-active-label').textContent = tag.label;
+  // Pop animation
+  btn.classList.remove('pop');
+  void btn.offsetWidth; // reflow
+  btn.classList.add('pop');
+}
+
+function diSelect(i) {
+  if (i === diCurrent) return;
+  diCurrent = i;
+  diIsJson = false;
+
+  // Update active pill (pop animation)
+  diSetActive(i);
+
+  // Rebuild inactive tags (old active goes back, new one removed from grid)
+  diBuildInactiveTags();
+
+  // Reset to viewer tab
+  diSetViewTab('viewer');
+
+  // Animate card content
+  const card = document.getElementById('di-card');
+  card.classList.remove('di-card-enter');
+  void card.offsetWidth;
+  card.classList.add('di-card-enter');
+
+  diRender();
+}
+
+function diSetViewTab(tab) {
+  document.querySelectorAll('.di-view-tab').forEach(t => {
+    const isActive = t.dataset.tab === tab;
+    t.className = isActive
+      ? 'di-view-tab text-sm font-semibold text-brand-600 pb-2 border-b-2 border-brand-600'
+      : 'di-view-tab text-sm font-medium text-gray-400 pb-2 border-b-2 border-transparent hover:text-gray-600';
+  });
+  document.getElementById('di-viewer').classList.toggle('hidden', tab === 'json');
+  document.getElementById('di-json').classList.toggle('hidden', tab !== 'json');
+}
+
+function diShowViewer() {
+  diIsJson = false;
+  diSetViewTab('viewer');
+}
+
+function diToggleJson() {
+  diIsJson = !diIsJson;
+  diSetViewTab(diIsJson ? 'json' : 'viewer');
+  if (diIsJson) {
+    document.getElementById('di-json-content').textContent = JSON.stringify(DI_DOCS[diCurrent].json, null, 2);
+  }
+}
+
+function diDownload() {
+  const doc = DI_DOCS[diCurrent];
+  const blob = new Blob([JSON.stringify(doc.json, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = doc.file.replace('.pdf','.json');
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function diRender() {
+  const doc = DI_DOCS[diCurrent];
+  document.getElementById('di-filename').textContent = doc.file;
+
+  const badgeColors = {
+    green:'bg-green-50 text-green-700 border-green-200',
+    blue:'bg-blue-50 text-blue-700 border-blue-200',
+    purple:'bg-purple-50 text-purple-700 border-purple-200',
+    orange:'bg-orange-50 text-orange-700 border-orange-200',
+    gray:'bg-gray-100 text-gray-600 border-gray-200'
+  };
+
+  let html = doc.fields.map(f => {
+    let val;
+    if (f.badge) {
+      val = `<span class="inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full border ${badgeColors[f.badge]}">${f.v}</span>`;
+    } else if (f.bold) {
+      val = `<span class="font-bold text-gray-900 text-sm">${f.v}</span>`;
+    } else {
+      val = `<span class="text-gray-900 text-sm">${f.v}</span>`;
+    }
+    return `<div class="di-field flex items-center justify-between py-2.5 border-b border-gray-100">
+      <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">${f.k}</span>
+      ${val}
+    </div>`;
+  }).join('');
+
+  // Add table for KIR
+  if (doc.table) {
+    html += `<div class="di-table mt-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-bold text-gray-900">Računi</span>
+        <span class="text-xs text-gray-400">${doc.table.rows.length} postavk</span>
+      </div>
+      <div class="overflow-x-auto border border-gray-200 rounded-xl">
+        <table class="w-full text-xs">
+          <thead>
+            <tr class="bg-gray-50 text-gray-400 uppercase tracking-wider">
+              ${doc.table.head.map(h=>`<th class="px-3 py-2 text-left font-semibold">${h}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${doc.table.rows.map((r,ri)=>`<tr class="${ri%2?'bg-gray-50/50':'bg-white'} border-t border-gray-100">
+              ${r.map((c,ci)=>`<td class="px-3 py-2 ${ci>=3?'font-medium text-right':'text-gray-700'}">${c}</td>`).join('')}
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('di-viewer').innerHTML = html;
+}
+
+// Init Document Intelligence
+diSetActive(0);
+diBuildInactiveTags();
+diRender();
+</script>
+
+</body>
+</html>

@@ -192,6 +192,24 @@
   nav a { position: relative; }
   #navbar-pill nav a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: #2563EB; transition: width 0.2s ease; }
   #navbar-pill nav a:hover::after { width: 100%; }
+
+  /* ── Document Intelligence ── */
+  .di-inactive-tag { cursor:pointer; transition:all .25s ease; }
+  .di-inactive-tag:hover { border-color:#9CA3AF; transform:translateY(-1px); box-shadow:0 2px 8px rgba(0,0,0,.06); }
+  #di-card .di-field { animation: fadeInUp .3s ease forwards; opacity:0; }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  #di-card .di-field:nth-child(1){animation-delay:.05s} #di-card .di-field:nth-child(2){animation-delay:.1s}
+  #di-card .di-field:nth-child(3){animation-delay:.15s} #di-card .di-field:nth-child(4){animation-delay:.2s}
+  #di-card .di-field:nth-child(5){animation-delay:.25s} #di-card .di-field:nth-child(6){animation-delay:.3s}
+  #di-card .di-field:nth-child(7){animation-delay:.35s} #di-card .di-field:nth-child(8){animation-delay:.4s}
+  #di-card .di-field:nth-child(9){animation-delay:.45s} #di-card .di-field:nth-child(10){animation-delay:.5s}
+  #di-card .di-table { animation: fadeInUp .4s ease .25s forwards; opacity:0; }
+  @keyframes diDashFlow { from{stroke-dashoffset:20} to{stroke-dashoffset:0} }
+  .di-connect-line { animation:diDashFlow .8s linear infinite; }
+  @keyframes diPopIn { 0%{transform:scale(.85);opacity:0} 50%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
+  #di-active-btn.pop { animation:diPopIn .35s ease forwards; }
+  @keyframes diCardFade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .di-card-enter { animation:diCardFade .35s ease forwards; }
 </style>
 </head>
 <body class="bg-white overflow-x-hidden">
@@ -529,154 +547,64 @@
 
 
 
-<!-- EXAMPLES -->
-<section id="examples" class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-12 reveal">
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Konkretni primeri iz prakse</h2>
-      <p class="text-lg text-gray-500">Oglejte si, kaj Konta naredi namesto vas — vsak dan, za vsako stranko.</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6 items-stretch">
-      <!-- Example 1: App mockup — Document extraction -->
-      <div class="reveal reveal-delay-1 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
-          <!-- Mini app mockup -->
-          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
-            <!-- Sidebar -->
-            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
-              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-            </div>
-            <!-- Main content -->
-            <div style="flex:1;padding:12px;overflow:hidden;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                <div style="font-weight:700;color:#37352F;font-size:12px;">Dokumenti</div>
-                <span style="font-size:9px;color:#fff;background:#0073ff;padding:2px 8px;border-radius:10px;font-weight:600;">Obdelano</span>
-              </div>
-              <!-- File card -->
-              <div style="background:#f9fafb;border:1px solid #efefec;border-radius:10px;padding:8px 10px;margin-bottom:8px;">
-                <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-                  <div style="width:24px;height:24px;background:#fee2e2;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-                  <div><div style="font-weight:600;color:#37352F;">racun-telekom-042.pdf</div><div style="color:#9B9A97;font-size:9px;">PDF · 1,2 MB · Prebrano</div></div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Dobavitelj</div><div style="font-weight:600;color:#0073ff;">Telekom SI</div></div>
-                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Skupaj</div><div style="font-weight:600;color:#37352F;">€89,40</div></div>
-                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">DDV 22%</div><div style="font-weight:600;color:#37352F;">€16,12</div></div>
-                  <div style="background:#fff;border:1px solid #efefec;border-radius:6px;padding:4px 6px;"><div style="color:#9B9A97;font-size:8px;">Datum</div><div style="font-weight:600;color:#37352F;">15.03.2026</div></div>
-                </div>
-                <div style="margin-top:6px;display:flex;align-items:center;gap:6px;background:#eff6ff;border-radius:6px;padding:4px 8px;">
-                  <div style="flex:1;height:4px;background:#dbeafe;border-radius:4px;overflow:hidden;"><div style="width:97%;height:100%;background:#0073ff;border-radius:4px;"></div></div>
-                  <span style="font-weight:700;color:#0073ff;font-size:9px;">97%</span>
-                </div>
-              </div>
+<!-- DOCUMENT INTELLIGENCE -->
+<section id="examples" class="py-20 bg-gray-50 overflow-hidden">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-8 lg:gap-4 items-start reveal">
+      <!-- Left: Text + tags -->
+      <div class="relative">
+        <p class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">Dokumentna inteligenca</p>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+          Najboljša <span class="text-blue-600">ekstrakcija</span><br>dokumentov
+        </h2>
+        <p class="text-gray-500 leading-relaxed mb-8">
+          AI pretvori vsak dokument v strukturiran, zanesljiv objekt. Rokopisi, tabele, kompleksno oblikovanje — Konta prebere vse in izvleče točno to, kar potrebujete.
+        </p>
+
+        <!-- Active tag (top, with connecting line) -->
+        <div class="mb-6 relative" id="di-active-area">
+          <div class="inline-flex items-center relative" id="di-active-wrap">
+            <button id="di-active-btn" class="inline-flex items-center gap-2.5 border-2 border-blue-600 text-blue-600 bg-blue-50 font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-300 cursor-default shadow-sm shadow-blue-100">
+              <span id="di-active-icon" class="w-5 h-5 flex items-center justify-center"></span>
+              <span id="di-active-label"></span>
+            </button>
+            <!-- Connecting line (desktop only) -->
+            <div class="hidden md:block absolute left-full top-1/2 -translate-y-1/2" style="width:calc(100vw)">
+              <svg class="h-2 overflow-visible" style="width:100%">
+                <line x1="0" y1="4" x2="100%" y2="4" stroke="#2563EB" stroke-width="2" stroke-dasharray="6 4" class="di-connect-line"/>
+              </svg>
             </div>
           </div>
         </div>
-        <div class="p-5 flex flex-col flex-1">
-          <span class="text-xs font-semibold text-blue-600 uppercase tracking-wide">Ekstrakcija dokumentov</span>
-          <h3 class="font-bold text-gray-900 mt-1 mb-2">Račun naložen. Podatki že tam.</h3>
-          <p class="text-sm text-gray-500 leading-relaxed flex-1">Strankin dobavitelj je poslal skeniran račun. Konta ga prebere, izvleče dobavitelja, znesek, DDV in datum — in ga samodejno razvrsti v pravo kategorijo. Vi samo potrdite.</p>
-        </div>
+
+        <!-- Inactive tags grid -->
+        <div class="flex flex-wrap gap-2.5" id="di-inactive-tags"></div>
       </div>
-      <!-- Example 2: App mockup — Clients dashboard -->
-      <div class="reveal reveal-delay-2 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
-          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
-            <!-- Sidebar -->
-            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
-              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-            </div>
-            <!-- Main content -->
-            <div style="flex:1;padding:12px;overflow:hidden;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                <div style="font-weight:700;color:#37352F;font-size:12px;">Stranke</div>
-                <div style="display:flex;gap:4px;">
-                  <span style="font-size:9px;color:#16a34a;background:#dcfce7;padding:2px 8px;border-radius:10px;font-weight:600;">4 aktivne</span>
-                </div>
-              </div>
-              <!-- Client rows -->
-              <div style="border:1px solid #efefec;border-radius:8px;overflow:hidden;">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
-                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2563eb;font-size:9px;">S</div><span style="font-weight:500;color:#37352F;">Strokovnjak d.o.o.</span></div>
-                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">12 dok</span><span style="color:#16a34a;">✓</span></div>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
-                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#fce7f3;display:flex;align-items:center;justify-content:center;font-weight:700;color:#db2777;font-size:9px;">H</div><span style="font-weight:500;color:#37352F;">Hitri prevozi s.p.</span></div>
-                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">7 dok</span><span style="color:#16a34a;">✓</span></div>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #f5f5f4;">
-                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-weight:700;color:#16a34a;font-size:9px;">N</div><span style="font-weight:500;color:#37352F;">Nova trgovina d.o.o.</span></div>
-                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">9 dok</span><span style="color:#16a34a;">✓</span></div>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#fefce8;">
-                  <div style="display:flex;align-items:center;gap:6px;"><div style="width:22px;height:22px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-weight:700;color:#d97706;font-size:9px;">Z</div><span style="font-weight:500;color:#37352F;">Zelena kmetija s.p.</span></div>
-                  <div style="display:flex;align-items:center;gap:6px;"><span style="color:#9B9A97;">2 dok</span><span style="font-size:9px;color:#d97706;background:#fef3c7;padding:1px 6px;border-radius:8px;font-weight:600;">Čaka</span></div>
-                </div>
-              </div>
+
+      <!-- Right: Extraction preview card -->
+      <div class="relative" id="di-card-wrap">
+        <div class="hidden md:block absolute -left-2 top-12 w-3 h-3 bg-blue-600 rounded-full border-2 border-white shadow-md z-10" style="box-shadow:0 0 12px rgba(37,99,235,.4)"></div>
+        <div id="di-card" class="bg-white border border-gray-200 rounded-2xl shadow-xl overflow-hidden transition-all duration-300">
+          <div class="flex items-center gap-2 px-5 pt-4 pb-0">
+            <div class="inline-flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-600">
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+              <span id="di-filename">racun-telekom.pdf</span>
             </div>
           </div>
-        </div>
-        <div class="p-5 flex flex-col flex-1">
-          <span class="text-xs font-semibold text-green-600 uppercase tracking-wide">Nadzorna plošča strank</span>
-          <h3 class="font-bold text-gray-900 mt-1 mb-2">Vse stranke. En pogled.</h3>
-          <p class="text-sm text-gray-500 leading-relaxed flex-1">Na nadzorni plošči vidite vsako stranko, koliko dokumentov ste obdelali in kdo še čaka. Brez iskanja po mapah, brez e-poštnih verig.</p>
-        </div>
-      </div>
-      <!-- Example 3: App mockup — KIR/KPR Export -->
-      <div class="reveal reveal-delay-3 card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-        <div class="p-3 flex items-stretch" style="min-height:260px;background:#FAFAF9;">
-          <div class="flex w-full rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white" style="font-size:10px;">
-            <!-- Sidebar -->
-            <div style="width:52px;min-width:52px;background:#FAFAF9;border-right:1px solid #EFEFEC;padding:10px 6px;display:flex;flex-direction:column;gap:6px;">
-              <div style="font-weight:800;font-size:11px;color:#37352F;text-align:center;margin-bottom:6px;">K.</div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#9B9A97" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-              <div style="width:28px;height:28px;margin:0 auto;border-radius:6px;background:#e6f0ff;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" fill="none" stroke="#0073ff" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-            </div>
-            <!-- Main content -->
-            <div style="flex:1;padding:12px;overflow:hidden;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <div style="font-weight:700;color:#37352F;font-size:12px;">KPR · Marec 2026</div>
-                <div style="font-size:9px;color:#fff;background:#7c3aed;padding:2px 8px;border-radius:10px;font-weight:600;">XML pripravljen</div>
-              </div>
-              <!-- Transaction table -->
-              <div style="border:1px solid #efefec;border-radius:8px;overflow:hidden;margin-bottom:8px;">
-                <div style="display:grid;grid-template-columns:1fr auto auto;gap:0;font-size:9px;">
-                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;">Dobavitelj</div>
-                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;text-align:right;">Neto</div>
-                  <div style="padding:5px 8px;font-weight:600;color:#9B9A97;background:#fafaf9;border-bottom:1px solid #efefec;text-align:right;">DDV</div>
-                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;">Telekom SI</div>
-                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€73,28</div>
-                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€16,12</div>
-                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;">Real d.o.o.</div>
-                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€532,79</div>
-                  <div style="padding:5px 8px;color:#37352F;border-bottom:1px solid #f5f5f4;text-align:right;font-weight:500;">€117,21</div>
-                  <div style="padding:5px 8px;color:#37352F;">OMV</div>
-                  <div style="padding:5px 8px;color:#37352F;text-align:right;font-weight:500;">€245,08</div>
-                  <div style="padding:5px 8px;color:#37352F;text-align:right;font-weight:500;">€53,92</div>
-                </div>
-              </div>
-              <!-- Export button -->
-              <div style="display:flex;align-items:center;gap:6px;">
-                <div style="flex:1;background:#f3e8ff;border-radius:8px;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
-                  <span style="font-weight:600;color:#7c3aed;">Skupaj: €851,15</span>
-                  <span style="font-weight:600;color:#7c3aed;">DDV: €187,25</span>
-                </div>
-              </div>
-              <div style="margin-top:6px;background:#7c3aed;color:#fff;text-align:center;padding:5px;border-radius:8px;font-weight:600;font-size:9px;">↓ Izvozi KPR XML za eDavke</div>
-            </div>
+          <div class="flex items-center gap-4 px-5 pt-3 pb-0 border-b border-gray-100">
+            <button class="di-view-tab text-sm font-semibold text-blue-600 pb-2 border-b-2 border-blue-600" data-tab="viewer" onclick="diShowViewer()">Pregled</button>
+            <button class="di-view-tab text-sm font-medium text-gray-400 pb-2 border-b-2 border-transparent hover:text-gray-600" onclick="diToggleJson()" data-tab="json">JSON</button>
           </div>
-        </div>
-        <div class="p-5 flex flex-col flex-1">
-          <span class="text-xs font-semibold text-purple-600 uppercase tracking-wide">KIR/KPR izvoz</span>
-          <h3 class="font-bold text-gray-900 mt-1 mb-2">En klik do eDavkov.</h3>
-          <p class="text-sm text-gray-500 leading-relaxed flex-1">Ko so transakcije potrjene, Konta zgradi KPR ali KIR evidenco in generira XML v formatu, ki ga eDavke sprejmejo. Brez ročnega prepisovanja.</p>
+          <div id="di-viewer" class="p-5 space-y-0"></div>
+          <div id="di-json" class="hidden p-5">
+            <pre class="bg-gray-50 rounded-xl p-4 text-xs text-gray-700 font-mono overflow-x-auto max-h-80 leading-relaxed" id="di-json-content"></pre>
+          </div>
+          <div class="px-5 pb-4 flex justify-end">
+            <button onclick="diDownload()" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              PRENESI JSON
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1252,6 +1180,114 @@
       card.style.transform = '';
     });
   });
+
+  // ── Document Intelligence Section ──
+  const DI_DOCS = [
+    { file:'racun-telekom.pdf', fields:[
+      {k:'IZDAJATELJ',v:'Telekom Slovenije d.d.'},{k:'DAVČNA ŠTEVILKA',v:'SI50858269',bold:true},{k:'DATUM IZDAJE',v:'2025-03-15'},
+      {k:'ROK PLAČILA',v:'2025-04-14'},{k:'OSNOVA',v:'€104,36'},{k:'DDV (22%)',v:'€22,96'},
+      {k:'SKUPAJ',v:'€127,32',bold:true},{k:'IBAN',v:'SI56 0510 0801 5006 462'},{k:'SKLIC',v:'SI00 234-56789-2025'},
+      {k:'SMER',v:'KPR (prejeti)',badge:'green'}
+    ], json:{izdajatelj:'Telekom Slovenije d.d.',davcna_stevilka:'SI50858269',datum_izdaje:'2025-03-15',rok_placila:'2025-04-14',osnova:104.36,ddv_stopnja:22,ddv_znesek:22.96,skupaj:127.32,iban:'SI56 0510 0801 5006 462',sklic:'SI00 234-56789-2025',smer:'KPR',tip:'racun'}},
+    { file:'dobropis-mega-trade.pdf', fields:[
+      {k:'IZDAJATELJ',v:'Mega Trade d.o.o.'},{k:'DAVČNA ŠTEVILKA',v:'SI98765432',bold:true},{k:'DATUM IZDAJE',v:'2025-03-10'},
+      {k:'ORIGINALNI RAČUN',v:'R-2025-0342'},{k:'RAZLOG',v:'Količinska razlika'},{k:'OSNOVA',v:'-€200,82'},
+      {k:'DDV (22%)',v:'-€44,18'},{k:'SKUPAJ',v:'-€245,00',bold:true},{k:'SMER',v:'KPR (prejeti)',badge:'green'},
+      {k:'TIP',v:'Dobropis',badge:'purple'}
+    ], json:{izdajatelj:'Mega Trade d.o.o.',davcna_stevilka:'SI98765432',datum_izdaje:'2025-03-10',originalni_racun:'R-2025-0342',razlog:'Količinska razlika',osnova:-200.82,ddv_stopnja:22,ddv_znesek:-44.18,skupaj:-245.00,smer:'KPR',tip:'dobropis'}},
+    { file:'avans-001.pdf', fields:[
+      {k:'IZDAJATELJ',v:'ABC Storitve d.o.o.'},{k:'DAVČNA ŠTEVILKA',v:'SI11223344',bold:true},{k:'DATUM IZDAJE',v:'2025-03-01'},
+      {k:'NAMEN',v:'Avans za projekt Alpha'},{k:'OSNOVA',v:'€409,84'},{k:'DDV (22%)',v:'€90,16'},
+      {k:'SKUPAJ',v:'€500,00',bold:true},{k:'SMER',v:'KIR (izdani)',badge:'blue'},{k:'TIP',v:'Avansni račun',badge:'orange'}
+    ], json:{izdajatelj:'ABC Storitve d.o.o.',davcna_stevilka:'SI11223344',datum_izdaje:'2025-03-01',namen:'Avans za projekt Alpha',osnova:409.84,ddv_stopnja:22,ddv_znesek:90.16,skupaj:500.00,smer:'KIR',tip:'avansni_racun'}},
+    { file:'blagajniski-prejemek.pdf', fields:[
+      {k:'BLAGAJNIK',v:'Marija Horvat'},{k:'PREJEMNIK',v:'Janez Novak'},{k:'DATUM',v:'2025-03-18'},
+      {k:'NAMEN',v:'Pisarniški material'},{k:'ZNESEK',v:'€35,00',bold:true},{k:'ŠTEVILKA',v:'BP-2025-012'},
+      {k:'EVIDENCA',v:'Blagajna',badge:'green'},{k:'TIP',v:'Blagajniški prejemek',badge:'gray'}
+    ], json:{blagajnik:'Marija Horvat',prejemnik:'Janez Novak',datum:'2025-03-18',namen:'Pisarniški material',znesek:35.00,stevilka:'BP-2025-012',evidenca:'blagajna',tip:'blagajniski_prejemek'}},
+    { file:'kir-marec-2025.pdf', fields:[
+      {k:'OBDOBJE',v:'Marec 2025'},{k:'DAVČNI ZAVEZANEC',v:'Moja Pisarna d.o.o.',bold:true},
+      {k:'DAVČNA ŠTEVILKA',v:'SI55667788'},{k:'ŠTEVILO RAČUNOV',v:'4',badge:'blue'}
+    ], table:{head:['ŠT. RAČUNA','KUPEC','DATUM','OSNOVA','DDV','SKUPAJ'],rows:[
+      ['R-2025-041','Podjetje A d.o.o.','05.03.2025','€820,00','€180,40','€1.000,40'],
+      ['R-2025-042','Studio B s.p.','12.03.2025','€450,00','€99,00','€549,00'],
+      ['R-2025-043','Trgovina C d.o.o.','18.03.2025','€1.230,00','€270,60','€1.500,60'],
+      ['R-2025-044','Obrt D s.p.','25.03.2025','€320,00','€70,40','€390,40']
+    ]}, json:{obdobje:'2025-03',davcni_zavezanec:'Moja Pisarna d.o.o.',davcna_stevilka:'SI55667788',racuni:[{stevilka:'R-2025-041',kupec:'Podjetje A d.o.o.',datum:'2025-03-05',osnova:820.00,ddv:180.40,skupaj:1000.40},{stevilka:'R-2025-042',kupec:'Studio B s.p.',datum:'2025-03-12',osnova:450.00,ddv:99.00,skupaj:549.00},{stevilka:'R-2025-043',kupec:'Trgovina C d.o.o.',datum:'2025-03-18',osnova:1230.00,ddv:270.60,skupaj:1500.60},{stevilka:'R-2025-044',kupec:'Obrt D s.p.',datum:'2025-03-25',osnova:320.00,ddv:70.40,skupaj:390.40}],tip:'kir'}},
+    { file:'pos-zbir-18-03.pdf', fields:[
+      {k:'DATUM',v:'18.03.2025'},{k:'LOKACIJA',v:'Poslovalnica Center, Ljubljana',bold:true},{k:'BLAGAJNA',v:'POS-01'},
+      {k:'GOTOVINA',v:'€1.245,80'},{k:'KARTICA',v:'€3.892,40'},{k:'SKUPAJ PROMET',v:'€5.138,20',bold:true},
+      {k:'DDV (22%)',v:'€927,03'},{k:'DDV (9.5%)',v:'€148,25'},{k:'ŠTEVILO RAČUNOV',v:'87',badge:'blue'},
+      {k:'TIP',v:'POS dnevni zbir',badge:'orange'}
+    ], json:{datum:'2025-03-18',lokacija:'Poslovalnica Center, Ljubljana',blagajna:'POS-01',gotovina:1245.80,kartica:3892.40,skupaj_promet:5138.20,ddv_22:927.03,ddv_9_5:148.25,stevilo_racunov:87,tip:'pos_zbir'}}
+  ];
+  const DI_TAGS = [
+    {label:'Račun',icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>'},
+    {label:'Dobropis',icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/></svg>'},
+    {label:'Avansni račun',icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75"/></svg>'},
+    {label:'Blagajniški prejemek',icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664"/></svg>'},
+    {label:'KIR tabela',icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125"/></svg>'},
+    {label:'POS zbir',icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg>'}
+  ];
+  let diCurrent=0, diIsJson=false;
+  function diBuildInactiveTags(){
+    const w=document.getElementById('di-inactive-tags'); if(!w)return; w.innerHTML='';
+    DI_TAGS.forEach((t,i)=>{if(i===diCurrent)return;
+      const b=document.createElement('button');
+      b.className='di-inactive-tag inline-flex items-center gap-2 border border-gray-200 text-gray-600 bg-white font-medium text-sm px-4 py-2.5 rounded-full';
+      b.innerHTML=`<span class="w-4 h-4 flex items-center justify-center">${t.icon}</span> ${t.label}`;
+      b.onclick=()=>diSelect(i);
+      b.style.opacity='0';b.style.transform='translateY(6px)';
+      setTimeout(()=>{b.style.transition='all .25s ease';b.style.opacity='1';b.style.transform='translateY(0)';},50*(i>diCurrent?i-1:i));
+      w.appendChild(b);
+    });
+  }
+  function diSetActive(i){
+    const t=DI_TAGS[i],btn=document.getElementById('di-active-btn');if(!btn)return;
+    document.getElementById('di-active-icon').innerHTML=t.icon;
+    document.getElementById('di-active-label').textContent=t.label;
+    btn.classList.remove('pop');void btn.offsetWidth;btn.classList.add('pop');
+  }
+  function diSelect(i){
+    if(i===diCurrent)return; diCurrent=i; diIsJson=false;
+    diSetActive(i); diBuildInactiveTags(); diSetViewTab('viewer');
+    const c=document.getElementById('di-card');if(c){c.classList.remove('di-card-enter');void c.offsetWidth;c.classList.add('di-card-enter');}
+    diRender();
+  }
+  function diSetViewTab(tab){
+    document.querySelectorAll('.di-view-tab').forEach(t=>{
+      const a=t.dataset.tab===tab;
+      t.className=a?'di-view-tab text-sm font-semibold text-blue-600 pb-2 border-b-2 border-blue-600':'di-view-tab text-sm font-medium text-gray-400 pb-2 border-b-2 border-transparent hover:text-gray-600';
+    });
+    const v=document.getElementById('di-viewer'),j=document.getElementById('di-json');
+    if(v)v.classList.toggle('hidden',tab==='json'); if(j)j.classList.toggle('hidden',tab!=='json');
+  }
+  function diShowViewer(){diIsJson=false;diSetViewTab('viewer');}
+  function diToggleJson(){
+    diIsJson=!diIsJson;diSetViewTab(diIsJson?'json':'viewer');
+    if(diIsJson){const el=document.getElementById('di-json-content');if(el)el.textContent=JSON.stringify(DI_DOCS[diCurrent].json,null,2);}
+  }
+  function diDownload(){
+    const d=DI_DOCS[diCurrent],b=new Blob([JSON.stringify(d.json,null,2)],{type:'application/json'}),a=document.createElement('a');
+    a.href=URL.createObjectURL(b);a.download=d.file.replace('.pdf','.json');a.click();URL.revokeObjectURL(a.href);
+  }
+  function diRender(){
+    const d=DI_DOCS[diCurrent],fn=document.getElementById('di-filename'),vw=document.getElementById('di-viewer');
+    if(fn)fn.textContent=d.file; if(!vw)return;
+    const bc={green:'bg-green-50 text-green-700 border-green-200',blue:'bg-blue-50 text-blue-700 border-blue-200',purple:'bg-purple-50 text-purple-700 border-purple-200',orange:'bg-orange-50 text-orange-700 border-orange-200',gray:'bg-gray-100 text-gray-600 border-gray-200'};
+    let h=d.fields.map(f=>{
+      let v;if(f.badge)v=`<span class="inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full border ${bc[f.badge]}">${f.v}</span>`;
+      else if(f.bold)v=`<span class="font-bold text-gray-900 text-sm">${f.v}</span>`;
+      else v=`<span class="text-gray-900 text-sm">${f.v}</span>`;
+      return `<div class="di-field flex items-center justify-between py-2.5 border-b border-gray-100"><span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">${f.k}</span>${v}</div>`;
+    }).join('');
+    if(d.table){
+      h+=`<div class="di-table mt-4"><div class="flex items-center justify-between mb-2"><span class="text-sm font-bold text-gray-900">Računi</span><span class="text-xs text-gray-400">${d.table.rows.length} postavk</span></div><div class="overflow-x-auto border border-gray-200 rounded-xl"><table class="w-full text-xs"><thead><tr class="bg-gray-50 text-gray-400 uppercase tracking-wider">${d.table.head.map(x=>`<th class="px-3 py-2 text-left font-semibold">${x}</th>`).join('')}</tr></thead><tbody>${d.table.rows.map((r,ri)=>`<tr class="${ri%2?'bg-gray-50/50':'bg-white'} border-t border-gray-100">${r.map((c,ci)=>`<td class="px-3 py-2 ${ci>=3?'font-medium text-right':'text-gray-700'}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`;
+    }
+    vw.innerHTML=h;
+  }
+  // Init DI
+  if(document.getElementById('di-active-btn')){diSetActive(0);diBuildInactiveTags();diRender();}
 </script>
 </body>
 </html>
