@@ -106,6 +106,36 @@ tailwind.config = {
 @keyframes pop-in { 0%{transform:scale(.85);opacity:0} 50%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
 #di-active-btn.pop { animation:pop-in .35s ease forwards; }
 
+/* Flow section */
+@keyframes flow-dash-move { from{stroke-dashoffset:26} to{stroke-dashoffset:0} }
+.flow-dash-anim { animation:flow-dash-move 1s linear infinite; }
+@keyframes flow-upload-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+.flow-upload-pulse { animation:flow-upload-bob 2s ease infinite; }
+.flow-type-pill { transition:all .4s cubic-bezier(.4,0,.2,1); }
+.flow-type-pill.fading { opacity:.35; transform:scale(.95); }
+#flow-active-pill { transition:all .5s cubic-bezier(.4,0,.2,1); }
+.flow-file-item { transition:all .4s ease; }
+.flow-result-field { animation:fade-in-up .3s ease forwards; opacity:0; }
+.flow-result-field:nth-child(1){animation-delay:.1s} .flow-result-field:nth-child(2){animation-delay:.2s}
+.flow-result-field:nth-child(3){animation-delay:.3s} .flow-result-field:nth-child(4){animation-delay:.4s}
+
+/* Konta logo ring pulse */
+@keyframes konta-ring-pulse {
+  0%{box-shadow:0 0 0 0 rgba(37,99,235,.4)} 50%{box-shadow:0 0 0 18px rgba(37,99,235,0)} 100%{box-shadow:0 0 0 0 rgba(37,99,235,0)}
+}
+@keyframes konta-spin-in {
+  0%{transform:scale(0) rotate(-180deg);opacity:0} 60%{transform:scale(1.1) rotate(10deg);opacity:1} 100%{transform:scale(1) rotate(0deg);opacity:1}
+}
+#flow-konta-logo.show { opacity:1; }
+#flow-konta-logo.show #flow-konta-ring { animation:konta-ring-pulse 1.2s ease 2, konta-spin-in .6s cubic-bezier(.175,.885,.32,1.275) forwards; }
+#flow-konta-logo.fading { opacity:0 !important; transform:translate(-50%, 0) scale(0.8) !important; }
+
+/* Flow section initial hidden states */
+.flow-left-hidden { opacity:0; transform:translateX(-30px); transition:all .6s ease; }
+.flow-left-show { opacity:1 !important; transform:translateX(0) !important; }
+.flow-right-hidden { opacity:0; transform:translateX(30px); transition:all .6s ease; }
+.flow-right-show { opacity:1 !important; transform:translateX(0) !important; }
+
 /* Card content fade */
 @keyframes card-fade-in { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 .di-card-enter { animation:card-fade-in .35s ease forwards; }
@@ -429,99 +459,125 @@ tailwind.config = {
 </section>
 
 <!-- ════════════════════════════════════════════ -->
-<!-- 5. ANIMATED FLOW SECTION                     -->
+<!-- 5. ANIMATED FLOW SECTION (DocuPipe style)    -->
 <!-- ════════════════════════════════════════════ -->
-<section id="flow" class="py-20 md:py-28 bg-gray-50">
-  <div class="max-w-5xl mx-auto px-4">
+<section id="flow" class="py-20 md:py-28 bg-gray-50 overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4">
     <div class="text-center mb-16 reveal">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">Od dokumenta do knjižbe. <span class="gradient-text">Zanesljivo.</span></h2>
       <p class="text-gray-500 max-w-xl mx-auto">Vsak tip dokumenta gre skozi isti AI postopek — OCR, ekstrakcija, validacija. Rezultat je strukturiran in pripravljen za oddajo.</p>
     </div>
 
-    <!-- Flow animation -->
-    <div class="reveal flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0">
+    <!-- 3-column flow -->
+    <div class="reveal grid grid-cols-1 md:grid-cols-[300px_1fr_340px] gap-6 md:gap-0 items-start">
 
-      <!-- Left: Document types -->
-      <div class="flex flex-col gap-3 md:w-48 flex-shrink-0">
-        <div class="flow-doc-1 flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
-          <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
-            <svg class="w-4 h-4 text-brand-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      <!-- ── LEFT: Upload zone + file list ── -->
+      <div class="flex flex-col items-center md:items-end gap-5 md:pr-3 flow-left-hidden" id="flow-left">
+        <!-- Upload card -->
+        <div class="w-64 bg-white border-2 border-gray-200 rounded-2xl p-6 flex flex-col items-center shadow-sm relative" style="border-style:dashed">
+          <div class="w-20 h-20 bg-gray-50 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
           </div>
-          <span class="text-sm font-medium">Račun</span>
+          <!-- Upload arrow circle -->
+          <div class="absolute bottom-4 right-4 w-10 h-10 bg-brand-600 rounded-full flex items-center justify-center shadow-md flow-upload-pulse">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75"/></svg>
+          </div>
         </div>
-        <div class="flow-doc-2 flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
-          <div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center">
-            <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          </div>
-          <span class="text-sm font-medium">Dobropis</span>
-        </div>
-        <div class="flow-doc-3 flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
-          <div class="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center">
-            <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          </div>
-          <span class="text-sm font-medium">Avans</span>
-        </div>
-        <div class="flow-doc-4 flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
-          <div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center">
-            <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12a2 2 0 002-2V6l-4-4H4a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          </div>
-          <span class="text-sm font-medium">Blagajniški</span>
+        <!-- File list -->
+        <div class="w-64 space-y-2.5" id="flow-file-list">
+          <!-- Populated by JS -->
         </div>
       </div>
 
-      <!-- Center: Connecting lines + AI node -->
-      <div class="hidden md:flex flex-col items-center justify-center mx-4 md:mx-8 relative" style="width:180px;height:260px">
-        <svg width="180" height="260" class="absolute inset-0">
-          <line x1="0" y1="40" x2="90" y2="130" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4"/>
-          <line x1="0" y1="100" x2="90" y2="130" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:.2s"/>
-          <line x1="0" y1="160" x2="90" y2="130" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:.4s"/>
-          <line x1="0" y1="220" x2="90" y2="130" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:.6s"/>
-          <line x1="90" y1="130" x2="180" y2="50" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:1s"/>
-          <line x1="90" y1="130" x2="180" y2="100" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:1.2s"/>
-          <line x1="90" y1="130" x2="180" y2="150" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:1.4s"/>
-          <line x1="90" y1="130" x2="180" y2="200" class="flow-line" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 4" fill="none" opacity=".4" style="animation-delay:1.6s"/>
-        </svg>
-        <!-- AI node -->
-        <div class="flow-ai relative z-10 w-16 h-16 bg-brand-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30" style="animation:flow-ai-pulse 8s ease infinite, pulse-glow 2s ease infinite">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/></svg>
+      <!-- ── CENTER: Active pill + dashed lines + type pills ── -->
+      <div class="flex flex-col items-center relative px-4 md:px-8">
+
+        <!-- INTRO: Speech bubble (appears phase 1) -->
+        <div id="flow-speech" class="absolute top-0 left-1/2 -translate-x-1/2 z-20 opacity-0 transition-all duration-500" style="transform:translate(-50%,-10px) scale(0.9)">
+          <div class="flex items-center gap-3 bg-white border-2 border-brand-600 rounded-full px-5 py-3 shadow-lg whitespace-nowrap">
+            <div class="w-8 h-8 bg-brand-600 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+            </div>
+            <span class="text-sm font-semibold text-gray-900">Izvleci znesek, DDV in datum</span>
+          </div>
+        </div>
+
+        <!-- INTRO: Konta logo (appears phase 2) -->
+        <div id="flow-konta-logo" class="absolute top-0 left-1/2 -translate-x-1/2 z-30 opacity-0 pointer-events-none" style="transition:all .6s cubic-bezier(.4,0,.2,1)">
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-24 h-24 bg-white border-2 border-brand-600 rounded-2xl flex items-center justify-center shadow-xl" id="flow-konta-ring" style="box-shadow:0 0 0 0 rgba(37,99,235,0)">
+              <img src="konta-logo-t2.webp" alt="Konta" class="w-16 h-16 object-contain">
+            </div>
+            <span class="text-xs font-bold text-brand-600 uppercase tracking-widest">Konta AI</span>
+          </div>
+        </div>
+
+        <!-- Active document pill -->
+        <div class="relative flex items-center justify-center w-full mb-5" id="flow-pill-row" style="opacity:0;transition:opacity .5s ease">
+          <!-- Left dashed line -->
+          <svg class="hidden md:block absolute right-1/2 top-1/2 -translate-y-1/2" style="width:calc(50% - 100px);right:auto;left:0" height="2" overflow="visible">
+            <line x1="0" y1="1" x2="100%" y2="1" stroke="#2563EB" stroke-width="2" stroke-dasharray="8 5" class="flow-dash-anim"/>
+          </svg>
+          <!-- The pill -->
+          <div id="flow-active-pill" class="relative z-10 flex items-center gap-3.5 bg-gradient-to-r from-brand-600 to-blue-500 text-white font-semibold text-lg px-9 py-4 rounded-full shadow-lg shadow-blue-500/30 transition-all duration-500">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+            </div>
+            <span id="flow-active-label">Račun</span>
+          </div>
+          <!-- Right dashed line -->
+          <svg class="hidden md:block absolute left-1/2 top-1/2 -translate-y-1/2" style="width:calc(50% - 100px);left:auto;right:0" height="2" overflow="visible">
+            <line x1="0" y1="1" x2="100%" y2="1" stroke="#2563EB" stroke-width="2" stroke-dasharray="8 5" class="flow-dash-anim"/>
+          </svg>
+        </div>
+
+        <!-- Inactive type pills -->
+        <div class="flex flex-col gap-3 w-full max-w-[260px]" id="flow-type-pills" style="opacity:0;transition:opacity .5s ease">
+          <!-- Populated by JS -->
         </div>
       </div>
 
-      <!-- Mobile: Arrow -->
-      <div class="md:hidden flex items-center justify-center py-2">
-        <div class="flow-ai w-14 h-14 bg-brand-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30" style="animation:flow-ai-pulse 8s ease infinite, pulse-glow 2s ease infinite">
-          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+      <!-- ── RIGHT: Result card + file card ── -->
+      <div class="flex flex-col items-center md:items-start gap-0 md:pl-3 flow-right-hidden" id="flow-right">
+        <!-- Result card -->
+        <div class="w-80 bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
+          <div class="flex items-center gap-2.5 mb-5">
+            <div class="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </div>
+            <span class="text-base font-bold text-gray-900">Rezultat</span>
+          </div>
+          <div class="space-y-3.5 text-sm" id="flow-result-fields">
+            <!-- Populated by JS -->
+          </div>
+          <!-- Download buttons -->
+          <div class="flex items-center gap-2 mt-5">
+            <button class="flex-1 inline-flex items-center justify-center gap-1.5 border border-gray-200 text-gray-600 text-xs font-semibold px-3 py-2 rounded-lg hover:bg-gray-50 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              EXCEL
+            </button>
+            <button class="flex-1 inline-flex items-center justify-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              JSON
+            </button>
+          </div>
         </div>
-      </div>
-
-      <!-- Right: Result card -->
-      <div class="bg-white border border-gray-200 rounded-2xl shadow-lg p-5 md:w-64 flex-shrink-0">
-        <div class="flex items-center gap-2 mb-4">
-          <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
-            <svg class="w-3.5 h-3.5 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-          </div>
-          <span class="text-sm font-bold text-gray-900">Rezultat</span>
+        <!-- Vertical dashed line + dot -->
+        <div class="flex flex-col items-center">
+          <svg width="2" height="28"><line x1="1" y1="0" x2="1" y2="28" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 3" class="flow-dash-anim"/></svg>
+          <div class="w-3 h-3 bg-brand-600 rounded-full shadow-md mb-2" style="box-shadow:0 0 8px rgba(37,99,235,.5)"></div>
         </div>
-        <div class="space-y-2.5 text-sm">
-          <div class="flow-r1 flex justify-between">
-            <span class="text-gray-400">Izdajatelj</span>
-            <span class="font-medium text-gray-900">Telekom d.d.</span>
+        <!-- File card -->
+        <div class="w-80 bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-3.5 shadow-sm" id="flow-file-card">
+          <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
           </div>
-          <div class="flow-r2 flex justify-between">
-            <span class="text-gray-400">Znesek</span>
-            <span class="font-semibold text-gray-900">&euro;127,43</span>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium text-gray-900 truncate" id="flow-file-name">racun-telekom.pdf</p>
+            <p class="text-xs text-gray-400" id="flow-file-size">245 KB uploaded</p>
           </div>
-          <div class="flow-r3 flex justify-between">
-            <span class="text-gray-400">DDV</span>
-            <span class="font-medium text-brand-600">&euro;27,43 (22%)</span>
-          </div>
-          <div class="flow-r4 flex justify-between">
-            <span class="text-gray-400">Datum</span>
-            <span class="font-medium text-gray-900">15.03.2025</span>
-          </div>
-          <div class="flow-r5 flex justify-between">
-            <span class="text-gray-400">Kategorija</span>
-            <span class="inline-flex items-center bg-blue-50 text-brand-600 text-xs font-medium px-2 py-0.5 rounded-full">Telekomunikacije</span>
+          <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
           </div>
         </div>
       </div>
@@ -1253,6 +1309,225 @@ function diRender() {
 diSetActive(0);
 diBuildInactiveTags();
 diRender();
+
+// ── Flow Section (3-column animated) ──
+const FLOW_TYPES = [
+  { label:'Račun', file:'racun-telekom.pdf', size:'245 KB', result:[
+    {k:'Izdajatelj',v:'Telekom Slovenije d.d.'},{k:'Skupaj',v:'€127,43',bold:true},{k:'Datum',v:'15.03.2025'},{k:'DDV',v:'€22,96 (22%)'}
+  ]},
+  { label:'Dobropis', file:'dobropis-003.pdf', size:'156 KB', result:[
+    {k:'Izdajatelj',v:'Mega Trade d.o.o.'},{k:'Skupaj',v:'-€245,00',bold:true},{k:'Datum',v:'10.03.2025'},{k:'Razlog',v:'Količinska razlika'}
+  ]},
+  { label:'Avans', file:'avans-001.pdf', size:'312 KB', result:[
+    {k:'Izdajatelj',v:'ABC Storitve d.o.o.'},{k:'Skupaj',v:'€500,00',bold:true},{k:'Datum',v:'01.03.2025'},{k:'Namen',v:'Projekt Alpha'}
+  ]},
+  { label:'Blagajniški', file:'blagajniski-prejemek.pdf', size:'98 KB', result:[
+    {k:'Prejemnik',v:'Janez Novak'},{k:'Znesek',v:'€35,00',bold:true},{k:'Datum',v:'18.03.2025'},{k:'Namen',v:'Pisarniški material'}
+  ]},
+  { label:'POS zbir', file:'pos-zbir-18-03.pdf', size:'184 KB', result:[
+    {k:'Lokacija',v:'Center, Ljubljana'},{k:'Skupaj',v:'€5.138,20',bold:true},{k:'Datum',v:'18.03.2025'},{k:'Računi',v:'87 postavk'}
+  ]}
+];
+let flowIdx = 0;
+let flowInterval;
+
+function flowBuildFiles() {
+  const el = document.getElementById('flow-file-list');
+  if (!el) return;
+  const items = [];
+  for (let i = 0; i < Math.min(4, FLOW_TYPES.length); i++) {
+    const idx = (flowIdx + i) % FLOW_TYPES.length;
+    const t = FLOW_TYPES[idx];
+    items.push(`<div class="flow-file-item flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm" style="animation:fade-in-up .3s ease ${i*0.08}s forwards;opacity:0">
+      <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+      </div>
+      <div class="min-w-0 flex-1">
+        <p class="text-sm font-medium text-gray-700 truncate">${t.file}</p>
+        <p class="text-xs text-gray-400">${t.size} uploaded</p>
+      </div>
+      <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+        <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+      </div>
+    </div>`);
+  }
+  el.innerHTML = items.join('');
+}
+
+function flowBuildPills() {
+  const el = document.getElementById('flow-type-pills');
+  if (!el) return;
+  let html = '';
+  FLOW_TYPES.forEach((t, i) => {
+    if (i === flowIdx) return;
+    const fade = Math.abs(i - flowIdx) > 2 ? 'fading' : '';
+    html += `<div class="flow-type-pill flex items-center gap-3.5 bg-white border border-gray-200 rounded-full px-6 py-3.5 ${fade}">
+      <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+      </div>
+      <span class="text-base font-medium text-gray-500">${t.label}</span>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+function flowUpdateResult() {
+  const t = FLOW_TYPES[flowIdx];
+  const el = document.getElementById('flow-result-fields');
+  if (!el) return;
+  el.innerHTML = t.result.map(f =>
+    `<div class="flow-result-field flex justify-between items-center">
+      <span class="text-gray-400 text-xs font-medium">${f.k}</span>
+      <span class="${f.bold ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}">${f.v}</span>
+    </div>`
+  ).join('');
+  // Update active pill label
+  const lbl = document.getElementById('flow-active-label');
+  if (lbl) lbl.textContent = t.label;
+  // Update file card
+  const fn = document.getElementById('flow-file-name');
+  const fs = document.getElementById('flow-file-size');
+  if (fn) fn.textContent = t.file;
+  if (fs) fs.textContent = t.size + ' uploaded';
+}
+
+function flowCycle() {
+  flowIdx = (flowIdx + 1) % FLOW_TYPES.length;
+
+  // If we looped back to 0, restart the whole intro
+  if (flowIdx === 0) {
+    clearInterval(flowInterval);
+    flowResetAll();
+    setTimeout(() => flowIntroSequence(), 600);
+    return;
+  }
+
+  // Animate pill swap
+  const pill = document.getElementById('flow-active-pill');
+  if (pill) {
+    pill.style.transform = 'scale(0.9)';
+    pill.style.opacity = '0.5';
+    setTimeout(() => {
+      flowUpdateResult();
+      flowBuildPills();
+      flowBuildFiles();
+      pill.style.transform = 'scale(1)';
+      pill.style.opacity = '1';
+    }, 250);
+  }
+}
+
+// Reset all flow elements to initial hidden state
+function flowResetAll() {
+  flowStarted = false;
+  flowIdx = 0;
+
+  const left = document.getElementById('flow-left');
+  if (left) left.classList.remove('flow-left-show');
+
+  const right = document.getElementById('flow-right');
+  if (right) right.classList.remove('flow-right-show');
+
+  const pillRow = document.getElementById('flow-pill-row');
+  if (pillRow) pillRow.style.opacity = '0';
+
+  const pills = document.getElementById('flow-type-pills');
+  if (pills) pills.style.opacity = '0';
+
+  const speech = document.getElementById('flow-speech');
+  if (speech) { speech.style.opacity = '0'; speech.style.transform = 'translate(-50%, -10px) scale(0.9)'; }
+
+  const logo = document.getElementById('flow-konta-logo');
+  if (logo) { logo.classList.remove('show', 'fading'); logo.style.opacity = ''; logo.style.transform = ''; }
+}
+
+// ── Flow intro sequence (triggered on scroll) ──
+let flowStarted = false;
+
+function flowIntroSequence() {
+  if (flowStarted) return;
+  flowStarted = true;
+
+  // Phase 0 (0ms): Left column slides in with upload zone + files
+  const left = document.getElementById('flow-left');
+  if (left) left.classList.add('flow-left-show');
+  flowBuildFiles();
+
+  // Phase 1 (800ms): Speech bubble appears
+  setTimeout(() => {
+    const speech = document.getElementById('flow-speech');
+    if (speech) {
+      speech.style.opacity = '1';
+      speech.style.transform = 'translate(-50%, 0) scale(1)';
+    }
+  }, 800);
+
+  // Phase 2 (2200ms): Speech fades, Konta logo appears with spin-in
+  setTimeout(() => {
+    const speech = document.getElementById('flow-speech');
+    if (speech) {
+      speech.style.opacity = '0';
+      speech.style.transform = 'translate(-50%, -10px) scale(0.9)';
+    }
+  }, 2200);
+
+  setTimeout(() => {
+    const logo = document.getElementById('flow-konta-logo');
+    if (logo) { logo.classList.remove('fading'); logo.classList.add('show'); }
+  }, 2500);
+
+  // Phase 3 (3000ms): Konta logo fades out after ~0.5s visible
+  setTimeout(() => {
+    const logo = document.getElementById('flow-konta-logo');
+    if (logo) { logo.classList.add('fading'); }
+  }, 3000);
+
+  setTimeout(() => {
+    const logo = document.getElementById('flow-konta-logo');
+    if (logo) { logo.classList.remove('show', 'fading'); }
+
+    // Show active pill + dashed lines
+    const pillRow = document.getElementById('flow-pill-row');
+    if (pillRow) pillRow.style.opacity = '1';
+
+    // Show type pills
+    const pills = document.getElementById('flow-type-pills');
+    if (pills) pills.style.opacity = '1';
+
+    // Show right column
+    const right = document.getElementById('flow-right');
+    if (right) right.classList.add('flow-right-show');
+
+    // Populate everything
+    flowUpdateResult();
+    flowBuildPills();
+
+    // Start cycling after a beat
+    setTimeout(() => {
+      flowInterval = setInterval(flowCycle, 3000);
+    }, 1500);
+  }, 3600);
+}
+
+// Init flow — use IntersectionObserver to trigger on scroll
+if (document.getElementById('flow-active-pill')) {
+  const flowObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        flowIntroSequence();
+        flowObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  flowObs.observe(document.getElementById('flow'));
+
+  // Pause cycling on hover
+  const sec = document.getElementById('flow');
+  if (sec) {
+    sec.addEventListener('mouseenter', () => clearInterval(flowInterval));
+    sec.addEventListener('mouseleave', () => { if (flowStarted) flowInterval = setInterval(flowCycle, 3000); });
+  }
+}
 </script>
 
 </body>
