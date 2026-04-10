@@ -494,6 +494,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
               </button>
               <p class="text-xs text-gray-400 text-center mt-2">14-dnevni preizkus · odpovejte kadarkoli</p>
+              <button onclick="document.getElementById('demo-state-result').classList.add('hidden');document.getElementById('demo-state-upload').classList.remove('hidden');document.getElementById('demo-file-input').value='';" class="text-xs text-blue-600 hover:text-blue-800 font-medium mt-2 block mx-auto transition-colors">← Poskusite drug dokument</button>
             </div>
 
           </div>
@@ -1282,7 +1283,58 @@
   function demoStartProcessing(input) {
     const file = input.files && input.files[0];
     if (!file) return;
-    window.location.href = 'https://app.konta.si';
+    const fileName = file.name || 'dokument.pdf';
+
+    // Hide upload state, show processing
+    document.getElementById('demo-state-upload').classList.add('hidden');
+    document.getElementById('demo-state-processing').classList.remove('hidden');
+    document.getElementById('demo-state-result').classList.add('hidden');
+    document.getElementById('demo-proc-filename').textContent = fileName;
+
+    // Animate processing steps one by one
+    const steps = ['proc-s1', 'proc-s2', 'proc-s3', 'proc-s4'];
+    steps.forEach(function(id, i) {
+      setTimeout(function() {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('text-gray-400');
+        el.classList.add('text-green-700');
+        var icon = el.querySelector('.proc-icon');
+        if (icon) {
+          icon.classList.remove('border-gray-200');
+          icon.classList.add('border-green-500', 'bg-green-500', 'text-white');
+        }
+      }, 600 * (i + 1));
+    });
+
+    // After all steps, show result with mock data
+    setTimeout(function() {
+      document.getElementById('demo-state-processing').classList.add('hidden');
+      document.getElementById('demo-state-result').classList.remove('hidden');
+      document.getElementById('demo-result-filename').textContent = fileName;
+
+      // Fill in mock extracted data
+      var result = document.getElementById('demo-state-result');
+      result.querySelector('[data-field="dobavitelj"]').textContent = 'Telekom Slovenije d.d.';
+      result.querySelector('[data-field="datum"]').textContent = '15.03.2025';
+      result.querySelector('[data-field="brezDdv"]').textContent = '€104,47';
+      result.querySelector('[data-field="ddv"]').textContent = '€22,96';
+      result.querySelector('[data-field="skupaj"]').textContent = '€127,43';
+      result.querySelector('[data-field="kategorija"]').textContent = 'Telekomunikacije';
+
+      // Reset processing step styles for next demo
+      steps.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('text-gray-400');
+        el.classList.remove('text-green-700');
+        var icon = el.querySelector('.proc-icon');
+        if (icon) {
+          icon.classList.add('border-gray-200');
+          icon.classList.remove('border-green-500', 'bg-green-500', 'text-white');
+        }
+      });
+    }, 3200);
   }
 
   // ── FAQ accordion ──
