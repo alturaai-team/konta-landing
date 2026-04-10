@@ -232,6 +232,74 @@
   .flow-left-show { opacity:1 !important; transform:translateX(0) !important; }
   .flow-right-hidden { opacity:0; transform:translateX(30px); transition:all .6s ease; }
   .flow-right-show { opacity:1 !important; transform:translateX(0) !important; }
+
+  /* ── Mobile Responsive Overrides ── */
+  @media (max-width: 767px) {
+    /* Hero: tighter padding, smaller text */
+    section.pt-24 { padding-top: 5rem !important; padding-bottom: 1rem !important; }
+    section.pt-24 h1 { font-size: 1.75rem !important; line-height: 1.2 !important; }
+    section.pt-24 p.text-lg { font-size: 0.95rem !important; }
+
+    /* Nav CTA button: smaller on mobile */
+    #navbar-pill { padding: 0.5rem 0.75rem !important; }
+
+    /* Demo widget: constrain to viewport */
+    #demo-widget { overflow-x: hidden !important; }
+    #demo-widget .grid { grid-template-columns: 1fr !important; }
+
+    /* Before/After comparison: stack */
+    .grid.md\\:grid-cols-2 { grid-template-columns: 1fr !important; }
+
+    /* Document Intelligence: stack and constrain */
+    #examples .grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+    #examples .max-w-6xl { padding-left: 1rem !important; padding-right: 1rem !important; }
+    #di-active-btn { font-size: 0.8rem !important; padding: 0.5rem 1rem !important; }
+    #di-card { max-width: 100% !important; }
+
+    /* Flow section: stack columns, center elements */
+    #flow .grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+    #flow .max-w-6xl { padding-left: 1rem !important; padding-right: 1rem !important; }
+    #flow .w-64, #flow .w-80 { width: 100% !important; max-width: 320px !important; }
+    #flow .flow-left-hidden, #flow .flow-right-hidden { align-items: center !important; }
+    #flow svg.hidden.md\\:block { display: none !important; }
+    #flow-pill-row { margin-bottom: 1rem !important; }
+    #flow-active-pill { font-size: 0.95rem !important; padding: 0.75rem 1.5rem !important; }
+    #flow-type-pills { max-width: 100% !important; align-items: center !important; }
+
+    /* How it works steps: stack */
+    #how-it-works-steps .grid { grid-template-columns: 1fr !important; }
+    #how-it-works-steps .max-w-6xl { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+    /* Pricing: stack cards */
+    #pricing .grid { grid-template-columns: 1fr !important; }
+    #pricing .max-w-5xl { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+    /* Security section */
+    .bg-gradient-to-br .grid { grid-template-columns: 1fr !important; }
+    .bg-gradient-to-br .max-w-5xl { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+
+    /* FAQ: tighter padding */
+    .max-w-3xl { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+    /* All sections: ensure no horizontal overflow */
+    section { overflow-x: hidden !important; }
+    .max-w-6xl, .max-w-5xl, .max-w-4xl, .max-w-3xl { max-width: 100% !important; }
+
+    /* Footer: stack columns */
+    footer .grid { grid-template-columns: 1fr 1fr !important; gap: 1.5rem !important; }
+
+    /* General: prevent horizontal scroll */
+    body { overflow-x: hidden !important; }
+
+    /* Section headings: smaller on mobile */
+    h2.text-2xl, h2.sm\\:text-3xl { font-size: 1.5rem !important; line-height: 1.25 !important; }
+
+    /* Cards: full width */
+    .card-lift { width: 100% !important; }
+
+    /* Reveal animations: reduce transform distance for mobile */
+    .reveal { transform: translateY(16px) !important; }
+  }
 </style>
 </head>
 <body class="bg-white overflow-x-hidden">
