@@ -99,16 +99,44 @@
   </footer>
 
   <script>
-    function handleContact(e) {
+    async function handleContact(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('button[type=submit]');
+      const form = e.target;
+      const btn = form.querySelector('button[type=submit]');
+      const inputs = form.querySelectorAll('input,select,textarea');
+      const name = form.querySelector('input[type=text]').value.trim();
+      const email = form.querySelector('input[type=email]').value.trim();
+      const subject = form.querySelector('select').value;
+      const message = form.querySelector('textarea').value.trim();
+
       btn.textContent = 'Pošiljam…';
       btn.disabled = true;
-      setTimeout(() => {
+      inputs.forEach(el => el.disabled = true);
+
+      try {
+        const res = await fetch('https://qtqvooozbidwvvqjxjkg.supabase.co/functions/v1/send-contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message }),
+        });
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Napaka');
         btn.textContent = '✓ Sporočilo poslano!';
         btn.classList.replace('bg-blue-600', 'bg-green-600');
         btn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
-      }, 1200);
+        form.reset();
+      } catch (err) {
+        btn.textContent = 'Poskusite znova';
+        btn.disabled = false;
+        inputs.forEach(el => el.disabled = false);
+        btn.classList.replace('bg-blue-600', 'bg-red-600');
+        btn.classList.replace('hover:bg-blue-700', 'hover:bg-red-700');
+        setTimeout(() => {
+          btn.textContent = 'Pošljite sporočilo';
+          btn.classList.replace('bg-red-600', 'bg-blue-600');
+          btn.classList.replace('hover:bg-red-700', 'hover:bg-blue-700');
+        }, 3000);
+      }
     }
   </script>
 </body>
