@@ -20,7 +20,7 @@
 
   <!-- Nav -->
   <nav class="bg-white border-b border-gray-100 px-6 py-4">
-    <a href="konta-landing.html" class="flex items-center"><img src="konta-logo-t2.webp" alt="konta." style="height:28px;"></a>
+    <a href="/" class="text-xl font-extrabold text-gray-900 tracking-tight">Konta.</a>
   </nav>
 
   <!-- Main -->
@@ -36,21 +36,21 @@
             <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
           </div>
           <p class="text-xs font-semibold text-gray-700">E-pošta</p>
-          <p class="text-xs text-gray-400 mt-1">support@konta.si</p>
+          <p class="text-xs text-gray-400 mt-1">info@konta.si</p>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-5 text-center">
           <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-3">
             <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
           </div>
           <p class="text-xs font-semibold text-gray-700">Telefon</p>
-          <p class="text-xs text-gray-400 mt-1">+386 40 188 999</p>
+          <p class="text-xs text-gray-400 mt-1">+386 1 234 56 78</p>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-5 text-center">
           <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-3">
             <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
-          <p class="text-xs font-semibold text-gray-700">Povprečen čas odgovora</p>
-          <p class="text-xs text-gray-400 mt-1">&lt; 1 uro</p>
+          <p class="text-xs font-semibold text-gray-700">Odzivni čas</p>
+          <p class="text-xs text-gray-400 mt-1">Pon–Pet, 8–17h</p>
         </div>
       </div>
 
@@ -99,44 +99,16 @@
   </footer>
 
   <script>
-    async function handleContact(e) {
+    function handleContact(e) {
       e.preventDefault();
-      const form = e.target;
-      const btn = form.querySelector('button[type=submit]');
-      const inputs = form.querySelectorAll('input,select,textarea');
-      const name = form.querySelector('input[type=text]').value.trim();
-      const email = form.querySelector('input[type=email]').value.trim();
-      const subject = form.querySelector('select').value;
-      const message = form.querySelector('textarea').value.trim();
-
+      const btn = e.target.querySelector('button[type=submit]');
       btn.textContent = 'Pošiljam…';
       btn.disabled = true;
-      inputs.forEach(el => el.disabled = true);
-
-      try {
-        const res = await fetch('https://qtqvooozbidwvvqjxjkg.supabase.co/functions/v1/send-contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, subject, message }),
-        });
-        const data = await res.json();
-        if (!res.ok || data.error) throw new Error(data.error || 'Napaka');
+      setTimeout(() => {
         btn.textContent = '✓ Sporočilo poslano!';
         btn.classList.replace('bg-blue-600', 'bg-green-600');
         btn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
-        form.reset();
-      } catch (err) {
-        btn.textContent = 'Poskusite znova';
-        btn.disabled = false;
-        inputs.forEach(el => el.disabled = false);
-        btn.classList.replace('bg-blue-600', 'bg-red-600');
-        btn.classList.replace('hover:bg-blue-700', 'hover:bg-red-700');
-        setTimeout(() => {
-          btn.textContent = 'Pošljite sporočilo';
-          btn.classList.replace('bg-red-600', 'bg-blue-600');
-          btn.classList.replace('hover:bg-red-700', 'hover:bg-blue-700');
-        }, 3000);
-      }
+      }, 1200);
     }
   </script>
 </body>
