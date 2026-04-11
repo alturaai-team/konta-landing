@@ -418,7 +418,7 @@
               </div>
               <p class="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-1.5">
                 <svg class="w-3.5 h-3.5 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                Demo ne pošilja vaše datoteke nikamor.
+                Vaš dokument je varno shranjen in vas bo čakal po registraciji.
               </p>
             </div>
 
@@ -488,13 +488,13 @@
                   <span class="text-gray-400">Kategorija</span><span class="badge-blue" data-field="kategorija">—</span>
                 </div>
               </div>
-              <button onclick="window.location.href='https://app.konta.si?plan=starter'"
+              <button onclick="demoGoToSignup()"
                       class="w-full flex items-center justify-center gap-2 text-base font-semibold text-white bg-green-600 hover:bg-green-700 py-3.5 rounded-xl transition-colors shadow-sm">
                 Potrdi in začnite brezplačno
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
               </button>
               <p class="text-xs text-gray-400 text-center mt-2">14-dnevni preizkus · odpovejte kadarkoli</p>
-              <button onclick="document.getElementById('demo-state-result').classList.add('hidden');document.getElementById('demo-state-upload').classList.remove('hidden');document.getElementById('demo-file-input').value='';" class="text-xs text-blue-600 hover:text-blue-800 font-medium mt-2 block mx-auto transition-colors">← Poskusite drug dokument</button>
+              <button onclick="_demoDocId=null;_demoSessionId=null;_demoUploadOk=false;document.getElementById('demo-state-result').classList.add('hidden');document.getElementById('demo-state-upload').classList.remove('hidden');document.getElementById('demo-file-input').value='';" class="text-xs text-blue-600 hover:text-blue-800 font-medium mt-2 block mx-auto transition-colors">← Poskusite drug dokument</button>
             </div>
 
           </div>
@@ -1280,16 +1280,49 @@
     result.classList.remove('hidden');
   }
 
+  // Demo upload state
+  var _demoDocId = null;
+  var _demoSessionId = null;
+  var _demoUploadOk = false;
+  var DEMO_EDGE_URL = 'https://qtqvooozbidwvvqjxjkg.supabase.co/functions/v1/demo-upload';
+
   function demoStartProcessing(input) {
     const file = input.files && input.files[0];
     if (!file) return;
     const fileName = file.name || 'dokument.pdf';
+    _demoDocId = null;
+    _demoSessionId = null;
+    _demoUploadOk = false;
 
     // Hide upload state, show processing
     document.getElementById('demo-state-upload').classList.add('hidden');
     document.getElementById('demo-state-processing').classList.remove('hidden');
     document.getElementById('demo-state-result').classList.add('hidden');
     document.getElementById('demo-proc-filename').textContent = fileName;
+
+    // Upload file in background (non-blocking — animation plays simultaneously)
+    var reader = new FileReader();
+    reader.onload = function() {
+      var base64 = reader.result.split(',')[1]; // strip data:...;base64, prefix
+      fetch(DEMO_EDGE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ file_base64: base64, file_name: fileName, mime_type: file.type || 'application/pdf' })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success && data.document_id) {
+          _demoDocId = data.document_id;
+          _demoSessionId = data.demo_session_id;
+          _demoUploadOk = true;
+          console.log('[demo] Upload ok:', _demoDocId);
+        } else {
+          console.warn('[demo] Upload response:', data.error || 'unknown');
+        }
+      })
+      .catch(function(e) { console.warn('[demo] Upload failed:', e.message); });
+    };
+    reader.readAsDataURL(file);
 
     // Animate processing steps one by one
     const steps = ['proc-s1', 'proc-s2', 'proc-s3', 'proc-s4'];
@@ -1313,7 +1346,6 @@
       document.getElementById('demo-state-result').classList.remove('hidden');
       document.getElementById('demo-result-filename').textContent = fileName;
 
-      // Fill in mock extracted data
       var result = document.getElementById('demo-state-result');
       result.querySelector('[data-field="dobavitelj"]').textContent = 'Telekom Slovenije d.d.';
       result.querySelector('[data-field="datum"]').textContent = '15.03.2025';
@@ -1322,7 +1354,7 @@
       result.querySelector('[data-field="skupaj"]').textContent = '€127,43';
       result.querySelector('[data-field="kategorija"]').textContent = 'Telekomunikacije';
 
-      // Reset processing step styles for next demo
+      // Reset processing step styles
       steps.forEach(function(id) {
         var el = document.getElementById(id);
         if (!el) return;
@@ -1335,6 +1367,14 @@
         }
       });
     }, 3200);
+  }
+
+  function demoGoToSignup() {
+    var url = 'https://app.konta.si?mode=signup';
+    if (_demoUploadOk && _demoDocId) {
+      url += '&pending_doc=' + encodeURIComponent(_demoDocId) + '&demo_session=' + encodeURIComponent(_demoSessionId);
+    }
+    window.location.href = url;
   }
 
   // ── FAQ accordion ──
